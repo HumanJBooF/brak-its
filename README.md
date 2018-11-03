@@ -28,7 +28,7 @@ This is not an exhaustive list, just some worth noting
 +-- /Dockerfile.express           : Docker build spec for (local) Express
 +-- /Dockerfile.react             : Docker build spec for React (local) dev server
 +-- /docker-compose.yml           : Full Stack Docker environment spec (local development)
-+-- /provision.sh                 : Provisioner for [optional] Vagrant VM
++-- /provision.sh                 : Provisioner for Vagrant VM
 +-- /vagrantfile                  : Vagrant VM definition
 ```
 
