@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
-import './App.css';
+// import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+
 
 class App extends React.Component {
 
