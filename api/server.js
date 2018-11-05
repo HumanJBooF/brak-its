@@ -8,7 +8,7 @@ require('dotenv').config();
 // =============================================================
 const app = express();
 const PORT = process.env.PORT || 3001;
-const db = require('./models');
+// const db = require('./models');
 
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
