@@ -26,18 +26,18 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
     Users.associate = models => {
-        Users.hasMany(models.Rounds, {
+        Users.hasMany(models.rounds, {
+            as: 'round_number',
             foreignKey: {
-                as: 'round_number',
                 allowNull: false
             }
         });
-        Users.hasMany(models.Tourneys, {
-            foreignKey: {
-                as: 'tourney_name',
-                allowNull: false
-            }
-        })
+        // Users.hasMany(models.tourneys, {
+        //     foreignKey: {
+        //         as: 'tourney_name',
+        //         allowNull: false
+        //     }
+        // })
     };
     return Users;
 }

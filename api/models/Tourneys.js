@@ -22,21 +22,21 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
     Tourneys.associate = models => {
-        Tourneys.hasMany(models.Users, {
+        Tourneys.hasMany(models.users, {
+            as: 'players',
             foreignKey: {
-                as: 'players',
                 allowNull: false
             }
         });
-        Tourneys.hasOne(models.Users, {
+        Tourneys.hasOne(models.users, {
+            as: 'manager',
             foreignKey: {
-                as: 'manager',
                 allowNull: false
             }
         });
-        Tourneys.hasMany(models.Rounds, {
+        Tourneys.hasMany(models.rounds, {
+            as: 'roundNum',
             foreignKey: {
-                as: 'roundNum',
                 allowNull: false
             }
         })
