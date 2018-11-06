@@ -22,26 +22,11 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
     Rounds.associate = models => {
-        Rounds.belongsToMany(models.users, {
-            through: 'players',
-            as: 'player_one',
-            foreignKey: {
-                allowNull: false
-            },
-        });
-        Rounds.belongsToMany(models.users, {
-            through: 'players',
-            as: 'player_two',
-            foreignKey: {
-                allowNull: false
-            },
-        });
         Rounds.belongsTo(models.tourneys, {
-            as: 'tourney_name',
-            foreignKey: {
-                allowNull: false
-            },
+            as: 'tourney_',
+            foreignKey: 'tourney'
         });
+
     }
 
     return Rounds;
