@@ -8,7 +8,7 @@ require('dotenv').config();
 // =============================================================
 const app = express();
 const PORT = process.env.PORT || 3001;
-// const db = require('./models');
+const db = require('./models');
 
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
@@ -29,11 +29,11 @@ app.get("/api/test", (req, res) => {
 });
 
 // commenting this out for now until the models are set up, just wanted to get sequelize ready to go
-// db.sequelize.sync({force: false}).then(() => {
+db.sequelize.sync({ force: false }).then(() => {
 
-// Starts the server to begin listening
-// =============================================================
-app.listen(PORT, () => {
-  console.log("API endpoint listening on PORT " + PORT);
-});
-// })
+  // Starts the server to begin listening
+  // =============================================================
+  app.listen(PORT, () => {
+    console.log("API endpoint listening on PORT " + PORT);
+  });
+})
