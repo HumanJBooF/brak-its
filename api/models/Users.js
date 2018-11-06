@@ -16,28 +16,24 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        saltrounds: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
         deleted: {
             type: DataTypes.BOOLEAN,
             default: false
         }
     });
     Users.associate = models => {
-        Users.hasMany(models.rounds, {
-            as: 'round_number',
-            foreignKey: {
-                allowNull: false
-            }
+        Users.hasOne(models.rounds, {
+            as: 'player1',
+            foreignKey: 'player_one'
+        });
+        Users.hasOne(models.rounds, {
+            as: 'player2',
+            foreignKey: 'player_two'
         });
         // Users.hasMany(models.tourneys, {
-        //     foreignKey: {
-        //         as: 'tourney_name',
-        //         allowNull: false
-        //     }
+        //     as: 'tourneyName_',
+        //     foreignKey: 'tourneyName'
         // })
-    };
+    }
     return Users;
 }
