@@ -30,10 +30,6 @@ module.exports = (sequelize, DataTypes) => {
             as: 'player2',
             foreignKey: 'player_two'
         });
-        // Users.hasMany(models.tourneys, {
-        //     as: 'tourneyName_',
-        //     foreignKey: 'tourneyName'
-        // })
     }
     return Users;
 }
