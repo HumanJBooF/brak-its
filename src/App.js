@@ -1,19 +1,31 @@
 import React from 'react';
 import axios from 'axios';
-// import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import SignUp from "./pages/SignUp";
+import SignIn from "./pages/SignIn";
+import Landing from "./pages/Landing"
+
 
 
 class App extends React.Component {
 
-  componentDidMount () {
+  componentDidMount() {
     axios.get("/api/test").then(data => {
       console.log("Api Response", data);
     });
   }
 
-  render () {
+  render() {
     return (
-      <div className='test'>HELLO!</div>
+      <>
+        <Router>
+          <div>
+            <Route exact path="/" component={Landing} />
+            <Route exact path="/signup" component={SignUp} />
+            <Route exact path="/signin" component={SignIn} />
+          </div>
+        </Router>
+     </>
     );
   }
 }
