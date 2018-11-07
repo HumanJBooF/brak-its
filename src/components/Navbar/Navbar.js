@@ -3,15 +3,14 @@ import { Link } from "react-router-dom";
 import SignUp from "../../pages/SignUp";
 import SignIn from "../../pages/SignIn";
 
-const Navbar = props => (
-    <nav>
+const Navbar = () => (
+    <nav className="blue-grey ligthen-5">
         <div className="nav-wrapper">
             <div className="brand-logo"><Link to="/">[brakits]</Link></div>
-            <ul>
-                <ul className="right">
+
+            <ul className="right">
                 <li><Link to="/signup" component={SignUp}>Sign Up</Link></li>
-                <li><Link to="/SignIn" component={SignIn}>Sign In</Link></li>
-                </ul>
+                <li><Link to="/signin" component={SignIn}>Sign In</Link></li>
             </ul>
         </div>
     </nav>

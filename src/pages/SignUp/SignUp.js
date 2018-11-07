@@ -13,7 +13,7 @@ const form_valid = ({ formErrors, ...rest }) => {
     //validate form errors beign empty
     Object.values(formErrors).forEach(val => {
         val.length > 0 && (isValid = false);
-    });
+    }); 
 
     // validate the form was filled out
     Object.values(rest).forEach(val => {
@@ -44,7 +44,7 @@ class SignUp extends React.Component {
 
     handleSubmit = e => {
         e.preventDefault();
-
+        
         if (!form_valid(this.state)) {
             console.log(`
             -------SUBMITTING-------
@@ -76,21 +76,21 @@ class SignUp extends React.Component {
             case 'password':
                 formErrors.password =
                     value.length < 8
-                        ? "minimum 8 characters please"
+                        ? "Passwords must contain at least 8 characters"
                         : ""
                 break;
             default:
                 break;
         }
         this.setState({ formErrors, [name]: value },
-            () => console.log(this.state));
+            _cb => console.log(this.state));
     }
 
     render() {
         const { formErrors } = this.state;
 
         return (
-            <>
+            <> 
                 <Navbar />
                 <Container>
                     <Card>

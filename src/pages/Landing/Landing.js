@@ -2,14 +2,10 @@ import React from "react";
 import Navbar from "../../components/Navbar";
 import RecentCard from "../../components/RecentCard";
 import Container from "../../components/Container";
-import Search from "../../components/Search"
-import Create from "../../components/Create"
+import Search from "../../components/Search";
 
 
 class LandingPage extends React.Component {
-    state = {
-
-    }
     
     render() {
         return (
@@ -17,7 +13,6 @@ class LandingPage extends React.Component {
                 <Navbar />
                 <Container>
                 <Search />
-                <Create />
                 <RecentCard />
                 </Container>
             </>

@@ -8,6 +8,7 @@ const RecentCard = () => (
             <div className="card horizontal large grey lighten-4">
                 <div className="card-content">
                     <h1>Shug Knight killed Tupac</h1>
+                    <p className="center-align">BUSH DID 9/11</p>
                 </div>
             </div>
         </div>
