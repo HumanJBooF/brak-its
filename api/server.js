@@ -28,12 +28,12 @@ app.get("/api/test", (req, res) => {
   res.json({ status: "success" });
 });
 
-// commenting this out for now until the models are set up, just wanted to get sequelize ready to go
-// db.sequelize.sync({force: false}).then(() => {
 
-// Starts the server to begin listening
-// =============================================================
-app.listen(PORT, () => {
-  console.log("API endpoint listening on PORT " + PORT);
-});
-// })
+db.sequelize.sync({ force: true }).then(() => {
+
+  // Starts the server to begin listening
+  // =============================================================
+  app.listen(PORT, () => {
+    console.log("API endpoint listening on PORT " + PORT);
+  });
+})
