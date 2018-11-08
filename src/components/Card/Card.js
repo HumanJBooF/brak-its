@@ -1,7 +1,7 @@
 import React from "react";
 
 const cardStyle = {
-    "margin-top": "15%"
+    "marginTop": "15%"
 }
 
 
