@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import SignUp from "../../pages/SignUp";
-import SignIn from "../../pages/SignIn";
 
 const Navbar = () => (
     <nav className="blue-grey ligthen-5">

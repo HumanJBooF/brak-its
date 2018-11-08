@@ -2,7 +2,7 @@ import React from "react";
 import Container from "../../components/Container";
 import Card from "../../components/Card";
 import Navbar from "../../components/Navbar";
-import API from "../../utils/SignUp-API";
+import API from "../../utils/API";
 
 
 const emailRegEx = RegExp(
@@ -55,7 +55,8 @@ class SignUp extends React.Component {
             API.addUser({
                 username: this.state.username,
                 email:    this.state.email,
-                password: this.state.password
+                password: this.state.password,
+                UUID:     Math.random().toString // todo : Temp, untill UUID is set up
             }).catch(error => console.log(error))
         } else {
             console.log("INVALID FORM ENTRY");
