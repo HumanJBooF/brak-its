@@ -31,5 +31,15 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'player_two'
         });
     }
+
+    User.prototype.validPassword = function (password) {
+		return bcrypt.compareSync(password, this.password);
+	};
+
+	User.hook("beforeCreate", (user) => {
+        const saltRounds = Math.floor(Math.random() * 6 + 13);
+		user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(saltRounds), null);
+	});
+
     return Users;
 }
