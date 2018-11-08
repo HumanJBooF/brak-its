@@ -76,11 +76,10 @@ package-lock.json
 /data
 
 # production
+/build
 
 #vs-code
 .vscode/
-
-/build
 
 # misc
 .DS_Store
@@ -89,7 +88,7 @@ package-lock.json
 .env.development.local
 .env.test.local
 .env.production.local
-
+.package.json.swp
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
