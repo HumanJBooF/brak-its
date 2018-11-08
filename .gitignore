@@ -76,6 +76,10 @@ package-lock.json
 /data
 
 # production
+
+#vs-code
+.vscode/
+
 /build
 
 # misc
