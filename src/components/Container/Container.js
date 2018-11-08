@@ -1,8 +1,8 @@
 import React from "react";
 
 
-const Container = ({ children }) => (
-    <div className="container fluid">
+const Container = ({ fluid, children }) => (
+    <div className={ `conatiner${fluid ? "-fluid" : ""}`}>
         {children}
     </div>
 )
