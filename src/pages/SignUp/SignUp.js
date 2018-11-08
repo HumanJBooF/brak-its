@@ -2,6 +2,7 @@ import React from "react";
 import Container from "../../components/Container";
 import Card from "../../components/Card";
 import Navbar from "../../components/Navbar";
+import API from "../../utils/SignUp-API";
 
 
 const emailRegEx = RegExp(
@@ -23,8 +24,6 @@ const form_valid = ({ formErrors, ...rest }) => {
     return isValid
 }
 
-
-
 class SignUp extends React.Component {
 
     constructor(props) {
@@ -42,8 +41,8 @@ class SignUp extends React.Component {
         }
     }
 
-    handleSubmit = e => {
-        e.preventDefault();
+    handleSubmit = event => {
+        event.preventDefault();
         
         if (!form_valid(this.state)) {
             console.log(`
@@ -52,10 +51,17 @@ class SignUp extends React.Component {
             email:    ${this.state.email}
             password: ${this.state.password}
             `)
+
+            API.getSignUp({
+                username: this.state.username,
+                email:    this.state.email,
+                password: this.state.password
+            }).catch(error => res.json( error ))
         } else {
             console.log("INVALID FORM ENTRY");
             console.log(this.state.formErrors)
         }
+
     }
 
     handleChange = event => {
@@ -85,6 +91,8 @@ class SignUp extends React.Component {
         this.setState({ formErrors, [name]: value },
             _cb => console.log(this.state));
     }
+    
+
 
     render() {
         const { formErrors } = this.state;
