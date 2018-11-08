@@ -52,11 +52,11 @@ class SignUp extends React.Component {
             password: ${this.state.password}
             `)
 
-            API.getSignUp({
+            API.addUser({
                 username: this.state.username,
                 email:    this.state.email,
                 password: this.state.password
-            }).catch(error => res.json( error ))
+            }).catch(error => console.log(error))
         } else {
             console.log("INVALID FORM ENTRY");
             console.log(this.state.formErrors)

@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const signUp_api = {
-    getSignUp: () => {
-        return axios.get(/api/signUp);
+    addUser: () => {
+        return axios.get("/api/signUp");
     }
 }
 

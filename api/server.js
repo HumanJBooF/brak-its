@@ -14,6 +14,11 @@ const db = require('./models');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Passport
+// app.use(session({ secret: 'BrakitsSecret', resave: true, saveUninitialized: true }));
+// app.use(passport.initialize());
+// app.use(passport.session());
+
 // staticly serve the React build artifacts if NOT in development mode
 if (process.env.NODE_ENV === "production") {
   console.log("Serving Static Build Content.");

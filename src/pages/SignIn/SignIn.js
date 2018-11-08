@@ -44,7 +44,7 @@
 //     }
 //     handleChange = event => {
 //         event.prevent.default();
-        
+
 //         //const { username, value } = e.target;
 //         let  formErrors = this.state.formErrors;
 
@@ -89,7 +89,7 @@
 //                                         onChange={this.handleChange}    
 //                                     />
 //                                     <label for="password">Password:</label>
-                                
+
 //                                 </div><div className="btn btn-large" > sign in!</div>
 //                             </div>
 //                         </form>
@@ -103,3 +103,54 @@
 // }
 
 // export default SignIn;
+
+import React from "react";
+import Navbar from "../../components/Navbar";
+import Container from "../../components/Container";
+import Card from "../../components/Card";
+
+class SignIn extends React.Component {
+    render() {
+        return (
+            <>
+                <Navbar />
+                <Container>
+                    <Card>
+                        <header className="center-align s12">Sign In!</header>
+                        <div className="row">
+                            <form className="col s12 center-align" onSubmit={this.handleSubmit}>
+                                <div className="row">
+                                    <div className="input field col m6 center-align username">
+                                        <input
+                                            id="username"
+                                            type="text"
+                                            name="username"
+                                            className="validate"
+                                            onChange={this.handleChange}
+                                        />
+                                        <label for="username">UserName:</label>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="center-align input field col m6">
+                                        <input
+                                            name="password"
+                                            id="password"
+                                            type="password"
+                                            className="validate"
+                                            onChange={this.handleChange}
+                                        />
+                                        <label for="password">Password:</label>
+
+                                    </div><div className="btn btn-large" > sign in!</div>
+                                </div>
+                            </form>
+                        </div>
+                    </Card>
+                </Container>
+            </>
+        )
+    }
+}
+
+export default SignIn;
