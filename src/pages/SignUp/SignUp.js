@@ -14,12 +14,13 @@ const form_valid = ({ formErrors, ...rest }) => {
     //validate form errors beign empty
     Object.values(formErrors).forEach(val => {
         val.length > 0 && (isValid = false);
-    }); 
+    });
 
     // validate the form was filled out
     Object.values(rest).forEach(val => {
         val === null && (isValid = false);
     });
+    
     console.log(isValid)
     return isValid
 }
@@ -41,9 +42,9 @@ class SignUp extends React.Component {
         }
     }
 
-    handleSubmit = event => {
+    handle_submit = event => {
         event.preventDefault();
-        
+
         if (!form_valid(this.state)) {
             console.log(`
             -------SUBMITTING-------
@@ -54,9 +55,9 @@ class SignUp extends React.Component {
 
             API.addUser({
                 username: this.state.username,
-                email:    this.state.email,
+                email: this.state.email,
                 password: this.state.password,
-                UUID:     Math.random().toString // todo : Temp, untill UUID is set up
+                UUID: Math.random().toString // todo : Temp, untill UUID is set up
             }).catch(error => console.log(error))
         } else {
             console.log("INVALID FORM ENTRY");
@@ -65,7 +66,7 @@ class SignUp extends React.Component {
 
     }
 
-    handleChange = event => {
+    handle_change = event => {
         event.preventDefault();
 
         const { name, value } = event.target;
@@ -92,20 +93,20 @@ class SignUp extends React.Component {
         this.setState({ formErrors, [name]: value },
             _cb => console.log(this.state));
     }
-    
+
 
 
     render() {
         const { formErrors } = this.state;
 
         return (
-            <> 
+            <>
                 <Navbar />
                 <Container>
                     <Card>
                         <header className="center-align s12">Sign Up!</header>
                         <div className="row">
-                            <form onSubmit={this.handleSubmit} className="col s12 center-align" noValidate>
+                            <form onSubmit={this.handle_submit} className="col s12 center-align" noValidate>
                                 <div className="row">
                                     <div className="username">
                                         <div className="input field col m6 center-align">
@@ -114,7 +115,7 @@ class SignUp extends React.Component {
                                                 name="username"
                                                 type="text"
                                                 className="validate"
-                                                onChange={this.handleChange}
+                                                onChange={this.handle_change}
                                             />
                                             {formErrors.username.length > 0 && (
                                                 <span className="errorMessage">{formErrors.username}</span>
@@ -130,7 +131,7 @@ class SignUp extends React.Component {
                                             name="email"
                                             type="text"
                                             className="validate"
-                                            onChange={this.handleChange}
+                                            onChange={this.handle_change}
                                         />
                                         {formErrors.email.length > 0 && (
                                             <span className="errorMessage">{formErrors.email}</span>
@@ -146,13 +147,23 @@ class SignUp extends React.Component {
                                             name="password"
                                             type="password"
                                             noValidate
-                                            onChange={this.handleChange}
+                                            onChange={this.handle_change}
                                         />
                                         {formErrors.password.length > 0 && (
                                             <span className="errorMessage">{formErrors.password}</span>
                                         )}
                                         <label htmlFor="passWord">Password:</label>
-
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="center-align input field col m6">
+                                        <input
+                                            id="passWordValidate"
+                                            name="passwordValidate"
+                                            type="password"
+                                            noValidate
+                                            onChange={this.handle_change}
+                                        />
                                     </div>
                                 </div>
                                 <button className="btn btn-large" type="submit"> sign up!</button>
