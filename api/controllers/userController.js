@@ -1,11 +1,20 @@
-const db = require("../models");
+const db = require('../models/');
 
-module.exports = {
-  create: (req, res) => {
-    console.log(typeof db.users)
-    db.users
-      .create(req.body)
-      .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).json(err));
+const userController = {
+
+  createUser: (req, res) => {
+    db.users.create(req.body)
+      .then(dbModel => {
+        console.log(dbModel);
+        res.json(dbModel);
+      }).catch(err => console.log(`createUser error: ${err}`));
+  },
+  findUser: () => {
+
+  },
+  findUsers: () => {
+
   }
-};
+}
+
+module.exports = userController;

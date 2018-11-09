@@ -1,9 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
     const Users = sequelize.define('users', {
-        UUID: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
+        // UUID: {
+        //     type: DataTypes.STRING,
+        //     allowNull: false,
+        // },
         username: {
             type: DataTypes.STRING,
             allowNull: false
@@ -33,13 +33,13 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     // User.prototype.validPassword = function (password) {
-	// 	return bcrypt.compareSync(password, this.password);
-	// };
+    // 	return bcrypt.compareSync(password, this.password);
+    // };
 
-	// User.hook("beforeCreate", (user) => {
+    // User.hook("beforeCreate", (user) => {
     //     const saltRounds = Math.floor(Math.random() * 6 + 13);
-	// 	user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(saltRounds), null);
-	// });
+    // 	user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(saltRounds), null);
+    // });
 
     return Users;
 }
