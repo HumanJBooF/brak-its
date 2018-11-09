@@ -14,7 +14,7 @@ const form_valid = ({ formErrors, ...rest }) => {
     //validate form errors beign empty
     Object.values(formErrors).forEach(val => {
         val.length > 0 && (isValid = false);
-    }); 
+    });
 
     // validate the form was filled out
     Object.values(rest).forEach(val => {
@@ -43,7 +43,7 @@ class SignUp extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        
+
         if (!form_valid(this.state)) {
             console.log(`
             -------SUBMITTING-------
@@ -52,11 +52,11 @@ class SignUp extends React.Component {
             password: ${this.state.password}
             `)
 
-            API.addUser({
+            API.add_user({
                 username: this.state.username,
-                email:    this.state.email,
+                email: this.state.email,
                 password: this.state.password,
-                UUID:     Math.random().toString // todo : Temp, untill UUID is set up
+                UUID: Math.random().toString // todo : Temp, untill UUID is set up
             }).catch(error => console.log(error))
         } else {
             console.log("INVALID FORM ENTRY");
@@ -92,14 +92,14 @@ class SignUp extends React.Component {
         this.setState({ formErrors, [name]: value },
             _cb => console.log(this.state));
     }
-    
 
 
-    render() {
+
+    render () {
         const { formErrors } = this.state;
 
         return (
-            <> 
+            <>
                 <Navbar />
                 <Container>
                     <Card>

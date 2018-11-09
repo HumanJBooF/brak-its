@@ -1,7 +1,9 @@
 import axios from "axios";
 
-export default {
-    addUser: userData => {
+const apiController = {
+    add_user: userData => {
         return axios.post("/api/users", userData);
     }
 };
+
+export default apiController;
