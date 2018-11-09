@@ -1,7 +1,7 @@
 // npm/file linking
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const db = require("../../models");
+const db = require("../../models/");
 
 // Use a username/password login strategy
 passport.use(new LocalStrategy(
@@ -11,11 +11,11 @@ passport.use(new LocalStrategy(
     },
 
     (username, password, done) => {
-        db.Users.findOne({
+        db.users.findOne({
             where: {
                 username: username
             }
-        }).then((dbUser) => {
+        }).then(dbUser => {
             // If no user/Incorrect password
             if (!dbUser || !dbUser.validPassword(password)) {
                 return done(null, false, {

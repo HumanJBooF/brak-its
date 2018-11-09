@@ -45,7 +45,7 @@ class SignUp extends React.Component {
     handle_submit = event => {
         event.preventDefault();
 
-        if (!form_valid(this.state)) {
+        if (!form_valid(this.state)) {<button className="btn btn-large" type="submit"> sign up!</button>
             console.log(`
             -------SUBMITTING-------
             username: ${this.state.username}
@@ -53,7 +53,7 @@ class SignUp extends React.Component {
             password: ${this.state.password}
             `)
 
-            API.addUser({
+            API.add_user({
                 username: this.state.username,
                 email: this.state.email,
                 password: this.state.password,
@@ -93,10 +93,14 @@ class SignUp extends React.Component {
         this.setState({ formErrors, [name]: value },
             _cb => console.log(this.state));
     }
+<<<<<<< HEAD
+
+=======
+>>>>>>> b2c742d04b67951bba54e5f69a6fda019b24cdab
 
 
 
-    render() {
+    render () {
         const { formErrors } = this.state;
 
         return (
