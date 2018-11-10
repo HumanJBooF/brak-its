@@ -1,6 +1,8 @@
 // Dependencies
 // =============================================================
 const express = require("express");
+const session = require("express-session");
+const passport = require("./config/passport/passport.js")
 
 require('dotenv').config();
 
@@ -17,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Passport
-// app.use(session({ secret: 'BrakitsSecret', resave: true, saveUninitialized: true }));
+app.use(session({ secret: 'BrakitsSecret', resave: true, saveUninitialized: true }));
 // app.use(passport.initialize());
 // app.use(passport.session());
 

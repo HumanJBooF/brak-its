@@ -1,3 +1,5 @@
+const bcrypt = require("bcrypt-nodejs");
+
 module.exports = (sequelize, DataTypes) => {
     const Users = sequelize.define('users', {
         // UUID: {
@@ -32,14 +34,14 @@ module.exports = (sequelize, DataTypes) => {
         });
     }
 
-    // User.prototype.validPassword = function (password) {
-    // 	return bcrypt.compareSync(password, this.password);
-    // };
+    Users.prototype.validPassword = function (password) {
+    	return bcrypt.compareSync(password, this.password);
+    };
 
-    // User.hook("beforeCreate", (user) => {
-    //     const saltRounds = Math.floor(Math.random() * 6 + 13);
-    // 	user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(saltRounds), null);
-    // });
+    Users.hook("beforeCreate", (users) => {
+        const saltRounds = Math.floor(Math.random() * 6 + 13);
+    	users.password = bcrypt.hashSync(users.password, bcrypt.genSaltSync(saltRounds), null);
+    });
 
     return Users;
 }

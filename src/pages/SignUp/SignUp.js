@@ -19,10 +19,10 @@ class SignUp extends React.Component {
         /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2}|io|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b/
     )
 
-    handleSubmit = event => {
+    handle_submit = event => {
         event.preventDefault();
 
-        this.checkValidity({
+        this.check_validity({
             username: this.state.username,
             email: this.state.email,
             password: this.state.password
@@ -32,15 +32,16 @@ class SignUp extends React.Component {
                 email: this.state.email,
                 password: this.state.password
             }).catch(error => console.log(error)) 
+            // todo add a couldn't send
             : console.log('dont send')
 
     }
 
-    checkValidity(userInfo) {
+    check_validity(userInfo) {
         return (userInfo.username.length > 0) && (this.emailRegEx.test(userInfo.email)) && (userInfo.password.length >= 8) ? true : false
     }
 
-    handleChange = (event) => {
+    handle_change = (event) => {
         event.preventDefault();
 
         const value = event.target.value;
@@ -94,7 +95,7 @@ class SignUp extends React.Component {
                     <Card>
                         <header className="center-align s12">Sign Up!</header>
                         <div className="row">
-                            <form onSubmit={this.handleSubmit} className="col s12 center-align" noValidate>
+                            <form onSubmit={this.handle_submit} className="col s12 center-align" noValidate>
                                 <div className="row">
                                     <div className="username">
                                         <div className="input field col m6 center-align">
@@ -103,7 +104,7 @@ class SignUp extends React.Component {
                                                 name="username"
                                                 type="text"
                                                 className="validate"
-                                                onChange={this.handleChange}
+                                                onChange={this.handle_change}
                                             />
                                             <label htmlFor="userName">{this.state.usernameDescription}</label>
                                         </div>
@@ -116,7 +117,7 @@ class SignUp extends React.Component {
                                             name="email"
                                             type="text"
                                             className="validate"
-                                            onChange={this.handleChange}
+                                            onChange={this.handle_change}
                                         />
                                         <label htmlFor="Email">{this.state.emailDescription}</label>
                                     </div>
@@ -129,7 +130,7 @@ class SignUp extends React.Component {
                                             name="password"
                                             type="password"
                                             noValidate
-                                            onChange={this.handleChange}
+                                            onChange={this.handle_change}
                                         />
                                         <label htmlFor="passWord">{this.state.passwordDescription}</label>
 
