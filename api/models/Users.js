@@ -18,10 +18,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        deleted: {
-            type: DataTypes.BOOLEAN,
-            default: false
-        }
+        paranoid: true
     });
     Users.associate = models => {
         Users.hasOne(models.rounds, {
@@ -35,12 +32,12 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     Users.prototype.validPassword = function (password) {
-    	return bcrypt.compareSync(password, this.password);
+        return bcrypt.compareSync(password, this.password);
     };
 
     Users.hook("beforeCreate", (users) => {
         const saltRounds = Math.floor(Math.random() * 6 + 13);
-    	users.password = bcrypt.hashSync(users.password, bcrypt.genSaltSync(saltRounds), null);
+        users.password = bcrypt.hashSync(users.password, bcrypt.genSaltSync(saltRounds), null);
     });
 
     return Users;
