@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
         type: {
             type: DataTypes.INTEGER,
             allowNull: false
+        },
+        owner: {
+            type: DataTypes.BOOLEAN,
+            default: false
         }
     }, {
             paranoid: true
