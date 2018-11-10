@@ -15,9 +15,10 @@ module.exports = (sequelize, DataTypes) => {
         type: {
             type: DataTypes.INTEGER,
             allowNull: false
-        },
-        paranoid: true
-    });
+        }
+    }, {
+            paranoid: true
+        });
     Tourneys.associate = models => {
         Tourneys.hasMany(models.users, {
             as: 'tourneyId',

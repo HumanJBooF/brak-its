@@ -19,9 +19,10 @@ module.exports = (sequelize, DataTypes) => {
         next_round: {
             type: DataTypes.BOOLEAN,
             default: false
-        },
-        paranoid: true
-    });
+        }
+    }, {
+            paranoid: true
+        });
     Rounds.associate = models => {
         Rounds.belongsTo(models.tourneys, {
             as: 'tourneyId',
