@@ -5,10 +5,12 @@ module.exports = (sequelize, DataTypes) => {
         // UUID: {
         //     type: DataTypes.STRING,
         //     allowNull: false,
+        //     unique: true
         // },
         username: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: true
         },
         email: {
             type: DataTypes.STRING,
@@ -18,8 +20,9 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        paranoid: true
-    });
+    }, {
+            paranoid: true
+        });
     Users.associate = models => {
         Users.hasOne(models.rounds, {
             as: 'player1',

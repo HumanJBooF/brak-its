@@ -16,7 +16,7 @@ class SignUp extends React.Component {
     }
 
     emailRegEx = RegExp(
-        /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2}|io|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b/
+        /^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2}|io|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b/
     )
 
     handle_submit = event => {
@@ -31,13 +31,13 @@ class SignUp extends React.Component {
                 username: this.state.username,
                 email: this.state.email,
                 password: this.state.password
-            }).catch(error => console.log(error)) 
+            }).catch(error => console.log(error))
             // todo add a couldn't send
             : console.log('dont send')
 
     }
 
-    check_validity(userInfo) {
+    check_validity (userInfo) {
         return (userInfo.username.length > 0) && (this.emailRegEx.test(userInfo.email)) && (userInfo.password.length >= 8) ? true : false
     }
 
@@ -71,23 +71,23 @@ class SignUp extends React.Component {
                     })
                 break;
             case 'password':
-            value.length >= 8
-            ? this.setState({
-                passwordDescription: 'Valid Password'
-            })
-            : this.setState({
-                passwordDescription: 'Password must be 8 characters or longer'
-            })
+                value.length >= 8
+                    ? this.setState({
+                        passwordDescription: 'Valid Password'
+                    })
+                    : this.setState({
+                        passwordDescription: 'Password must be 8 characters or longer'
+                    })
                 break;
             default:
-            // todo add a error function
+                // todo add a error function
                 console.log('error')
         }
     }
 
 
 
-    render() {
+    render () {
         return (
             <>
                 <Navbar />
