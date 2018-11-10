@@ -16,10 +16,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        deleted: {
-            type: DataTypes.BOOLEAN,
-            default: false
-        }
+        paranoid: true
     });
     Tourneys.associate = models => {
         Tourneys.hasMany(models.users, {
