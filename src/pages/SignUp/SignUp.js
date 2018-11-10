@@ -1,103 +1,92 @@
-import React from "react";
-import Container from "../../components/Container";
-import Card from "../../components/Card";
-import Navbar from "../../components/Navbar";
-import API from "../../utils/API";
+import React from 'react';
+import Container from '../../components/Container';
+import Card from '../../components/Card';
+import Navbar from '../../components/Navbar';
+import API from '../../utils/API';
 
-
-const emailRegEx = RegExp(
-    /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-)
-
-const form_valid = ({ formErrors, ...rest }) => {
-    let isValid = true;
-    //validate form errors beign empty
-    Object.values(formErrors).forEach(val => {
-        val.length > 0 && (isValid = false);
-    });
-
-    // validate the form was filled out
-    Object.values(rest).forEach(val => {
-        val === null && (isValid = false);
-    });
-    console.log(isValid)
-    return isValid
-}
 
 class SignUp extends React.Component {
-
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            username: "",
-            email: "",
-            password: "",
-            formErrors: {
-                username: "",
-                email: "",
-                password: ""
-            }
-        }
+    state = {
+        username: '',
+        email: '',
+        password: '',
+        usernameDescription: 'Username',
+        emailDescription: 'Email',
+        passwordDescription: 'Password'
     }
+
+    emailRegEx = RegExp(
+        /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2}|io|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b/
+    )
 
     handleSubmit = event => {
         event.preventDefault();
 
-        if (!form_valid(this.state)) {
-            console.log(`
-            -------SUBMITTING-------
-            username: ${this.state.username}
-            email:    ${this.state.email}
-            password: ${this.state.password}
-            `)
-
-            API.add_user({
+        this.checkValidity({
+            username: this.state.username,
+            email: this.state.email,
+            password: this.state.password
+        })
+            ? API.add_user({
                 username: this.state.username,
                 email: this.state.email,
-                password: this.state.password,
-                UUID: Math.random().toString // todo : Temp, untill UUID is set up
-            }).catch(error => console.log(error))
-        } else {
-            console.log("INVALID FORM ENTRY");
-            console.log(this.state.formErrors)
-        }
+                password: this.state.password
+            }).catch(error => console.log(error)) 
+            : console.log('dont send')
 
     }
 
-    handleChange = event => {
+    checkValidity(userInfo) {
+        return (userInfo.username.length > 0) && (this.emailRegEx.test(userInfo.email)) && (userInfo.password.length >= 8) ? true : false
+    }
+
+    handleChange = (event) => {
         event.preventDefault();
 
-        const { name, value } = event.target;
-        let formErrors = { ...this.state.formErrors }
+        const value = event.target.value;
+        const name = event.target.name;
+
+        this.setState({
+            [name]: value
+        })
 
         switch (name) {
             case 'username':
-                formErrors.username = value.length > 0;
+                value.length === 0
+                    ? this.setState({
+                        usernameDescription: 'Please enter a valid username'
+                    })
+                    : this.setState({
+                        usernameDescription: 'Valid username'
+                    })
                 break;
             case 'email':
-                formErrors.email = emailRegEx.test(value)
-                    ? "Valid Email Address"
-                    : "Invalid Email Address"
+                this.emailRegEx.test(value)
+                    ? this.setState({
+                        emailDescription: 'Valid Email'
+                    })
+                    : this.setState({
+                        emailDescription: 'Please enter a valid email'
+                    })
                 break;
             case 'password':
-                formErrors.password =
-                    value.length < 8
-                        ? "Passwords must contain at least 8 characters"
-                        : ""
+            value.length >= 8
+            ? this.setState({
+                passwordDescription: 'Valid Password'
+            })
+            : this.setState({
+                passwordDescription: 'Password must be 8 characters or longer'
+            })
                 break;
             default:
-                break;
+            // todo add a error function
+                console.log('error')
         }
-        this.setState({ formErrors, [name]: value },
-            _cb => console.log(this.state));
     }
 
 
 
-    render () {
-        const { formErrors } = this.state;
-
+    render() {
         return (
             <>
                 <Navbar />
@@ -116,10 +105,7 @@ class SignUp extends React.Component {
                                                 className="validate"
                                                 onChange={this.handleChange}
                                             />
-                                            {formErrors.username.length > 0 && (
-                                                <span className="errorMessage">{formErrors.username}</span>
-                                            )}
-                                            <label htmlFor="userName">UserName:</label>
+                                            <label htmlFor="userName">{this.state.usernameDescription}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -132,10 +118,7 @@ class SignUp extends React.Component {
                                             className="validate"
                                             onChange={this.handleChange}
                                         />
-                                        {formErrors.email.length > 0 && (
-                                            <span className="errorMessage">{formErrors.email}</span>
-                                        )}
-                                        <label htmlFor="Email">Email:</label>
+                                        <label htmlFor="Email">{this.state.emailDescription}</label>
                                     </div>
 
                                 </div>
@@ -148,10 +131,7 @@ class SignUp extends React.Component {
                                             noValidate
                                             onChange={this.handleChange}
                                         />
-                                        {formErrors.password.length > 0 && (
-                                            <span className="errorMessage">{formErrors.password}</span>
-                                        )}
-                                        <label htmlFor="passWord">Password:</label>
+                                        <label htmlFor="passWord">{this.state.passwordDescription}</label>
 
                                     </div>
                                 </div>
