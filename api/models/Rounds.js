@@ -1,5 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
     const Rounds = sequelize.define('rounds', {
+        uuid: {
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            allowNull: false,
+            primaryKey: true
+        },
         p1_score: {
             type: DataTypes.INTEGER,
             allowNull: false
