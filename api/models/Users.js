@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         password: {
             type: DataTypes.STRING,
             allowNull: false
-        },
+        }
     }, {
             paranoid: true
         });
@@ -39,8 +39,8 @@ module.exports = (sequelize, DataTypes) => {
         return bcrypt.compareSync(password, this.password);
     };
 
-    Users.hook("beforeCreate", (users) => {
-        const saltRounds = Math.floor(Math.random() * 6 + 13);
+    Users.addHook("beforeCreate", (users) => {
+        const saltRounds = Math.floor(/*Math.random() * 6 + 13*/ 12);
         users.password = bcrypt.hashSync(users.password, bcrypt.genSaltSync(saltRounds), null);
     });
 

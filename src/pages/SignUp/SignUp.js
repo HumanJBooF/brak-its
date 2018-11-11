@@ -3,6 +3,7 @@ import Container from '../../components/Container';
 import Card from '../../components/Card';
 import Navbar from '../../components/Navbar';
 import API from '../../utils/API';
+import { Redirect } from 'react-router-dom';
 
 
 class SignUp extends React.Component {
@@ -12,7 +13,8 @@ class SignUp extends React.Component {
         password: '',
         usernameDescription: 'Username',
         emailDescription: 'Email',
-        passwordDescription: 'Password'
+        passwordDescription: 'Password',
+        redirectTo: null
     }
 
     emailRegEx = RegExp(
@@ -34,14 +36,14 @@ class SignUp extends React.Component {
                 email: this.state.email,
                 password: this.state.password
             }).then(result => {
-                result.data
-                ? console.log("success")
-                : console.log("error")
+                (!result.data.error)
+                    ? this.setState({ redirectTo: '/signin' })
+                    : this.setState({ usernameDescription: result.data.error })
             }).catch(error => console.log(error))
             // todo add a couldn't send
-            : console.log('dont send')
+            : console.log('dont send');
 
-        
+
 
     }
 
@@ -57,7 +59,7 @@ class SignUp extends React.Component {
 
         this.setState({
             [name]: value
-        })
+        });
 
         switch (name) {
             case 'username':
@@ -96,61 +98,65 @@ class SignUp extends React.Component {
 
 
     render () {
-        return (
-            <>
-                <Navbar />
-                <Container>
-                    <Card>
-                        <header className="center-align s12">Sign Up!</header>
-                        <div className="row">
-                            <form onSubmit={this.handle_submit} className="col s12 center-align" noValidate>
-                                <div className="row">
-                                    <div className="username">
+        if (this.state.redirectTo) {
+            return <Redirect to={{ pathname: this.state.redirectTo }} />
+        } else {
+            return (
+                <>
+                    <Navbar />
+                    <Container>
+                        <Card>
+                            <header className="center-align s12">Sign Up!</header>
+                            <div className="row">
+                                <form onSubmit={this.handle_submit} className="col s12 center-align" noValidate>
+                                    <div className="row">
+                                        <div className="username">
+                                            <div className="input field col m6 center-align">
+                                                <input
+                                                    id="userName"
+                                                    name="username"
+                                                    type="text"
+                                                    className="validate"
+                                                    onChange={this.handle_change}
+                                                />
+                                                <label htmlFor="userName">{this.state.usernameDescription}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="row">
                                         <div className="input field col m6 center-align">
                                             <input
-                                                id="userName"
-                                                name="username"
+                                                id="Email"
+                                                name="email"
                                                 type="text"
                                                 className="validate"
                                                 onChange={this.handle_change}
                                             />
-                                            <label htmlFor="userName">{this.state.usernameDescription}</label>
+                                            <label htmlFor="Email">{this.state.emailDescription}</label>
+                                        </div>
+
+                                    </div>
+                                    <div className="row">
+                                        <div className="center-align input field col m6">
+                                            <input
+                                                id="passWord"
+                                                name="password"
+                                                type="password"
+                                                noValidate
+                                                onChange={this.handle_change}
+                                            />
+                                            <label htmlFor="passWord">{this.state.passwordDescription}</label>
+
                                         </div>
                                     </div>
-                                </div>
-                                <div className="row">
-                                    <div className="input field col m6 center-align">
-                                        <input
-                                            id="Email"
-                                            name="email"
-                                            type="text"
-                                            className="validate"
-                                            onChange={this.handle_change}
-                                        />
-                                        <label htmlFor="Email">{this.state.emailDescription}</label>
-                                    </div>
-
-                                </div>
-                                <div className="row">
-                                    <div className="center-align input field col m6">
-                                        <input
-                                            id="passWord"
-                                            name="password"
-                                            type="password"
-                                            noValidate
-                                            onChange={this.handle_change}
-                                        />
-                                        <label htmlFor="passWord">{this.state.passwordDescription}</label>
-
-                                    </div>
-                                </div>
-                                <button className="btn btn-large" type="submit"> sign up!</button>
-                            </form>
-                        </div>
-                    </Card>
-                </Container>
-            </>
-        )
+                                    <button className="btn btn-large" type="submit"> sign up!</button>
+                                </form>
+                            </div>
+                        </Card>
+                    </Container>
+                </>
+            )
+        }
     }
 }
 export default SignUp;
