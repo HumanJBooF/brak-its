@@ -1,5 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
     const Tourneys = sequelize.define('tourneys', {
+        uuid: {
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            allowNull: false,
+            primaryKey: true
+        },
         name: {
             type: DataTypes.STRING,
             allowNull: false
@@ -28,7 +34,6 @@ module.exports = (sequelize, DataTypes) => {
             as: 'tourneyId',
             foreignKey: 'tourney'
         });
-
     }
 
     return Tourneys;
