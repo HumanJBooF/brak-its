@@ -5,7 +5,7 @@ const apiController = {
         return axios.post("/api/users/create", userData);
     },
     find_user: userData => {
-        return axios.get("/api/users/login", userData);
+        return axios.post("/api/users/login", userData);
     }
 };
 

@@ -33,11 +33,15 @@ class SignUp extends React.Component {
                 username: this.state.username,
                 email: this.state.email,
                 password: this.state.password
+            }).then(result => {
+                result.data
+                ? console.log("success")
+                : console.log("error")
             }).catch(error => console.log(error))
             // todo add a couldn't send
             : console.log('dont send')
 
-        console.log("data added")
+        
 
     }
 
