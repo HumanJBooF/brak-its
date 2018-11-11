@@ -1,8 +1,9 @@
-import React from "react";
-import Navbar from "../../components/Navbar";
-import Container from "../../components/Container";
-import Card from "../../components/Card";
+import React from 'react';
+import Navbar from '../../components/Navbar';
+import Container from '../../components/Container';
+import Card from '../../components/Card';
 import API from '../../utils/API';
+
 
 class SignIn extends React.Component {
 
@@ -39,16 +40,16 @@ class SignIn extends React.Component {
                 username: this.state.username,
                 password: this.state.password
             }).then(dbUser => {
-                console.log(dbUser);
+                console.log(dbUser.data);
             }).catch(error => console.log(error))
             // todo add a couldn't send
             : console.log('dont send')
 
-        
+
 
     }
 
-    render() {
+    render () {
         return (
             <>
                 <Navbar />
