@@ -22,6 +22,8 @@ class SignUp extends React.Component {
     handle_submit = event => {
         event.preventDefault();
 
+        console.log("form submitting")
+
         this.check_validity({
             username: this.state.username,
             email: this.state.email,
@@ -34,6 +36,8 @@ class SignUp extends React.Component {
             }).catch(error => console.log(error))
             // todo add a couldn't send
             : console.log('dont send')
+
+        console.log("data added")
 
     }
 
