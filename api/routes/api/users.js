@@ -7,8 +7,8 @@ router.route("/create")
   .post(userController.createUser);
 
 router.route("/login")
-  .get((req, res) => {
-    passport.authenticate(req.body)
+  .post(passport.authenticate("local"), (req, res) => {
+    console.log("here", req.user.username)
   });
 
 

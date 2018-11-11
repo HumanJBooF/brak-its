@@ -20,8 +20,8 @@ app.use(express.json());
 app.use(session({ secret: 'BrakitsSecret', resave: true, saveUninitialized: true }));
 
 // Passport
-// app.use(passport.initialize());
-// app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 
 // staticly serve the React build artifacts if NOT in development mode
 if (process.env.NODE_ENV === "production") {

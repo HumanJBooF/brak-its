@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../../components/Navbar";
 import Container from "../../components/Container";
 import Card from "../../components/Card";
-// import API from '../../utils/API';
+import API from '../../utils/API';
 
 class SignIn extends React.Component {
 
@@ -29,20 +29,22 @@ class SignIn extends React.Component {
     handle_submit = event => {
         event.preventDefault();
 
-        console.log("here");
+        console.log("attempting login");
 
-        // this.check_validity({
-        //     username: this.state.username,
-        //     password: this.state.password
-        // })
-        //     ? API.find_user({
-        //         username: this.state.username,
-        //         password: this.state.password
-        //     }).then(dbUser => {
-        //         console.log(dbUser);
-        //     }).catch(error => console.log(error))
-        //     // todo add a couldn't send
-        //     : console.log('dont send')
+        this.check_validity({
+            username: this.state.username,
+            password: this.state.password
+        })
+            ? API.find_user({
+                username: this.state.username,
+                password: this.state.password
+            }).then(dbUser => {
+                console.log(dbUser);
+            }).catch(error => console.log(error))
+            // todo add a couldn't send
+            : console.log('dont send')
+
+        
 
     }
 
@@ -78,7 +80,8 @@ class SignIn extends React.Component {
                                         />
                                         <label htmlFor="password">Password</label>
 
-                                    </div><div className="btn btn-large" > sign in!</div>
+                                    </div>
+                                    <button className="btn btn-large" type="submit"> sign in!</button>
                                 </div>
                             </form>
                         </div>
