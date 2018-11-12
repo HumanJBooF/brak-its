@@ -1,11 +1,17 @@
-import axios from "axios";
+import axios from 'axios';
 
 const apiController = {
     add_user: userData => {
-        return axios.post("/api/users/create", userData);
+        return axios.post('/api/users/create', userData);
     },
     find_user: userData => {
-        return axios.post("/api/users/login", userData);
+        return axios.post('/api/users/login', userData);
+    },
+    check_user: () => {
+        return axios.get('/api/users/user');
+    },
+    logout: () => {
+        return axios.post('/api/users/logout');
     }
 };
 
