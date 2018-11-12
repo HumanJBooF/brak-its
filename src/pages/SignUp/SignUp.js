@@ -47,15 +47,17 @@ class SignUp extends React.Component {
 
     }
 
-    check_validity (userInfo) {
-        return (userInfo.username.length > 0) && (this.emailRegEx.test(userInfo.email)) && (userInfo.password.length >= 8) ? true : false
+    check_validity = userInfo => {
+        return (userInfo.username.length > 0) 
+            && (this.emailRegEx.test(userInfo.email)) 
+            && (userInfo.password.length >= 8) ? true : false
     }
 
-    handle_change = (event) => {
+    handle_change = event => {
         event.preventDefault();
 
         const value = event.target.value;
-        const name = event.target.name;
+        const name  = event.target.name;
 
         this.setState({
             [name]: value
@@ -90,8 +92,10 @@ class SignUp extends React.Component {
                     })
                 break;
             default:
-                // todo add a error function
-                console.log('error')
+                //error function -> yet to be tested, but should be valid
+               // if (this.state.hasError) 
+                    //return console.log(this.state.error);
+                break;
         }
     }
 
@@ -149,7 +153,7 @@ class SignUp extends React.Component {
 
                                         </div>
                                     </div>
-                                    <button className="btn btn-large" type="submit"> sign up!</button>
+                                    <button className="btn btn-large" type="submit"> Sign Up!</button>
                                 </form>
                             </div>
                         </Card>
