@@ -12,6 +12,7 @@ class TournCreate extends React.Component {
        tournyType:     "",
        tournyDescript: "",
        tournySize:     "",
+       tournyDate:     "",
         nameError:     "",
         typeError:     "",
         DescriptError: ""
@@ -66,6 +67,11 @@ class TournCreate extends React.Component {
         console.log(this.state.tournySize)
         event.preventDefault();
         //Add API route to save created tourny into database?
+        // tournyName:     this.state.tournyName
+        // tournyType:     this.state.tournyType
+        // tournyDescript: this.state.tournyDescript
+        // tournyDate:     this.state.tournyDate
+
     }
 
     render() {
@@ -101,6 +107,9 @@ class TournCreate extends React.Component {
                                 onChange={this.handle_change}
                             />
                             <label htmlFor="textarea">{this.state.descriptError}</label>
+
+                            <input type="date" name="TournyDate" />
+                            <label htmlFor="date">Select Tournament date</label>
                             <br /><br />
                             <a className='dropdown-trigger btn left' href='#' data-target='dropdown1'>Select Size</a>
                                 <ul id='dropdown1' className='dropdown-content'>
