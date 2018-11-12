@@ -15,18 +15,17 @@ class SignIn extends React.Component {
     }
 
     check_validity (userInfo) {
-        return (userInfo.username.length > 0) && (userInfo.password.length >= 8) ? true : false
+        return (userInfo.username.length > 0) 
+            && (userInfo.password.length >= 8) ? true : false
     }
 
     handle_change = event => {
         event.preventDefault();
 
         const value = event.target.value;
-        const name = event.target.name;
+        const name  = event.target.name;
 
-        this.setState({
-            [name]: value
-        })
+        this.setState({ [name]: value })
     }
 
     handle_submit = event => {

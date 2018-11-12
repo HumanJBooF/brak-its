@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import Landing from './pages/Landing'
+import TournCreate from "./pages/TournamentCreate";
 import API from './utils/API';
 
 class App extends React.Component {
@@ -33,7 +34,6 @@ class App extends React.Component {
 				})
 		})
 	}
-
 	render () {
 		return (
 			<Router>
@@ -42,10 +42,10 @@ class App extends React.Component {
 						<Route exact path='/' render={() => <Landing update_user={this.update_user} loggedIn={this.state.loggedIn} username={this.state.username} />} />
 						<Route exact path='/signup' render={() => <SignUp update_user={this.update_user} />} />
 						<Route exact path='/signin' render={() => <SignIn update_user={this.update_user} />} />
+    		    <Route exact path="/tournament" component={TournCreate} />
 					</Switch>
 				</div>
 			</Router>
-
 		)
 	}
 }

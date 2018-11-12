@@ -7,8 +7,12 @@ const RecentCard = () => (
             <h3 className="RecentHead center-align">Recent Matches</h3>
             <div className="card horizontal large grey lighten-4">
                 <div className="card-content">
-                    <h1>Shug Knight killed Tupac</h1>
-                    <p className="center-align">BUSH DID 9/11</p>
+                    <h1 className="center-align"> <strong> Recent Tournaments</strong></h1>
+                    <ul className="center-align">
+                        <li>League of legends tournament</li>
+                        <li>Runescape PVP challonge </li>
+                        <li>CS:GO NvS vs qp</li>
+                    </ul>
                 </div>
             </div>
         </div>

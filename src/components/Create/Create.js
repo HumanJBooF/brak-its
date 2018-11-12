@@ -13,9 +13,9 @@ const btnStyles = {
 
 const CreateButton = () => (
 
-        <button className="btn waves-effect white right" style={btnStyles}>
-            <Link to="/">Create</Link>
-        </button>
+        <li className="btn waves-effect white right" style={btnStyles}>
+            <Link to="/tournament">Create</Link>
+        </li>
 
 )
 
