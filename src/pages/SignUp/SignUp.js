@@ -37,7 +37,18 @@ class SignUp extends React.Component {
                 password: this.state.password
             }).then(result => {
                 (!result.data.error)
-                    ? this.setState({ redirectTo: '/signin' })
+                    ? API.find_user({
+                        username: this.state.username,
+                        password: this.state.password,
+                    }).then(user => {
+                        if (user.data) {
+                            this.props.update_user({
+                                loggedIn: true,
+                                username: user.data.username
+                            });
+                            this.setState({ redirectTo: '/' });
+                        }
+                    })
                     : this.setState({ usernameDescription: result.data.error })
             }).catch(error => console.log(error))
             // todo add a couldn't send
