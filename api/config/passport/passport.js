@@ -9,16 +9,20 @@ passport.use(new LocalStrategy(
         usernameField: "username",
         passwordField: "password"
     }, (username, password, done) => {
-        controller.findUserForLogin(username, password, done)
+        controller.find_user_for_login(username, password, done)
     }
 ));
 
 // Used to add the user in the cookies for checking if user is logged in our not
 passport.serializeUser((user, cb) => {
-    cb(null, user);
+    console.log('serialize')
+    console.log(`USER: ${user.username}`)
+    cb(null, { id: user.uuid });
 });
 
 passport.deserializeUser((obj, cb) => {
+    console.log('DESERIALIZE');
+    console.log(`USER OBJ: ${obj.user}`)
     cb(null, obj);
 });
 
