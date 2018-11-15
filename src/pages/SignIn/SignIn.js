@@ -1,4 +1,5 @@
 import React from 'react';
+import "./style.css"
 import Navbar from '../../components/Navbar';
 import Container from '../../components/Container';
 import Card from '../../components/Card';
@@ -92,7 +93,7 @@ class SignIn extends React.Component {
                                             <label htmlFor="password">Password</label>
 
                                         </div>
-                                        <button className="btn btn-large" type="submit"> sign in!</button>
+                                        <button className="submit btn btn-large" type="submit"> sign in!</button>
                                     </div>
                                 </form>
                             </div>

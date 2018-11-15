@@ -54,6 +54,7 @@ class SignUp extends React.Component {
             // todo add a couldn't send
             : console.log('dont send');
 
+        console.log(this.state.username)
 
 
     }
@@ -70,9 +71,7 @@ class SignUp extends React.Component {
         const value = event.target.value;
         const name  = event.target.name;
 
-        this.setState({
-            [name]: value
-        });
+        this.setState({ [name]: value });
 
         switch (name) {
             case 'username':
@@ -104,8 +103,9 @@ class SignUp extends React.Component {
                 break;
             default:
                 //error function -> yet to be tested, but should be valid
-               // if (this.state.hasError) 
-                    //return console.log(this.state.error);
+                if (this.state.hasError) 
+                    return console.log(this.state.error);
+                    //add sweetalert
                 break;
         }
     }
