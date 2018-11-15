@@ -21,7 +21,7 @@ class TournCreate extends React.Component {
 
     //RegEx to remove all special charcters 
     //EXCEPT: spaces - dashes - underscores (allows upper, lower, and numeric)
-    removeSpecials = RegExp( /^([a-zA-Z0-9_\s\-]*)$/)
+    removeSpecials = RegExp(/^([a-zA-Z0-9_\s\-]*)$/)
 
     //handle click to grab the value of the drop-down clicked.
     handle_click = event => {
@@ -30,14 +30,42 @@ class TournCreate extends React.Component {
         console.log(this.state.tournySize);
     }
 
+    handle_validity = tournyInfo => {
+        return ( tournyInfo.tournyName.length > 0)
+            && (this.removeSpecials.test(tournyInfo.name))
+            && (tournyInfo.tournyDescipt.length <= 250
+                & tournyInfo.tournyDescipt.length > 0)
+    }
+    
+    handle_submit = event => {
+        event.preventDefault();
+        this.handle_validity({
+            tournyName:    this.state.tournyName,
+            tournyDescrpt: this.state.tournyDescript,
+            tournyType:    this.state.tournyType,
+            tournySize:    this.state.tournySize
+        })
+    
+ 
+
+        console.log(this.state)
+        // ? API.create_tournament({
+        //     tournyName: this.state.TournyName,
+        //     tournyType: this.state.TournyType,
+        //     tournyDescript: this.state.TournyDescript,
+        //     tournyDate:     this.state.TournyDate
+        // }).then(newTourny => {
+
+        // })
+    }
+
     handle_change = event => {
         event.preventDefault();
-
+     
         const value = event.target.value;
         const name  = event.target.name;
-        console.log( this.setState({
-            [name]: value
-        }));
+        this.setState({ [name]: value });
+
         switch ( name ) {
             case 'TournyName':
              value.length > 3 
@@ -46,41 +74,31 @@ class TournCreate extends React.Component {
                     : this.setState({ nameError: "Now that's not a proper name!" })
                 break;
             case 'TournyType':
-                value.length <= 35 & value.length > 0
+                value.length <= 35 & value.length > 3
                     ? this.setState({ typeError: "GAME ON!" })
                     : this.setState({ typeError: "You sure that's a real game?" })
                 break;
             case 'TournyDescript':
                 value.length <= 250 & value.length > 10
-                    ? this.setState({ descriptError: "Brevity is a virtue!" })
-                    : this.setState({ descriptError: "Very Descriptive" })
+                    ? this.setState({ descriptError: "Very Descriptive" })
+                    : this.setState({ descriptError: "Brevity is a virtue!" })
                 break;
             default:
                 //append something below the "form" to say invalid form"
+                console.log('invalid form');
                 break;
-        }
+        }  
+    }
 
     
-    }
-
-    handle_submit = event => {
-        console.log(this.state.tournySize)
-        event.preventDefault();
-        //Add API route to save created tourny into database?
-        // tournyName:     this.state.tournyName
-        // tournyType:     this.state.tournyType
-        // tournyDescript: this.state.tournyDescript
-        // tournyDate:     this.state.tournyDate
-
-    }
 
     render() {
         return (
             <>
                 <Navbar />
-                <Container >
+                <Container>
                     <div className="row">
-                        <form onSubmit={this.handle_submit}>
+                        <form onSubmit={this.handle_submit} noValidate>
                             <input 
                                 type="text" 
                                 name="TournyName" 
@@ -111,37 +129,38 @@ class TournCreate extends React.Component {
                             <input type="date" name="TournyDate" />
                             <label htmlFor="date">Select Tournament date</label>
                             <br /><br />
+
                             <a className='dropdown-trigger btn left' href='#' data-target='dropdown1'>Select Size</a>
                                 <ul id='dropdown1' className='dropdown-content'>
                                     <li>
-                                        <p 
+                                        <h4 
                                             className="center-align" 
                                             onClick={this.handle_click.bind(this)} 
                                             data-id="4"> 4
-                                        </p>
+                                        </h4>
                                     </li>
                                     <li>
-                                        <p 
+                                        <h4 
                                             className="center-align" 
                                             onClick={this.handle_click.bind(this)} 
                                             data-id="8"> 8
-                                        </p>
+                                        </h4>
                                     </li>
                                     <li>
-                                        <p 
+                                        <h4 
                                             className="center-align" 
                                             onClick={this.handle_click.bind(this)} 
                                             data-id="16"> 16
-                                        </p>
+                                        </h4>
                                     </li>
                                     <li>
-                                        <p className="center-align" 
+                                        <h4 className="center-align" 
                                             onClick={this.handle_click.bind(this)} 
                                             data-id="32"> 32
-                                        </p>
+                                        </h4>
                                     </li>
                                 </ul>
-                            <button className="btn right" type="submit">Create Tournament!</button>
+                            <button className="btn right" onClick={()=> console.log(`clicked`)} type="submit">Create Tournament!</button>
                         </form> 
                     </div>
                 </Container>
