@@ -12,3 +12,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+body {
+  /* dark gunmetal */
+  background-color: #1D1E2C;
+  /*gun metal but a little bit lighter */
+  /* background-color: rgb(44, 46, 66) */
+  
+}

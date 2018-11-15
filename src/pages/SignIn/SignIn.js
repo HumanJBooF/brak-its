@@ -1,10 +1,11 @@
 import React from 'react';
-import "./style.css"
 import Navbar from '../../components/Navbar';
 import Container from '../../components/Container';
 import Card from '../../components/Card';
+import Button from "../../components/Button";
 import API from '../../utils/API';
 import { Redirect } from 'react-router-dom';
+import formStyle from './SignInStyle.js';
 
 
 class SignIn extends React.Component {
@@ -12,11 +13,12 @@ class SignIn extends React.Component {
     state = {
         username: '',
         password: '',
-        redirectTo: null
+        redirectTo: null,
+        btn: "Sign In!"
     }
 
-    check_validity (userInfo) {
-        return (userInfo.username.length > 0) 
+    check_validity(userInfo) {
+        return (userInfo.username.length > 0)
             && (userInfo.password.length >= 8) ? true : false
     }
 
@@ -24,7 +26,7 @@ class SignIn extends React.Component {
         event.preventDefault();
 
         const value = event.target.value;
-        const name  = event.target.name;
+        const name = event.target.name;
 
         this.setState({ [name]: value })
     }
@@ -57,7 +59,7 @@ class SignIn extends React.Component {
 
     }
 
-    render () {
+    render() {
         if (this.state.redirectTo) {
             return <Redirect to={{ pathname: this.state.redirectTo }} />
         } else {
@@ -68,7 +70,11 @@ class SignIn extends React.Component {
                         <Card>
                             <header className="center-align s12">Sign In!</header>
                             <div className="row">
-                                <form onSubmit={this.handle_submit} className="col s12 center-align" noValidate>
+                                <form
+                                    onSubmit={this.handle_submit}
+                                    className="col s12 center-align offset-s3"
+                                    style={formStyle.form}
+                                    noValidate>
                                     <div className="row">
                                         <div className="input field col m6 center-align username">
                                             <input
@@ -93,12 +99,17 @@ class SignIn extends React.Component {
                                             <label htmlFor="password">Password</label>
 
                                         </div>
-                                        <button className="submit btn btn-large" type="submit"> sign in!</button>
+
                                     </div>
                                 </form>
                             </div>
+                            <div className="row  offset-l5 center-align">
+                                <Button 
+                                    btn={this.state.btn}
+                                />
+                            </div>
                         </Card>
-                    </Container>
+                    </Container >
                 </>
             )
         }

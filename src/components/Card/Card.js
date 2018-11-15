@@ -1,5 +1,5 @@
 import React from "react";
-
+import styles from "./CardStyles";
 const cardStyle = {
     "marginTop": "15%"
 }
@@ -7,12 +7,16 @@ const cardStyle = {
 
 const Card = ({ children }, props) => (
 
-    <div className="card " style={cardStyle}>
-        <div className="card-content">
-            <span className="card-title green lighten-3 center-align"></span>
-            {children}
+<div className="row valign-wrapper">
+        <div className="col s6 offset-s3 valign">
+            <div className="card z-depth-5" style={styles}>
+                <div className="card-content">
+                    <span className="card-title green lighten-3 center-align black-text"></span>
+                    {children}
+                </div>
+                <div className="card-footer"></div>
+            </div>
         </div>
-        <div className="card-footer"></div>
     </div>
 
 )

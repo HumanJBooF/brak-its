@@ -11,8 +11,8 @@ class TournDisplay extends React.Component {
     render() {
         return (
             <Container>
-           <p> Gravy off probation </p>
-           </Container>
+                <p> </p>
+            </Container>
         )
     }
 }
