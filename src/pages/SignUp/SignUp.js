@@ -2,6 +2,7 @@ import React from 'react';
 import Container from '../../components/Container';
 import Card from '../../components/Card';
 import Navbar from '../../components/Navbar';
+import Button from "../../components/Button"
 import API from '../../utils/API';
 import { Redirect } from 'react-router-dom';
 
@@ -14,7 +15,8 @@ class SignUp extends React.Component {
         usernameDescription: 'Username',
         emailDescription: 'Email',
         passwordDescription: 'Password',
-        redirectTo: null
+        redirectTo: null,
+        btn: "Sign Up!"
     }
 
     emailRegEx = RegExp(
@@ -60,8 +62,8 @@ class SignUp extends React.Component {
     }
 
     check_validity = userInfo => {
-        return (userInfo.username.length > 0) 
-            && (this.emailRegEx.test(userInfo.email)) 
+        return (userInfo.username.length > 0)
+            && (this.emailRegEx.test(userInfo.email))
             && (userInfo.password.length >= 8) ? true : false
     }
 
@@ -69,7 +71,7 @@ class SignUp extends React.Component {
         event.preventDefault();
 
         const value = event.target.value;
-        const name  = event.target.name;
+        const name = event.target.name;
 
         this.setState({ [name]: value });
 
@@ -103,16 +105,16 @@ class SignUp extends React.Component {
                 break;
             default:
                 //error function -> yet to be tested, but should be valid
-                if (this.state.hasError) 
+                if (this.state.hasError)
                     return console.log(this.state.error);
-                    //add sweetalert
+                //add sweetalert
                 break;
         }
     }
 
 
 
-    render () {
+    render() {
         if (this.state.redirectTo) {
             return <Redirect to={{ pathname: this.state.redirectTo }} />
         } else {
@@ -121,9 +123,9 @@ class SignUp extends React.Component {
                     <Navbar />
                     <Container>
                         <Card>
-                            <header className="center-align s12">Sign Up!</header>
+                            <header className="center-align s12"><h4>Enter your Credentials</h4></header>
                             <div className="row">
-                                <form onSubmit={this.handle_submit} className="col s12 center-align" noValidate>
+                                <form onSubmit={this.handle_submit} className="col s12 center-align offset-s3" noValidate>
                                     <div className="row">
                                         <div className="username">
                                             <div className="input field col m6 center-align">
@@ -164,8 +166,12 @@ class SignUp extends React.Component {
 
                                         </div>
                                     </div>
-                                    <button className="btn btn-large" type="submit"> Sign Up!</button>
                                 </form>
+                            </div>
+                            <div className="row  offset-l5 center-align">
+                                <Button
+                                    btn={this.state.btn}
+                                />
                             </div>
                         </Card>
                     </Container>

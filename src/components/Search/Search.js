@@ -5,17 +5,23 @@
 const searchStyles = {
 
     marginTop: "5vh",
+    backgroundColor: "grey",
     color: "white",
-    borderRadius: "10%"
+    borderRadius: "20px",
+    zIndex: "5",
+    border: "1px solid white",
+    fontWeight: "Bold",
+    width: "100%",
+
 }
 
  const SearchBar = () => (
      <Container>
      <div className="row">
         <form className="col s6">
-            <div className="row center-align">
-              <input id="search" type="search" style={searchStyles}/>
-              <label htmlFor="search" >Search Tournaments!</label>
+            <div className="row center-align left">
+              <input id="search" type="search" style={searchStyles}/> 
+              <label htmlFor="search" className="black-text">Search Tournaments!</label>
             </div> 
         </form>
         <CreateButton />
