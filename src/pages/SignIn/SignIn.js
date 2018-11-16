@@ -99,15 +99,15 @@ class SignIn extends React.Component {
                                             <label htmlFor="password">Password</label>
 
                                         </div>
-
+                                    </div>
+                                    <div className="row  offset-l5 center-align">
+                                        <Button
+                                            btn={this.state.btn}
+                                        />
                                     </div>
                                 </form>
                             </div>
-                            <div className="row  offset-l5 center-align">
-                                <Button 
-                                    btn={this.state.btn}
-                                />
-                            </div>
+
                         </Card>
                     </Container >
                 </>
