@@ -29,9 +29,6 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('build'));
 }
 
-// Routes
-// =============================================================
-
 // Basic route
 app.use(routes);
 

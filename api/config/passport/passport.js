@@ -22,7 +22,7 @@ passport.serializeUser((user, cb) => {
 
 passport.deserializeUser((obj, cb) => {
     console.log('DESERIALIZE');
-    console.log(`USER OBJ: ${obj.user}`)
+    console.log(`USER OBJ: ${obj.id}`)
     cb(null, obj);
 });
 

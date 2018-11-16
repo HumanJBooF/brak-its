@@ -37,13 +37,12 @@ const userController = {
   },
 
   check_user: (req, res) => {
-    if (req.user) {/*?*/
-      console.log(req.user)
-      res.json({ user: req.user })
-    } else {/* :*/
-      res.json({ user: null })
-    }
+
+    (req.user)
+      ? res.json({ user: req.user })
+      : res.json({ user: null })
   },
+
   logout_user: (req, res) => {
     if (req.user) {
       req.logout()

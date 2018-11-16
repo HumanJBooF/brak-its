@@ -2,7 +2,7 @@ const db = require('../models/');
 
 const tourneyController = {
 
-    findAll: (req, res) => {
+    find_all: (req, res) => {
         db.tourneys.findAll({})
             .then(dbTourneys => {
                 res.json({ tournaments: dbTourneys });
@@ -10,7 +10,7 @@ const tourneyController = {
             .catch(err => res.json({ error: err }))
     },
 
-    findOne: (req, res) => {
+    find_all_for_owner: (req, res) => {
         db.tourneys.findOne({
             where: {
                 uuid: req.body.uuid
@@ -18,6 +18,14 @@ const tourneyController = {
         }).then(dbTourney => {
             res.json({ tournament: dbTourney });
         }).catch(err => res.json({ error: err }))
+    },
+
+    create: (req, res) => {
+        console.log(req.body)
+        db.tourneys.create(req.body)
+            .then(dbTourney => {
+                console.log(dbTourney);
+            }).catch(err => res.json({ error: err }));
     }
 };
 
