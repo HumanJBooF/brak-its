@@ -6,17 +6,28 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             primaryKey: true
         },
-        name: {
+        tourneyName: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        description: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
+        date: {
+            type: DataTypes.DATE,
+
+        },
+        time: {
+            type: DataTypes.TIME,
+
         },
         size: {
             type: DataTypes.INTEGER,
-            allowNull: false
         },
         format: {
             type: DataTypes.STRING,
-            allowNull: false
+            default: 'single-elim'
         },
         type: {
             type: DataTypes.INTEGER,

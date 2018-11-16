@@ -12,6 +12,9 @@ const apiController = {
     },
     logout: () => {
         return axios.post('/api/users/logout');
+    },
+    create_tournament: tourneyData => {
+        return axios.post('/api/tournament/create', tourneyData);
     }
 };
 

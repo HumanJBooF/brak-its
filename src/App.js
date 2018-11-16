@@ -23,7 +23,7 @@ class App extends React.Component {
 	}
 
 	check_user () {
-		API.check_user().then( result => {
+		API.check_user().then(result => {
 			result.data.user
 				? this.setState({
 					loggedIn: true,
@@ -43,8 +43,8 @@ class App extends React.Component {
 						<Route exact path='/' render={() => <Landing update_user={this.update_user} loggedIn={this.state.loggedIn} username={this.state.username} />} />
 						<Route exact path='/signup' render={() => <SignUp update_user={this.update_user} />} />
 						<Route exact path='/signin' render={() => <SignIn update_user={this.update_user} />} />
-    		    		<Route exact path='/tournament' component={TournCreate} />
-						<Route exact path='/display'    component={TournDisplay} />
+						<Route exact path='/tournament' render={() => <TournCreate username={this.state.username} />} />
+						<Route exact path='/display' component={TournDisplay} />
 					</Switch>
 				</div>
 			</Router>
