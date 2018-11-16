@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
     };
 
     Users.addHook("beforeCreate", (users) => {
-        const saltRounds = Math.floor(/*Math.random() * 6 + 13*/ 12);
+        const saltRounds = 12;
         users.password = bcrypt.hashSync(users.password, bcrypt.genSaltSync(saltRounds), null);
     });
 
