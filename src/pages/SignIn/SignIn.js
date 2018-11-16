@@ -17,7 +17,7 @@ class SignIn extends React.Component {
         btn: "Sign In!"
     }
 
-    check_validity(userInfo) {
+    check_validity (userInfo) {
         return (userInfo.username.length > 0)
             && (userInfo.password.length >= 8) ? true : false
     }
@@ -59,7 +59,7 @@ class SignIn extends React.Component {
 
     }
 
-    render() {
+    render () {
         if (this.state.redirectTo) {
             return <Redirect to={{ pathname: this.state.redirectTo }} />
         } else {
@@ -72,11 +72,11 @@ class SignIn extends React.Component {
                             <div className="row">
                                 <form
                                     onSubmit={this.handle_submit}
-                                    className="col s12 center-align offset-s3"
+                                    className="col s12"
                                     style={formStyle.form}
                                     noValidate>
                                     <div className="row">
-                                        <div className="input field col m6 center-align username">
+                                        <div className="input field col s12 center-align username">
                                             <input
                                                 id="username"
                                                 type="text"
@@ -88,7 +88,7 @@ class SignIn extends React.Component {
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="center-align input field col m6">
+                                        <div className="center-align input field col s12">
                                             <input
                                                 name="password"
                                                 id="password"
@@ -100,7 +100,7 @@ class SignIn extends React.Component {
 
                                         </div>
                                     </div>
-                                    <div className="row  offset-l5 center-align">
+                                    <div className="row">
                                         <Button
                                             btn={this.state.btn}
                                         />

@@ -12,9 +12,11 @@ class SignUp extends React.Component {
         username: '',
         email: '',
         password: '',
+        confirm: '',
         usernameDescription: 'Username',
         emailDescription: 'Email',
         passwordDescription: 'Password',
+        passwordConfirm: 'Confirm Your Password',
         redirectTo: null,
         btn: "Sign Up!"
     }
@@ -31,7 +33,8 @@ class SignUp extends React.Component {
         this.check_validity({
             username: this.state.username,
             email: this.state.email,
-            password: this.state.password
+            password: this.state.password,
+            confirm: this.state.confirm
         })
             ? API.add_user({
                 username: this.state.username,
@@ -64,7 +67,7 @@ class SignUp extends React.Component {
     check_validity = userInfo => {
         return (userInfo.username.length > 0)
             && (this.emailRegEx.test(userInfo.email))
-            && (userInfo.password.length >= 8) ? true : false
+            && (userInfo.password.length >= 8 && userInfo.password === userInfo.confirm) ? true : false
     }
 
     handle_change = event => {
@@ -114,7 +117,7 @@ class SignUp extends React.Component {
 
 
 
-    render() {
+    render () {
         if (this.state.redirectTo) {
             return <Redirect to={{ pathname: this.state.redirectTo }} />
         } else {
@@ -123,12 +126,12 @@ class SignUp extends React.Component {
                     <Navbar />
                     <Container>
                         <Card>
-                            <header className="center-align s12"><h4>Enter your Credentials</h4></header>
+                            <header className="center-align s12 hide-on-med-and-down"><h4>Enter your Credentials</h4></header>
                             <div className="row">
-                                <form onSubmit={this.handle_submit} className="col s12 center-align offset-s3" noValidate>
+                                <form onSubmit={this.handle_submit} className="col s12" noValidate>
                                     <div className="row">
                                         <div className="username">
-                                            <div className="input field col m6 center-align">
+                                            <div className="input field col s12 center-align">
                                                 <input
                                                     id="userName"
                                                     name="username"
@@ -141,7 +144,7 @@ class SignUp extends React.Component {
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="input field col m6 center-align">
+                                        <div className="input field col s12 center-align">
                                             <input
                                                 id="Email"
                                                 name="email"
@@ -154,7 +157,7 @@ class SignUp extends React.Component {
 
                                     </div>
                                     <div className="row">
-                                        <div className="center-align input field col m6">
+                                        <div className="center-align input field col s12">
                                             <input
                                                 id="passWord"
                                                 name="password"
@@ -166,7 +169,20 @@ class SignUp extends React.Component {
 
                                         </div>
                                     </div>
-                                    <div className="row  offset-l5 center-align">
+                                    <div className="row">
+                                        <div className="center-align input field col s12">
+                                            <input
+                                                id="confrimPass"
+                                                name="confirm"
+                                                type="password"
+                                                noValidate
+                                                onChange={this.handle_change}
+                                            />
+                                            <label htmlFor="passWord">{this.state.passwordConfirm}</label>
+
+                                        </div>
+                                    </div>
+                                    <div className="row">
                                         <Button
                                             btn={this.state.btn}
                                         />

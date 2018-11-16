@@ -18,7 +18,6 @@ class TournCreate extends React.Component {
         typeError: '',
         DescriptError: '',
         username: this.props.username
-
     }
 
     //RegEx to remove all special charcters 
@@ -97,7 +96,7 @@ class TournCreate extends React.Component {
     render () {
         return (
             <>
-                <Navbar />
+                <Navbar update_user={this.props.update_user} username={this.props.username} loggedIn={this.props.loggedIn} />
                 <Container>
                     <div className="row">
                         <form onSubmit={this.handle_submit} noValidate>

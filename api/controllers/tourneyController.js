@@ -2,12 +2,13 @@ const db = require('../models/');
 
 const tourneyController = {
 
-    find_all: (req, res) => {
-        db.tourneys.findAll({})
-            .then(dbTourneys => {
+    find_all_recent: (req, res) => {
+        db.tourneys.findAll({
+            limit: 5,
+            order: [['createdAt', 'DESC']]
+        }).then(dbTourneys => {
                 res.json({ tournaments: dbTourneys });
-            })
-            .catch(err => res.json({ error: err }))
+            }).catch(err => res.json({ error: err }));
     },
 
     find_all_for_owner: (req, res) => {
