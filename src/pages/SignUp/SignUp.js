@@ -114,7 +114,7 @@ class SignUp extends React.Component {
 
 
 
-    render () {
+    render() {
         if (this.state.redirectTo) {
             return <Redirect to={{ pathname: this.state.redirectTo }} />
         } else {
@@ -166,13 +166,14 @@ class SignUp extends React.Component {
 
                                         </div>
                                     </div>
+                                    <div className="row  offset-l5 center-align">
+                                        <Button
+                                            btn={this.state.btn}
+                                        />
+                                    </div>
                                 </form>
                             </div>
-                            <div className="row  offset-l5 center-align">
-                                <Button
-                                    btn={this.state.btn}
-                                />
-                            </div>
+
                         </Card>
                     </Container>
                 </>
