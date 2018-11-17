@@ -24,6 +24,7 @@ class TournCreate extends React.Component {
         username: this.props.username
     }
 
+<<<<<<< HEAD
     //RegEx to remove all special charcters 
     //EXCEPT: spaces - dashes - underscores (allows upper, lower, and numeric)
 <<<<<<< HEAD
@@ -35,6 +36,18 @@ class TournCreate extends React.Component {
     removeSpecials = RegExp(/^([a-zA-Z0-9_\s]*)$/)
 
 >>>>>>> 15dd802314403bdc44878d0f32e17b95dd06c2a3
+=======
+
+
+   
+    componentDidMount() {
+        M.AutoInit();
+    }
+    //RegEx to remove all special charcters 
+    //EXCEPT: spaces - dashes - underscores (allows upper, lower, and numeric)
+    removeSpecials = RegExp(/^([a-zA-Z0-9_\s]*)$/)
+
+>>>>>>> 1f76b6a5bf8799d4cb08af098a99d7246a63eec0
     //handle click to grab the value of the drop-down clicked.
     handle_click = event => {
         // const chosenSize = event.currentTarget.dataset.id;
@@ -112,6 +125,10 @@ class TournCreate extends React.Component {
                 <Navbar update_user={this.props.update_user} username={this.props.username} loggedIn={this.props.loggedIn} />
                 <Container>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1f76b6a5bf8799d4cb08af098a99d7246a63eec0
                     <div className="section white z-depth-3">
                         <div className="row">
                             <form onSubmit={this.handle_submit} noValidate>
@@ -152,13 +169,14 @@ class TournCreate extends React.Component {
                                     className=""
                                     style={styles.calen}
                                 />
-                                <a className='dropdown-trigger btn left' href='#' data-target='dropdown1'style={styles.posDrop}>Select Size</a>
+                                <a className='dropdown-trigger btn left' data-target='dropdown1'style={styles.posDrop}>Select Size</a>
                                 <ul  id='dropdown1' className='dropdown-content' onClick={() => console.log("clicked")}>
                                     <li>
                                         <h4
                                             className="center-align"
                                             onClick={this.handle_click.bind(this)}
                                             data-id="4"> 4
+<<<<<<< HEAD
 =======
                     <div className="row">
                         <form onSubmit={this.handle_submit} noValidate>
@@ -201,6 +219,8 @@ class TournCreate extends React.Component {
                                         onClick={this.handle_click.bind(this)}
                                         data-id="4"> 4
 >>>>>>> 15dd802314403bdc44878d0f32e17b95dd06c2a3
+=======
+>>>>>>> 1f76b6a5bf8799d4cb08af098a99d7246a63eec0
                                         </h4>
                                     </li>
                                     <li>
