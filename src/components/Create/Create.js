@@ -21,7 +21,7 @@ const CreateButton = () => (
         <button
             className="btn waves-effect white right black-text"
             style={btnStyles}
-        > Create </button> 
+        /> Create
     </Link>
 
 )

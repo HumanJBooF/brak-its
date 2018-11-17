@@ -12,7 +12,7 @@ const Button = props => (
     <div className="row valign-wrapper">
         <div className="col s6 offset-s3">
             <button 
-                className="btn btn-large black-text"
+                className="btn btn-large truncate black-text"
                 style={styles}
             > 
                 {props.btn}
