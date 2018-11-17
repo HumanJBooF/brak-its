@@ -26,10 +26,15 @@ class TournCreate extends React.Component {
 
     //RegEx to remove all special charcters 
     //EXCEPT: spaces - dashes - underscores (allows upper, lower, and numeric)
+<<<<<<< HEAD
     removeSpecials = RegExp(/^([a-zA-Z0-9_\s\-]*)$/)
     componentDidMount() {
         M.AutoInit();
     }
+=======
+    removeSpecials = RegExp(/^([a-zA-Z0-9_\s]*)$/)
+
+>>>>>>> 15dd802314403bdc44878d0f32e17b95dd06c2a3
     //handle click to grab the value of the drop-down clicked.
     handle_click = event => {
         // const chosenSize = event.currentTarget.dataset.id;
@@ -104,8 +109,9 @@ class TournCreate extends React.Component {
     render() {
         return (
             <>
-                <Navbar />
+                <Navbar update_user={this.props.update_user} username={this.props.username} loggedIn={this.props.loggedIn} />
                 <Container>
+<<<<<<< HEAD
                     <div className="section white z-depth-3">
                         <div className="row">
                             <form onSubmit={this.handle_submit} noValidate>
@@ -153,6 +159,48 @@ class TournCreate extends React.Component {
                                             className="center-align"
                                             onClick={this.handle_click.bind(this)}
                                             data-id="4"> 4
+=======
+                    <div className="row">
+                        <form onSubmit={this.handle_submit} noValidate>
+                            <input
+                                type="text"
+                                name="tourneyName"
+                                id="tName"
+                                maxLength="50"
+                                onChange={this.handle_change}
+                            />
+                            <label htmlFor="tName">{this.state.nameError}</label>
+
+                            <input
+                                type="text"
+                                name="type"
+                                id="tType"
+                                maxLength="35"
+                                onChange={this.handle_change}
+                            />
+                            <label htmlFor="tType">{this.state.typeError}</label>
+
+                            <textarea
+                                type="text"
+                                name="description"
+                                id="textarea"
+                                maxLength="250"
+                                onChange={this.handle_change}
+                            />
+                            <label htmlFor="textarea">{this.state.descriptError}</label>
+
+                            <input type="date" name="date" />
+                            <label htmlFor="date">Select Tournament date</label>
+                            <br /><br />
+
+                            <a className='dropdown-trigger btn left' data-target='dropdown1'>Select Size</a>
+                            <ul id='dropdown1' className='dropdown-content'>
+                                <li>
+                                    <h4
+                                        className="center-align"
+                                        onClick={this.handle_click.bind(this)}
+                                        data-id="4"> 4
+>>>>>>> 15dd802314403bdc44878d0f32e17b95dd06c2a3
                                         </h4>
                                     </li>
                                     <li>

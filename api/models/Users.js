@@ -10,8 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         username: {
             type: DataTypes.STRING,
-            allowNull: false,
-            unique: true
+            allowNull: false
         },
         email: {
             type: DataTypes.STRING,
@@ -25,11 +24,11 @@ module.exports = (sequelize, DataTypes) => {
             paranoid: true
         });
     Users.associate = models => {
-        Users.hasOne(models.rounds, {
+        Users.hasOne(models.matches, {
             as: 'player1',
             foreignKey: 'player_one'
         });
-        Users.hasOne(models.rounds, {
+        Users.hasOne(models.matches, {
             as: 'player2',
             foreignKey: 'player_two'
         });
@@ -40,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
     };
 
     Users.addHook("beforeCreate", (users) => {
-        const saltRounds = Math.floor(/*Math.random() * 6 + 13*/ 12);
+        const saltRounds = 12;
         users.password = bcrypt.hashSync(users.password, bcrypt.genSaltSync(saltRounds), null);
     });
 

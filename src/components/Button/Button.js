@@ -1,14 +1,8 @@
-import React from "react";
-
-const styles = {
-    backgroundColor: "#88D9E6",
-    width: "",
-    lineHeight: "50px",
-    fontSize: "30px",
-    marginLeft: 0
-}
+import React from 'react';
+import styles from './btnStyles';
 
 const Button = props => (
+<<<<<<< HEAD
     <div className="row valign-wrapper">
         <div className="col s6 offset-s3">
             <button 
@@ -18,6 +12,15 @@ const Button = props => (
                 {props.btn}
             </button>
         </div>
+=======
+    <div className="col s12">
+        <button
+            className="btn btn-large black-text col s12"
+            style={styles.btn}
+        >
+            {props.btn}
+        </button>
+>>>>>>> 15dd802314403bdc44878d0f32e17b95dd06c2a3
     </div>
 )
 

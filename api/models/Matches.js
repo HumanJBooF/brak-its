@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Rounds = sequelize.define('rounds', {
+    const Matches = sequelize.define('matches', {
         uuid: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
@@ -18,24 +18,24 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        round_num: {
+        match_num: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        next_round: {
+        next_match: {
             type: DataTypes.BOOLEAN,
             default: false
         }
     }, {
             paranoid: true
         });
-    Rounds.associate = models => {
-        Rounds.belongsTo(models.tourneys, {
+    Matches.associate = models => {
+        Matches.belongsTo(models.tourneys, {
             as: 'tourneyId',
             foreignKey: 'tourney'
         });
 
     }
 
-    return Rounds;
+    return Matches;
 }

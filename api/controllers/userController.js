@@ -37,10 +37,10 @@ const userController = {
   },
 
   check_user: (req, res) => {
-
-    (req.user)
-      ? res.json({ user: req.user })
-      : res.json({ user: null })
+    console.log(req.user);
+    req.user
+      ? res.json(req.user)
+      : res.json({ err: null })
   },
 
   logout_user: (req, res) => {
