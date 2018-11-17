@@ -7,6 +7,7 @@ import TournCreate from "./pages/TournamentCreate";
 import TournDisplay from "./pages/TournamentCreate/TournamentDisplay"
 import API from './utils/API';
 
+
 class App extends React.Component {
 
 	state = {
@@ -38,6 +39,7 @@ class App extends React.Component {
 	}
 	render () {
 		return (
+	
 			<Router>
 				<div>
 					<Switch>
