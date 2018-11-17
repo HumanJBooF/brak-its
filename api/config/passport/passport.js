@@ -2,6 +2,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const controller = require('../../controllers/userController');
+const db = require('../../models/');
 
 // Use a username/password login strategy
 passport.use(new LocalStrategy(
@@ -20,10 +21,16 @@ passport.serializeUser((user, cb) => {
     cb(null, { id: user.uuid });
 });
 
-passport.deserializeUser((obj, cb) => {
-    console.log('DESERIALIZE');
-    console.log(`USER OBJ: ${obj.id}`)
-    cb(null, obj);
+passport.deserializeUser((user, cb) => {
+    db.users.findOne({
+        where: {
+            uuid: user.id
+        }
+    }).then(() => {
+        console.log('DESERIALIZE');
+        console.log(`USER OBJ: ${user.id}`)
+        cb(null, user);
+    })
 });
 
 module.exports = passport;

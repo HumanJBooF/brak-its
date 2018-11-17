@@ -131,7 +131,7 @@ class TournCreate extends React.Component {
                             <label htmlFor="date">Select Tournament date</label>
                             <br /><br />
 
-                            <a className='dropdown-trigger btn left' href='#' data-target='dropdown1'>Select Size</a>
+                            <a className='dropdown-trigger btn left' data-target='dropdown1'>Select Size</a>
                             <ul id='dropdown1' className='dropdown-content'>
                                 <li>
                                     <h4

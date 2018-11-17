@@ -7,8 +7,8 @@ const tourneyController = {
             limit: 5,
             order: [['createdAt', 'DESC']]
         }).then(dbTourneys => {
-                res.json({ tournaments: dbTourneys });
-            }).catch(err => res.json({ error: err }));
+            res.json(dbTourneys);
+        }).catch(err => res.json({ error: err }));
     },
 
     find_all_for_owner: (req, res) => {
@@ -22,7 +22,6 @@ const tourneyController = {
     },
 
     create: (req, res) => {
-        console.log(req.body)
         db.tourneys.create(req.body)
             .then(dbTourney => {
                 console.log(dbTourney);

@@ -8,7 +8,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         tourneyName: {
             type: DataTypes.STRING,
-            allowNull: false
         },
         description: {
             type: DataTypes.STRING,
@@ -16,11 +15,9 @@ module.exports = (sequelize, DataTypes) => {
         },
         date: {
             type: DataTypes.DATE,
-
         },
         time: {
             type: DataTypes.TIME,
-
         },
         size: {
             type: DataTypes.INTEGER,
@@ -31,11 +28,9 @@ module.exports = (sequelize, DataTypes) => {
         },
         type: {
             type: DataTypes.INTEGER,
-            allowNull: false
         },
         owner: {
             type: DataTypes.STRING,
-            allowNull: false
         },
         isDeleted: {
             type: DataTypes.BOOLEAN,
@@ -47,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
     Tourneys.associate = models => {
         Tourneys.hasMany(models.users, {
             as: 'tourneyId',
-            foreignKey: 'tourney'
+            foreignKey: 'tourneys'
         });
     }
 
