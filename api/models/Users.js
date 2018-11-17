@@ -25,11 +25,11 @@ module.exports = (sequelize, DataTypes) => {
             paranoid: true
         });
     Users.associate = models => {
-        Users.hasOne(models.rounds, {
+        Users.hasOne(models.matches, {
             as: 'player1',
             foreignKey: 'player_one'
         });
-        Users.hasOne(models.rounds, {
+        Users.hasOne(models.matches, {
             as: 'player2',
             foreignKey: 'player_two'
         });
