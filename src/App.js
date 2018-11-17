@@ -17,6 +17,7 @@ class App extends React.Component {
 
 	componentDidMount = () => {
 		this.check_user()
+
 	}
 
 	update_user = userObj => {
@@ -25,14 +26,14 @@ class App extends React.Component {
 
 	check_user () {
 		API.check_user().then(result => {
-			result.data.user
+			!result.data.user
 				? this.setState({
-					loggedIn: true,
-					username: result.data.user.username
-				})
-				: this.setState({
 					loggedIn: false,
 					username: null
+				})
+				: this.setState({
+					loggedIn: true,
+					username: result.data.user.username
 				})
 		})
 	}
@@ -45,7 +46,7 @@ class App extends React.Component {
 						<Route exact path='/' render={() => <Landing update_user={this.update_user} loggedIn={this.state.loggedIn} username={this.state.username} />} />
 						<Route exact path='/signup' render={() => <SignUp update_user={this.update_user} />} />
 						<Route exact path='/signin' render={() => <SignIn update_user={this.update_user} />} />
-						<Route exact path='/tournament' render={() => <TournCreate username={this.state.username} />} />
+						<Route exact path='/tournament' render={() => <TournCreate username={this.state.username} update_user={this.props.update_user} loggedIn={this.state.loggedIn} />} />
 						<Route exact path='/display' component={TournDisplay} />
 					</Switch>
 				</div>

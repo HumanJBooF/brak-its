@@ -24,12 +24,16 @@ class TournCreate extends React.Component {
         username: this.props.username
     }
 
-    //RegEx to remove all special charcters 
-    //EXCEPT: spaces - dashes - underscores (allows upper, lower, and numeric)
-    removeSpecials = RegExp(/^([a-zA-Z0-9_\s\-]*)$/)
+
+
+   
     componentDidMount() {
         M.AutoInit();
     }
+    //RegEx to remove all special charcters 
+    //EXCEPT: spaces - dashes - underscores (allows upper, lower, and numeric)
+    removeSpecials = RegExp(/^([a-zA-Z0-9_\s]*)$/)
+
     //handle click to grab the value of the drop-down clicked.
     handle_click = event => {
         // const chosenSize = event.currentTarget.dataset.id;
@@ -104,8 +108,9 @@ class TournCreate extends React.Component {
     render() {
         return (
             <>
-                <Navbar />
+                <Navbar update_user={this.props.update_user} username={this.props.username} loggedIn={this.props.loggedIn} />
                 <Container>
+
                     <div className="section white z-depth-3">
                         <div className="row">
                             <form onSubmit={this.handle_submit} noValidate>
@@ -146,7 +151,7 @@ class TournCreate extends React.Component {
                                     className=""
                                     style={styles.calen}
                                 />
-                                <a className='dropdown-trigger btn left' href='#' data-target='dropdown1'style={styles.posDrop}>Select Size</a>
+                                <a className='dropdown-trigger btn left' data-target='dropdown1'style={styles.posDrop}>Select Size</a>
                                 <ul  id='dropdown1' className='dropdown-content' onClick={() => console.log("clicked")}>
                                     <li>
                                         <h4

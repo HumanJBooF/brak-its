@@ -15,7 +15,7 @@ const db = require('./models');
 const routes = require('./routes');
 
 // Sets up the Express app to handle data parsing
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(session({ secret: 'BrakitsSecret', resave: true, saveUninitialized: true }));
 
@@ -34,7 +34,7 @@ app.use(routes);
 
 
 
-db.sequelize.sync({ force: true }).then(() => {
+db.sequelize.sync({ force: false }).then(() => {
   // Starts the server to begin listening
   // =============================================================
   app.listen(PORT, () => {
