@@ -18,11 +18,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        round_num: {
+        match_num: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        next_round: {
+        next_match: {
             type: DataTypes.BOOLEAN,
             default: false
         }

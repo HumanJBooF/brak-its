@@ -22,7 +22,7 @@ class TournCreate extends React.Component {
 
     //RegEx to remove all special charcters 
     //EXCEPT: spaces - dashes - underscores (allows upper, lower, and numeric)
-    removeSpecials = RegExp(/^([a-zA-Z0-9_\s\-]*)$/)
+    removeSpecials = RegExp(/^([a-zA-Z0-9_\s]*)$/)
 
     //handle click to grab the value of the drop-down clicked.
     handle_click = event => {
@@ -93,7 +93,7 @@ class TournCreate extends React.Component {
 
 
 
-    render () {
+    render() {
         return (
             <>
                 <Navbar update_user={this.props.update_user} username={this.props.username} loggedIn={this.props.loggedIn} />
