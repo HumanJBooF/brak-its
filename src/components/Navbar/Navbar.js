@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import API from '../../utils/API';
-import styles from "./NavStyes";
+import styles from "./NavStyles";
 
 const logout = props => {
     API.logout().then(result => {
