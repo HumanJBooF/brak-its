@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import API from '../../utils/API';
-import styles from "./NavStyles";
+import styles from './NavStyles';
 
 const logout = props => {
     API.logout().then(result => {
@@ -18,13 +18,13 @@ const Navbar = props => (
     <nav className="" style={styles.nav}>
         <div className="nav-wrapper">
             <div className="brand-logo"><Link to="/">[Brakits]</Link></div>
-            {!props.loggedIn 
+            {!props.loggedIn
                 ? (
                     <ul className="right">
                         <li><Link to="/signup">Sign Up</Link></li>
                         <li><Link to="/signin">Sign In</Link></li>
-                        </ul>
-                ) 
+                    </ul>
+                )
                 : (
                     // just concept again showing that we can grab the current logged in user and display their name
                     <ul className="right">

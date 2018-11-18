@@ -1,5 +1,5 @@
-import React from "react";
-import "./Round.css"
+import React from 'react';
+import './Round.css';
 
 const Tournament = props => (
     <div className="round">

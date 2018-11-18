@@ -1,1 +1,1 @@
-export { default } from "./TournyCreate";
+export { default } from './TournyCreate';

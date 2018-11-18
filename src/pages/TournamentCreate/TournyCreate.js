@@ -15,7 +15,7 @@ class TournCreate extends React.Component {
         tourneyName: '',
         type: '',
         description: '',
-        size: '',
+        sizeLimit: '',
         date: new Date(),
         owner: '',
         nameError: '',
@@ -55,15 +55,15 @@ class TournCreate extends React.Component {
         this.handle_validity({
             tourneyName: this.state.tourneyName,
             description: this.state.description,
-            type: this.state.type,
+            gameType: this.state.type,
         })
 
             ? API.create_tournament({
                 tourneyName: this.state.tourneyName,
-                type: this.state.type,
+                gameType: this.state.type,
                 description: this.state.description,
                 date: this.state.date,
-                size: this.state.size,
+                sizeLimit: this.state.size,
                 owner: this.state.username
             }).then(newTourny => {
                 console.log('added yo')
@@ -77,8 +77,7 @@ class TournCreate extends React.Component {
         const value = event.target.value;
         const name = event.target.name;
         this.setState({ [name]: value });
-        console.log(this.state.date)
-        console.log(this.state.tournyName);
+
         switch (name) {
             case 'tourneyName':
                 value.length > 3

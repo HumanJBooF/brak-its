@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import Landing from './pages/Landing'
-import TournCreate from "./pages/TournamentCreate";
-import TournDisplay from "./pages/TournamentDisplay"
+import TournCreate from './pages/TournamentCreate';
+import TournDisplay from './pages/TournamentDisplay';
 import API from './utils/API';
 
 
@@ -35,8 +35,8 @@ class App extends React.Component {
 				: this.setState({
 					loggedIn: true,
 					username: result.data.username
-				})
-		})
+				});
+		});
 	}
 
 	get_recent = () => {
@@ -48,22 +48,24 @@ class App extends React.Component {
 						name: tourneyElems.tourneyName,
 						id: tourneyElems.uuid,
 						description: tourneyElems.description,
-						size: tourneyElems.size,
+						sizeLimit: tourneyElems.sizeLimit,
 						date: tourneyElems.date,
 						time: tourneyElems.time,
 						format: tourneyElems.format,
-						type: tourneyElems.type
+						gameType: tourneyElems.gameType,
+						owner: tourneyElems.owner,
+						isActive: tourneyElems.isActive
 					}
 					//looking to see if anything is there, it is not.
 					//then it looks into tourney obj, and puts both into the array
 					getTourneys.push(tourneyObj);
 
 					console.log('in loop', getTourneys);
-				})
+				});
 				this.setState({
 					recentArr: [...this.state.recentArr, ...getTourneys]
-				})
-			})
+				});
+			});
 	}
 
 
@@ -76,7 +78,7 @@ class App extends React.Component {
 						<Route exact path='/signup' render={() => <SignUp update_user={this.update_user} />} />
 						<Route exact path='/signin' render={() => <SignIn update_user={this.update_user} />} />
 						<Route exact path='/tournament' render={() => <TournCreate username={this.state.username} update_user={this.props.update_user} loggedIn={this.state.loggedIn} />} />
-						<Route exact path='/display' component={TournDisplay} />
+						<Route exact path='/tournament/:owner/:name' component={TournDisplay} />
 					</Switch>
 				</div>
 			</Router>
