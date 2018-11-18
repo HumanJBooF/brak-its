@@ -231,7 +231,7 @@ class TournDisplay extends React.Component {
     }
 
 
-    componentDidMount() {
+    componentDidMount = () => {
         const size = this.tempTourneyData.size;
         const tourneyInfo = [];
         const roundsToRun = Math.ceil(Math.sqrt(size));

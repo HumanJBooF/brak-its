@@ -38,33 +38,21 @@ class App extends React.Component {
 				})
 		})
 	}
-		// get_recent = () => {
-		// 	API.show_recent()
-		// 		.then(recent => {
-		// 			console.log(recent.data.tournament);
-		// 			const varArr = [];
-		// 			recent.data.tournament.map( tourneys => {
-		// 				// const tourneys = tourneys.tourneyName;
-		// 				// const id = tourneys.uuid;
-		// 				// console.log('name:', tourneys, '\n', 'id:', id);
-						
-		// 				varArr.tourneys = tourneys;
-						
-		// 			})
-		// 			this.setState( {recentArr: varArr});
-					
-		// 		})
-		// 		console.log('at', this.state.recentArr);
-		// }
-		
+
 		get_recent = () => {
 			API.show_recent()
-				.then(recent => {
+				.then( recent => {
 					const getTourneys = [];
 					recent.data.tournament.forEach( tourneyElems => {
 						const tourneyObj = { 
 							name: tourneyElems.tourneyName,
-							id: tourneyElems.uuid 
+							id: tourneyElems.uuid,
+							description: tourneyElems.description,
+							size: tourneyElems.size,
+							date: tourneyElems.date,
+							time: tourneyElems.time,
+							format: tourneyElems.format,
+							type: tourneyElems.type
 						}
 						//looking to see if anything is there, it is not.
 						//then it looks into tourney obj, and puts both into the array
