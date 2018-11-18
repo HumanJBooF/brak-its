@@ -1,6 +1,6 @@
 import React from "react";
-import Container from "../../../components/Container"
-import Tournament from "../../../components/Tournament"
+import Container from "../../components/Container"
+import Tournament from "../../components/Tournament"
 
 
 class TournDisplay extends React.Component {
@@ -234,7 +234,6 @@ class TournDisplay extends React.Component {
     componentDidMount() {
         const size = this.tempTourneyData.size;
         const tourneyInfo = [];
-
         const roundsToRun = Math.ceil(Math.sqrt(size));
 
         let indexTraker = 0;
@@ -242,12 +241,14 @@ class TournDisplay extends React.Component {
         for(let currentRound = 0; currentRound < roundsToRun; currentRound++) {
             const roundSize = size / (2 * Math.pow(2, currentRound));
 
-            tourneyInfo.push(this.sort_rounds(roundSize, indexTraker));
+            tourneyInfo.push(
+                this.sort_rounds(roundSize, indexTraker)
+            );
 
-            indexTraker = indexTraker + roundSize;
+            indexTraker += roundSize;
         }
 
-        this.setState({tourneyInfo: tourneyInfo})
+        this.setState({ tourneyInfo: tourneyInfo })
 
         console.log(tourneyInfo)
     }
@@ -255,9 +256,10 @@ class TournDisplay extends React.Component {
     sort_rounds = (roundSize, indexTraker) => {
         const roundInfo = [];
 
-        this.tempMatchData.map(match => {
-            if (match.match_num <= (roundSize + indexTraker) && match.match_num > indexTraker) {
-                roundInfo.push(match);
+        this.tempMatchData.map( match => {
+            if (match.match_num <= (roundSize + indexTraker) 
+                && match.match_num > indexTraker) {
+                    roundInfo.push(match);
             }
         });
 
@@ -267,9 +269,8 @@ class TournDisplay extends React.Component {
     render() {
         return (
             <>
-                {/* <Navbar update_user={this.props.update_user} username={this.props.username} loggedIn={this.props.loggedIn} /> */}
                 <Container>
-                    <Tournament tourneyInfo={this.state.tourneyInfo} key="willBeTourneyUUID" />
+                    <Tournament tourneyInfo={this.state.tourneyInfo} key="" />
                 </Container>
             </>
         )

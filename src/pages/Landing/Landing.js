@@ -14,7 +14,9 @@ class LandingPage extends React.Component {
                 <Navbar update_user={this.props.update_user} loggedIn={this.props.loggedIn} username={this.props.username} />
                 <Container>
                     <Search />
-                    <RecentCard />
+                    <RecentCard 
+                        recentarr={this.props.recentArr}
+                    />
                 </Container>
             </>
         )
