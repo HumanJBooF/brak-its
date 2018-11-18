@@ -6,38 +6,24 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             primaryKey: true
         },
-        tourneyName: {
-            type: DataTypes.STRING,
-        },
+        tourneyName: { type: DataTypes.STRING },
         description: {
             type: DataTypes.STRING,
             allowNull: true
         },
-        date: {
-            type: DataTypes.DATE,
-        },
-        time: {
-            type: DataTypes.TIME,
-        },
-        size: {
-            type: DataTypes.INTEGER,
-        },
-        format: {
-            type: DataTypes.STRING
-        },
-        type: {
-            type: DataTypes.STRING,
-        },
-        owner: {
-            type: DataTypes.STRING,
-        },
+        date: { type: DataTypes.DATE },
+        time: { type: DataTypes.TIME },
+        size: { type: DataTypes.INTEGER },
+        format: { type: DataTypes.STRING },
+        type: { type: DataTypes.STRING },
+        owner: { type: DataTypes.STRING },
         isDeleted: {
             type: DataTypes.BOOLEAN,
             default: false
         }
-    }, {
-            paranoid: true
-        });
+    },
+        { paranoid: true }
+    );
     Tourneys.associate = models => {
         Tourneys.hasMany(models.users, {
             as: 'tourneyId',

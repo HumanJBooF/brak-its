@@ -36,12 +36,14 @@ class SignUp extends React.Component {
             password: this.state.password,
             confirm: this.state.confirm
         })
+
             ? API.add_user({
                 username: this.state.username,
                 email: this.state.email,
                 password: this.state.password
             }).then(result => {
                 (!result.data.error)
+
                     ? API.find_user({
                         username: this.state.username,
                         password: this.state.password,
@@ -54,7 +56,9 @@ class SignUp extends React.Component {
                             this.setState({ redirectTo: '/' });
                         }
                     })
+
                     : this.setState({ usernameDescription: result.data.error })
+
             }).catch(error => console.log(error))
             // todo add a couldn't send
             : console.log('dont send');
