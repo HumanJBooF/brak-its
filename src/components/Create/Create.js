@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 // import Container from "../Container";
-import { Link } from "react-router-dom";
-import tournament from "../../pages/TournamentCreate";
-import styles from "./CreateStyle";
+import { Link } from 'react-router-dom';
+import tournament from '../../pages/TournamentCreate';
+import styles from './CreateStyle';
 
 
 // Dis page is to for the creation of a tournement, it will allow for a redirection
@@ -12,7 +12,7 @@ import styles from "./CreateStyle";
 
 const CreateButton = () => (
 
-    <Link to="/tournament"> 
+    <Link to="/tournament">
         <button
             className="btn waves-effect white right black-text"
             style={styles.btn}
