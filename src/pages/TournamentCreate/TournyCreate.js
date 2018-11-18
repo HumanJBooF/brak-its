@@ -7,7 +7,7 @@ import Card from "../../components/Card";
 import DatePicker from "react-date-picker";
 import 'materialize-css/dist/css/materialize.min.css';
 import M from 'materialize-css/dist/js/materialize.min.js';
-import styles from "./TournyStyles"
+import styles from './TournyStyles';
 
 class TournCreate extends React.Component {
 
@@ -26,8 +26,8 @@ class TournCreate extends React.Component {
 
 
 
-   
-    componentDidMount() {
+
+    componentDidMount () {
         M.AutoInit();
     }
     //RegEx to remove all special charcters 
@@ -105,7 +105,7 @@ class TournCreate extends React.Component {
 
 
 
-    render() {
+    render () {
         return (
             <>
                 <Navbar update_user={this.props.update_user} username={this.props.username} loggedIn={this.props.loggedIn} />
@@ -151,8 +151,8 @@ class TournCreate extends React.Component {
                                     className=""
                                     style={styles.calen}
                                 />
-                                <a className='dropdown-trigger btn left' data-target='dropdown1'style={styles.posDrop}>Select Size</a>
-                                <ul  id='dropdown1' className='dropdown-content' onClick={() => console.log("clicked")}>
+                                <a className='dropdown-trigger btn left' data-target='dropdown1' style={styles.posDrop}>Select Size</a>
+                                <ul id='dropdown1' className='dropdown-content' onClick={() => console.log("clicked")}>
                                     <li>
                                         <h4
                                             className="center-align"
@@ -181,13 +181,13 @@ class TournCreate extends React.Component {
                                         </h4>
                                     </li>
                                 </ul>
-                                    <button 
-                                        style={styles.createbtn} 
-                                        className="btn left col s12" 
-                                        onClick={() => console.log(`clicked`)} 
-                                        type="submit"
-                                    >
-                                        Create Tournament!
+                                <button
+                                    style={styles.createbtn}
+                                    className="btn left col s12"
+                                    onClick={() => console.log(`clicked`)}
+                                    type="submit"
+                                >
+                                    Create Tournament!
                                     </button>
                             </form>
                         </div>
