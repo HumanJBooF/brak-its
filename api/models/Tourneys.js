@@ -23,11 +23,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
         },
         format: {
-            type: DataTypes.STRING,
-            default: 'single-elim'
+            type: DataTypes.STRING
         },
         type: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
         },
         owner: {
             type: DataTypes.STRING,
