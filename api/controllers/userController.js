@@ -39,7 +39,10 @@ const userController = {
   check_user: (req, res) => {
     console.log(req.user);
     req.user
-      ? res.json(req.user)
+      ? res.json({
+        username: req.user.username,
+        loggedIn: true
+      })
       : res.json({ err: null })
   },
 
