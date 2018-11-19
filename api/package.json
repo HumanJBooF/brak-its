@@ -13,11 +13,12 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "react": "^16.5.2",
-    "react-date-picker": "^7.0.0",
+    "react-datepicker": "^2.0.0",
     "react-dom": "^16.6.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.3",
-    "sequelize": "^4.41.0"
+    "sequelize": "^4.41.0",
+    "sweetalert": "^2.1.2"
   },
   "devDependencies": {},
   "scripts": {

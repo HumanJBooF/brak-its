@@ -36,7 +36,7 @@ class SignUp extends React.Component {
             password: this.state.password,
             confirm: this.state.confirm
         })
-
+            //nested ternary here
             ? API.add_user({
                 username: this.state.username,
                 email: this.state.email,
@@ -64,14 +64,13 @@ class SignUp extends React.Component {
             : console.log('dont send');
 
         console.log(this.state.username)
-
-
     }
 
     check_validity = userInfo => {
         return (userInfo.username.length > 0)
             && (this.emailRegEx.test(userInfo.email))
-            && (userInfo.password.length >= 8 && userInfo.password === userInfo.confirm) ? true : false
+            && (userInfo.password.length >= 8 
+                && userInfo.password === userInfo.confirm) ? true : false
     }
 
     handle_change = event => {

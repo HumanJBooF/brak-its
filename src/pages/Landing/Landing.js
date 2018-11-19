@@ -6,12 +6,14 @@ import Search from '../../components/Search';
 
 
 class LandingPage extends React.Component {
-
-
     render () {
         return (
             <>
-                <Navbar update_user={this.props.update_user} loggedIn={this.props.loggedIn} username={this.props.username} />
+                <Navbar 
+                    update_user={this.props.update_user} 
+                    loggedIn={this.props.loggedIn} 
+                    username={this.props.username} 
+                />
                 <Container>
                     <Search />
                     <RecentCard 

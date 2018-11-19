@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 // import Container from "../Container";
-import { Link } from "react-router-dom";
-import tournament from "../../pages/TournamentCreate";
-import styles from "./CreateStyle";
+import { Link } from 'react-router-dom';
+import tournament from '../../pages/TournamentCreate';
+import styles from './CreateStyle';
 
 
 // Dis page is to for the creation of a tournement, it will allow for a redirection

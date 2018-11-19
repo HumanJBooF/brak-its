@@ -1,15 +1,16 @@
-import React from "react";
-import "./Round.css"
+import React from 'react';
+import './Round.css';
+import styles from './RoundStyles';
 
 const Tournament = props => (
     <div className="round">
-        {props.roundInfo.map(match => (
+        {props.roundInfo.map( match => (
             <>
-                <div className="playerContainer">
-                    <div className="player">{match.player_1}</div>
+                <div styles={styles.playerContainer}>
+                    <div styles={styles.player}> {match.player_1} </div>
                 </div>
-                <div className="playerContainer">
-                    <div className="player">{match.player_2}</div>
+                <div styles={styles.playerContainer}>
+                    <div styles={styles.player}> {match.player_2} </div>
                 </div>
             </>
         ))}

@@ -1,13 +1,15 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import 'react-datepicker/dist/react-datepicker.css';
+import 'materialize-css/dist/css/materialize.min.css';
 import Navbar from '../../components/Navbar';
 import Container from '../../components/Container';
-import API from '../../utils/API';
-import Card from "../../components/Card";
-import DatePicker from "react-date-picker";
-import 'materialize-css/dist/css/materialize.min.css';
-import M from 'materialize-css/dist/js/materialize.min.js';
+import Card from '../../components/Card';
 import styles from './TournyStyles';
+import API from '../../utils/API';
+
+import DatePicker from 'react-datepicker';
+import M from 'materialize-css/dist/js/materialize.min.js';
 
 class TournCreate extends React.Component {
 
@@ -16,16 +18,15 @@ class TournCreate extends React.Component {
         type: '',
         description: '',
         size: '',
-        date: new Date(),
+        startDate: new Date(),
+        date: '',
         owner: '',
         nameError: '',
         typeError: '',
         DescriptError: '',
-        username: this.props.username
+        username: this.props.username,
+        dropDownDisplay: ''
     }
-
-
-
 
     componentDidMount () {
         M.AutoInit();
@@ -35,10 +36,11 @@ class TournCreate extends React.Component {
     removeSpecials = RegExp(/^([a-zA-Z0-9_\s]*)$/)
 
     //handle click to grab the value of the drop-down clicked.
-    handle_click = event => {
+    handle_click = (event, date) => {
+        const dates = event.target.value
         // const chosenSize = event.currentTarget.dataset.id;
-        this.setState({ size: event.currentTarget.dataset.id });
-        console.log(this.state.size);
+        this.setState({ size: event.currentTarget.dataset.id, startDate: dates });
+        console.log(this.state.size, this.state.startDate);
     }
 
     handle_validity = tourneyInfo => {
@@ -51,7 +53,7 @@ class TournCreate extends React.Component {
 
     handle_submit = event => {
         event.preventDefault();
-        console.log(this.state);
+        console.log(this.state.size);
         this.handle_validity({
             tourneyName: this.state.tourneyName,
             description: this.state.description,
@@ -62,10 +64,10 @@ class TournCreate extends React.Component {
                 tourneyName: this.state.tourneyName,
                 type: this.state.type,
                 description: this.state.description,
-                date: this.state.date,
+                start: this.state.date,
                 size: this.state.size,
                 owner: this.state.username
-            }).then(newTourny => {
+            }).then( newTourny => {
                 console.log('added yo')
             })
             : console.log(`didn't send`)
@@ -73,11 +75,10 @@ class TournCreate extends React.Component {
 
     handle_change = event => {
         event.preventDefault();
-
         const value = event.target.value;
         const name = event.target.name;
         this.setState({ [name]: value });
-        console.log(this.state.date)
+        console.log(this.state.Startdate)
         console.log(this.state.tournyName);
         switch (name) {
             case 'tourneyName':
@@ -102,7 +103,7 @@ class TournCreate extends React.Component {
                 break;
         }
     }
-
+    
 
 
     render () {
@@ -146,8 +147,12 @@ class TournCreate extends React.Component {
                                 <label htmlFor="textarea">{this.state.descriptError}</label>
 
                                 <DatePicker
-                                    onClick={this.handle_click}
-                                    value={this.state.date}
+                                    id="dates"
+                                    name="date"
+                                    // onClick={this.handle_click.bind(this)}
+                                    onChange={this.handle_change}
+                                    selected={this.state.startDate}
+                               
                                     className=""
                                     style={styles.calen}
                                 />

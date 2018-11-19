@@ -1,10 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import 'react-datepicker/dist/react-datepicker.css';
+import 'materialize-css/dist/css/materialize.min.css';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import Landing from './pages/Landing'
-import TournCreate from "./pages/TournamentCreate";
-import TournDisplay from "./pages/TournamentDisplay"
+import TournCreate from './pages/TournamentCreate';
+import TournDisplay from './pages/TournamentDisplay';
 import API from './utils/API';
 
 
@@ -54,14 +56,18 @@ class App extends React.Component {
 						format: tourneyElems.format,
 						type: tourneyElems.type
 					}
-					//looking to see if anything is there, it is not.
-					//then it looks into tourney obj, and puts both into the array
+
 					getTourneys.push(tourneyObj);
 
-					console.log('in loop', getTourneys);
-				})
+					console.log(
+						'loop through created tournies, grab data \n', 
+						getTourneys
+					);
+				})					
+				//looking to see if anything is there, it is not.
+				//then it looks into tourney obj, and puts both into the array
 				this.setState({
-					recentArr: [...this.state.recentArr, ...getTourneys]
+					recentArr: [...this.state.recentArr, ...getTourneys ]
 				})
 			})
 	}
@@ -72,10 +78,31 @@ class App extends React.Component {
 			<Router>
 				<div>
 					<Switch>
-						<Route exact path='/' render={() => <Landing update_user={this.update_user} loggedIn={this.state.loggedIn} username={this.state.username} recentArr={this.state.recentArr} />} />
-						<Route exact path='/signup' render={() => <SignUp update_user={this.update_user} />} />
-						<Route exact path='/signin' render={() => <SignIn update_user={this.update_user} />} />
-						<Route exact path='/tournament' render={() => <TournCreate username={this.state.username} update_user={this.props.update_user} loggedIn={this.state.loggedIn} />} />
+						<Route exact path='/' 
+							render={() => <Landing 
+								update_user={this.update_user} 
+								loggedIn={this.state.loggedIn} 
+								username={this.state.username} 
+								recentArr={this.state.recentArr} 
+							/>} 
+						/>
+						<Route exact path='/signup' 
+							render={() => <SignUp 
+								update_user={this.update_user} 
+							/>} 
+						/>
+						<Route exact path='/signin' 
+							render={() => <SignIn 
+								update_user={this.update_user} 
+							/>} 
+						/>
+						<Route exact path='/tournament' 
+							render={() => <TournCreate 
+								username={this.state.username} 
+								update_user={this.props.update_user} 
+								loggedIn={this.state.loggedIn} 
+							/>} 
+						/>
 						<Route exact path='/display' component={TournDisplay} />
 					</Switch>
 				</div>
