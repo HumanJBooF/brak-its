@@ -1,8 +1,7 @@
 
 const styles = {
     nav: {
-
-        backgroundColor: "transparent",
+        backgroundColor: "#3d525c",
         fontFamily: `'Ubuntu', sansSeriff`,
         boxShadow: "none",
     }

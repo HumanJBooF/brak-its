@@ -1,6 +1,7 @@
 import React from "react";
 import Container from "../../../components/Container"
 import Tournament from "../../../components/Tournament"
+import Navbar from "../../../components/Navbar"
 
 
 class TournDisplay extends React.Component {
@@ -10,75 +11,75 @@ class TournDisplay extends React.Component {
 
     //================================================================================================
 
-    tempMatchData = [
+    // tempMatchData = [
 
-    // Round 1
+    // // Round 1
     
-    {
-        player_1: "1",
-        player_2: "2",
-        p1_score: 10,
-        p2_score: 20,
-        winner: "2",
-        match_num: 1,
-        next_match: 5
-    }, {
-        player_1: "3",
-        player_2: "4",
-        p1_score: 15,
-        p2_score: 12,
-        winner: "3",
-        match_num: 2,
-        next_match: 5
-    }, {
-        player_1: "5",
-        player_2: "6",
-        p1_score: 8,
-        p2_score: 12,
-        winner: "6",
-        match_num: 3,
-        next_match: 6
-    }, {
-        player_1: "7",
-        player_2: "8",
-        p1_score: 18,
-        p2_score: 20,
-        winner: "8",
-        match_num: 4,
-        next_match: 6
-    },
+    // {
+    //     player_1: "1",
+    //     player_2: "2",
+    //     p1_score: 10,
+    //     p2_score: 20,
+    //     winner: "2",
+    //     match_num: 1,
+    //     next_match: 5
+    // }, {
+    //     player_1: "3",
+    //     player_2: "4",
+    //     p1_score: 15,
+    //     p2_score: 12,
+    //     winner: "3",
+    //     match_num: 2,
+    //     next_match: 5
+    // }, {
+    //     player_1: "5",
+    //     player_2: "6",
+    //     p1_score: 8,
+    //     p2_score: 12,
+    //     winner: "6",
+    //     match_num: 3,
+    //     next_match: 6
+    // }, {
+    //     player_1: "7",
+    //     player_2: "8",
+    //     p1_score: 18,
+    //     p2_score: 20,
+    //     winner: "8",
+    //     match_num: 4,
+    //     next_match: 6
+    // },
 
-    // Round 2
+    // // Round 2
 
-    {
-        player_1: "2",
-        player_2: "3",
-        p1_score: 14,
-        p2_score: 17,
-        winner: "3",
-        match_num: 5,
-        next_match: 7
-    }, {
-        player_1: "6",
-        player_2: "8",
-        p1_score: 12,
-        p2_score: 10,
-        winner: "6",
-        match_num: 6,
-        next_match: 7
-    },
+    // {
+    //     player_1: "2",
+    //     player_2: "3",
+    //     p1_score: 14,
+    //     p2_score: 17,
+    //     winner: "3",
+    //     match_num: 5,
+    //     next_match: 7
+    // }, {
+    //     player_1: "6",
+    //     player_2: "8",
+    //     p1_score: 12,
+    //     p2_score: 10,
+    //     winner: "6",
+    //     match_num: 6,
+    //     next_match: 7
+    // },
 
-    // Round 3
+    // // Round 3
 
-    {
-        player_1: "3",
-        player_2: "6",
-        p1_score: 60,
-        p2_score: 3,
-        winner: "3",
-        match_num: 7,
-        next_match: 8
-    }];
+    // {
+    //     player_1: "3",
+    //     player_2: "6",
+    //     p1_score: 60,
+    //     p2_score: 3,
+    //     winner: "3",
+    //     match_num: 7,
+    //     next_match: 8
+    // }];
 
     //================================================================================================
 
@@ -87,38 +88,6 @@ class TournDisplay extends React.Component {
     // Round 1
 
     {
-        player_1: "1",
-        player_2: "2",
-        p1_score: 10,
-        p2_score: 20,
-        winner: "2",
-        match_num: 1,
-        next_match: 9
-    }, {
-        player_1: "3",
-        player_2: "4",
-        p1_score: 15,
-        p2_score: 12,
-        winner: "3",
-        match_num: 2,
-        next_match: 9
-    }, {
-        player_1: "5",
-        player_2: "6",
-        p1_score: 8,
-        p2_score: 12,
-        winner: "6",
-        match_num: 3,
-        next_match: 10
-    }, {
-        player_1: "7",
-        player_2: "8",
-        p1_score: 18,
-        p2_score: 20,
-        winner: "8",
-        match_num: 4,
-        next_match: 10
-    }, {
         player_1: "9",
         player_2: "10",
         p1_score: 5,
@@ -150,7 +119,39 @@ class TournDisplay extends React.Component {
         winner: "16",
         match_num: 8,
         next_match: 12
-    }, 
+    }, {
+        player_1: "1",
+        player_2: "2",
+        p1_score: 10,
+        p2_score: 20,
+        winner: "2",
+        match_num: 1,
+        next_match: 9
+    }, {
+        player_1: "3",
+        player_2: "4",
+        p1_score: 15,
+        p2_score: 12,
+        winner: "3",
+        match_num: 2,
+        next_match: 9
+    }, {
+        player_1: "5",
+        player_2: "6",
+        p1_score: 8,
+        p2_score: 12,
+        winner: "6",
+        match_num: 3,
+        next_match: 10
+    }, {
+        player_1: "7",
+        player_2: "8",
+        p1_score: 18,
+        p2_score: 20,
+        winner: "8",
+        match_num: 4,
+        next_match: 10
+    },
 
     // Round 2
 
@@ -222,6 +223,18 @@ class TournDisplay extends React.Component {
 
     //================================================================================================
 
+    // tempMatchData = [{
+    //     player_1: "",
+    //     player_2: "",
+    //     p1_score: 0,
+    //     p2_score: 0,
+    //     winner: "",
+    //     match_num: 0,
+    //     next_match: 0
+    // }]
+
+    //================================================================================================
+
     // tempTourneyData = {
     //     size: 8
     // };
@@ -230,10 +243,55 @@ class TournDisplay extends React.Component {
         size: 16
     }
 
+    // tempTourneyData = {
+    //     size: 10
+    // }
+
+
+    // componentDidMount() {
+    //     let tourneyInfo = [];
+    //     let indexTraker = 0;
+
+    //     const size = this.tempTourneyData.size;
+    //     // Below doesnt work (size of 25)
+    //     const roundsToRun = Math.ceil(Math.sqrt(size));
+
+    //     for(let currentRound = 0; currentRound < roundsToRun; currentRound++) {
+    //         const roundSize = size / (2 * Math.pow(2, currentRound));
+
+    //         tourneyInfo = [...tourneyInfo, this.sort_rounds(roundSize, indexTraker)];
+
+    //         indexTraker += roundSize;
+    //     }
+
+    //     this.setState({tourneyInfo: tourneyInfo})
+
+    //     console.log(tourneyInfo)
+    // }
+
+    // sort_rounds = (roundSize, indexTraker) => {
+    //     let roundInfo = [];
+
+    //     this.tempMatchData.map(match => {
+    //         if (match.match_num <= (roundSize + indexTraker) && match.match_num > indexTraker) {
+    //             roundInfo = [...roundInfo, match];
+    //         }
+    //     });
+
+    //     roundInfo.sort((a, b) => {
+    //         return a.match_num - b.match_num;
+    //     });
+
+    //     return roundInfo;
+    // }
+
+    //==========================================================================================
+
+    // Oldie but Goldie
 
     componentDidMount() {
         const size = this.tempTourneyData.size;
-        const tourneyInfo = [];
+        let tourneyInfo = [];
 
         const roundsToRun = Math.ceil(Math.sqrt(size));
 
@@ -242,9 +300,9 @@ class TournDisplay extends React.Component {
         for(let currentRound = 0; currentRound < roundsToRun; currentRound++) {
             const roundSize = size / (2 * Math.pow(2, currentRound));
 
-            tourneyInfo.push(this.sort_rounds(roundSize, indexTraker));
+            tourneyInfo = [...tourneyInfo, this.sort_rounds(roundSize, indexTraker)];
 
-            indexTraker = indexTraker + roundSize;
+            indexTraker += roundSize;
         }
 
         this.setState({tourneyInfo: tourneyInfo})
@@ -253,12 +311,16 @@ class TournDisplay extends React.Component {
     }
 
     sort_rounds = (roundSize, indexTraker) => {
-        const roundInfo = [];
+        let roundInfo = [];
 
         this.tempMatchData.map(match => {
             if (match.match_num <= (roundSize + indexTraker) && match.match_num > indexTraker) {
-                roundInfo.push(match);
+                roundInfo = [...roundInfo, match];
             }
+        });
+
+        roundInfo.sort((a, b) => {
+            return a.match_num - b.match_num;
         });
 
         return roundInfo;
@@ -267,7 +329,7 @@ class TournDisplay extends React.Component {
     render() {
         return (
             <>
-                {/* <Navbar update_user={this.props.update_user} username={this.props.username} loggedIn={this.props.loggedIn} /> */}
+                <Navbar update_user={this.props.update_user} username={this.props.username} loggedIn={this.props.loggedIn} />
                 <Container>
                     <Tournament tourneyInfo={this.state.tourneyInfo} key="willBeTourneyUUID" />
                 </Container>

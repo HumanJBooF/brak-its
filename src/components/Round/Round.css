@@ -8,8 +8,58 @@
     position: relative;
 }
 
+.playerContainer::before {
+    content: "";
+    display: block;
+    height: 30px;
+    border-left: 2px solid white;
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    margin-top: -15px;
+    margin-left: -2px;
+}
+
+.playerContainer:nth-child(odd)::after {
+    content: "";
+    display: block;
+    border: 2px solid transparent;
+    border-top-color: purple;
+    border-right-color: purple;
+    height: 50%;
+    position: absolute;
+    right: -10px;
+    width: 10px;
+    top: 50%;
+}
+
+.playerContainer:nth-child(even)::after {
+    content: "";
+    display: block;
+    border: 2px solid transparent;
+    border-bottom-color: red;
+    border-right-color: red;
+    height: 50%;
+    position: absolute;
+    right: -10px;
+    width: 10px;
+    bottom: 50%;
+}
+
 .player {
     border: 2px solid white;
-    width: 100px;
-    text-align: center
+    width: 100%;
+    text-align: center;
+    color: white;
+}
+
+.player::before {
+    content: "";
+    display: block;
+    width: 10px;
+    border-bottom: 2px solid lightgreen;
+    margin-left: -2px;
+    position: absolute;
+    top: 50%;
+    left: -10px;
 }
