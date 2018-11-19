@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import API from '../../utils/API';
-import styles from "./NavStyles";
+import styles from './NavStyles';
 
 const logout = props => {
     API.logout().then(result => {
@@ -11,7 +11,7 @@ const logout = props => {
                 username: null
             });
         }
-    }).catch(err => console.log(`LOGOUT ERROR: ${err}`));
+    }).catch( err => console.log(`LOGOUT ERROR: ${err}`));
 }
 
 const Navbar = props => (

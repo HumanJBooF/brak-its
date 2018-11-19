@@ -15,22 +15,26 @@ passport.use(new LocalStrategy(
 ));
 
 // Used to add the user in the cookies for checking if user is logged in our not
-passport.serializeUser((user, cb) => {
+passport.serializeUser((user, done) => {
     console.log('serialize')
     console.log(`USER: ${user.username}`)
-    cb(null, { id: user.uuid });
+    done(null, user);
 });
 
-passport.deserializeUser((user, cb) => {
+passport.deserializeUser((id, done) => {
+    console.log(`WHAT IS THIS: ${id.uuid}`)
     db.users.findOne({
         where: {
-            uuid: user.id
+            uuid: id.uuid
         }
-    }).then(() => {
-        console.log('DESERIALIZE');
-        console.log(`USER OBJ: ${user.id}`)
-        cb(null, user);
-    })
+    }).then(user => {
+        console.log(`deserialized: ${user.username}`)
+        if (!user) {
+            done(new Error(`No user`));
+        };
+    });
+
+    done(null, id);
 });
 
 module.exports = passport;
