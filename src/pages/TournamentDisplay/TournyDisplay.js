@@ -263,7 +263,7 @@ class TournDisplay extends React.Component {
         return (
             <>
                 <Container>
-                    <Tournament tourneyInfo={this.state.tourneyInfo} key="" />
+                    <Tournament tourneyInfo={this.state.tourneyInfo} key="willBeUUID" />
                 </Container>
             </>
         )

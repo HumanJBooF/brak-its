@@ -12,7 +12,7 @@ import styles from './CreateStyle';
 
 const CreateButton = () => (
 
-    <Link to="/tournament"> 
+    <Link to="/tournament">
         <button
             className="btn waves-effect white right black-text"
             style={styles.btn}

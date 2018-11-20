@@ -1,5 +1,5 @@
 const styles = {
-    searchbar: {
+    searchBar: {
         marginTop: "5vh",
         backgroundColor: "grey",
         color: "white",
@@ -10,4 +10,5 @@ const styles = {
         width: "100%",
     }
 }
+
 export default styles;

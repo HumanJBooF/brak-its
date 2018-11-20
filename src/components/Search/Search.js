@@ -3,8 +3,6 @@
  import CreateButton from '../Create';
  import styles from './SearchStyles';
 
-
-
  const SearchBar = () => (
      <Container>
      <div className="row">
@@ -17,6 +15,6 @@
         <CreateButton />
      </div>
     </Container>
- )
+)
 
- export default SearchBar;
+export default SearchBar;

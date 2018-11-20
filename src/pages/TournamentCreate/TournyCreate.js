@@ -17,7 +17,7 @@ class TournCreate extends React.Component {
         tourneyName: '',
         type: '',
         description: '',
-        size: '',
+        sizeLimit: '',
         startDate: new Date(),
         date: '',
         owner: '',
@@ -39,7 +39,7 @@ class TournCreate extends React.Component {
     handle_click = (event, date) => {
         const dates = event.target.value
         // const chosenSize = event.currentTarget.dataset.id;
-        this.setState({ size: event.currentTarget.dataset.id, startDate: dates });
+        this.setState({ sizeLimit: event.currentTarget.dataset.id, startDate: dates });
         console.log(this.state.size, this.state.startDate);
     }
 
@@ -65,7 +65,7 @@ class TournCreate extends React.Component {
                 type: this.state.type,
                 description: this.state.description,
                 start: this.state.date,
-                size: this.state.size,
+                sizeLimit: this.state.size,
                 owner: this.state.username
             }).then( newTourny => {
                 console.log('added yo')
@@ -152,7 +152,6 @@ class TournCreate extends React.Component {
                                     // onClick={this.handle_click.bind(this)}
                                     onChange={this.handle_change}
                                     selected={this.state.startDate}
-                               
                                     className=""
                                     style={styles.calen}
                                 />
