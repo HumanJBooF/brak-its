@@ -6,11 +6,11 @@ const Tournament = props => (
     <div className="round">
         {props.roundInfo.map( match => (
             <>
-                <div styles={styles.playerContainer}>
-                    <div styles={styles.player}> {match.player_1} </div>
+                <div style={styles.playerContainer}>
+                    <div style={styles.player}>{match.player_1}</div>
                 </div>
-                <div styles={styles.playerContainer}>
-                    <div styles={styles.player}> {match.player_2} </div>
+                <div style={styles.playerContainer}>
+                    <div style={styles.player}>{match.player_2}</div>
                 </div>
             </>
         ))}
