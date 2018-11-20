@@ -8,9 +8,7 @@ const styles = {
         border: "1px solid white",
         fontWeight: "Bold",
         width: "100%",
-
     }
-
 }
 
 export default styles;

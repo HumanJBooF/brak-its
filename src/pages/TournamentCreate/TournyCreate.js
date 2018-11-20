@@ -25,7 +25,7 @@ class TournCreate extends React.Component {
         typeError: '',
         DescriptError: '',
         username: this.props.username,
-
+        dropDownDisplay: ''
     }
 
     componentDidMount () {
@@ -67,7 +67,7 @@ class TournCreate extends React.Component {
                 start: this.state.date,
                 sizeLimit: this.state.size,
                 owner: this.state.username
-            }).then(newTourny => {
+            }).then( newTourny => {
                 console.log('added yo')
             })
             : console.log(`didn't send`)
@@ -103,7 +103,7 @@ class TournCreate extends React.Component {
                 break;
         }
     }
-
+    
 
 
     render () {

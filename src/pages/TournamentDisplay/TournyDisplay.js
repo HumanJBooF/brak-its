@@ -1,6 +1,6 @@
-import React from "react";
-import Container from "../../components/Container"
-import Tournament from "../../components/Tournament"
+import React from 'react';
+import Container from '../../components/Container';
+import Tournament from '../../components/Tournament';
 
 
 class TournDisplay extends React.Component {
@@ -83,9 +83,7 @@ class TournDisplay extends React.Component {
     //================================================================================================
 
     tempMatchData = [
-
         // Round 1
-
         {
             player_1: "1",
             player_2: "2",
@@ -151,9 +149,7 @@ class TournDisplay extends React.Component {
             match_num: 8,
             next_match: 12
         },
-
         // Round 2
-
         {
             player_1: "2",
             player_2: "3",
@@ -187,9 +183,7 @@ class TournDisplay extends React.Component {
             match_num: 12,
             next_match: 14
         },
-
         // Round 3
-
         {
             player_1: "2",
             player_2: "8",
@@ -259,10 +253,9 @@ class TournDisplay extends React.Component {
         this.tempMatchData.map(match => {
             if (match.match_num <= (roundSize + indexTraker)
                 && match.match_num > indexTraker) {
-                roundInfo.push(match);
+                    roundInfo.push(match);
             }
         });
-
         return roundInfo;
     }
 

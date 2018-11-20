@@ -1,12 +1,12 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
+
 import Navbar from '../../components/Navbar';
 import Container from '../../components/Container';
 import Card from '../../components/Card';
-import Button from "../../components/Button";
-import API from '../../utils/API';
-import { Redirect } from 'react-router-dom';
+import Button from '../../components/Button';
 import formStyle from './SignInStyle.js';
-
+import API from '../../utils/API';
 
 class SignIn extends React.Component {
 
@@ -14,7 +14,7 @@ class SignIn extends React.Component {
         username: '',
         password: '',
         redirectTo: null,
-        btn: "Sign In!"
+        btn: 'Sign In!',
     }
 
     check_validity (userInfo) {
@@ -34,7 +34,7 @@ class SignIn extends React.Component {
     handle_submit = event => {
         event.preventDefault();
 
-        console.log("attempting login");
+        console.log(`attempting login`);
 
         this.check_validity({
             username: this.state.username,
@@ -53,7 +53,7 @@ class SignIn extends React.Component {
                 }
             }).catch(error => console.log(error))
             // todo add a couldn't send
-            : console.log('dont send')
+            : console.log(`invalid, will not send`)
 
 
 
@@ -107,7 +107,6 @@ class SignIn extends React.Component {
                                     </div>
                                 </form>
                             </div>
-
                         </Card>
                     </Container >
                 </>

@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import 'react-datepicker/dist/react-datepicker.css';
+import 'materialize-css/dist/css/materialize.min.css';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import Landing from './pages/Landing'
@@ -56,8 +58,7 @@ class App extends React.Component {
 						owner: tourneyElems.owner,
 						isActive: tourneyElems.isActive
 					}
-					//looking to see if anything is there, it is not.
-					//then it looks into tourney obj, and puts both into the array
+
 					getTourneys.push(tourneyObj);
 
 					console.log('in loop', getTourneys);

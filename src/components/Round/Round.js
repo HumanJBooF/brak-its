@@ -4,7 +4,7 @@ import styles from './RoundStyles';
 
 const Tournament = props => (
     <div className="round">
-        {props.roundInfo.map(match => (
+        {props.roundInfo.map( match => (
             <>
                 <div style={styles.playerContainer}>
                     <div style={styles.player}>{match.player_1}</div>
