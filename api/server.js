@@ -17,7 +17,12 @@ const routes = require('./routes');
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(session({ secret: 'BrakitsSecret', resave: true, saveUninitialized: true }));
+app.use(session({
+  secret: 'BrakitsSecret',
+  resave: true,
+  saveUninitialized: true,
+  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } //remember user for 30 days
+}));
 
 // Passport
 app.use(passport.initialize());

@@ -74,10 +74,31 @@ class App extends React.Component {
 			<Router>
 				<div>
 					<Switch>
-						<Route exact path='/' render={() => <Landing update_user={this.update_user} loggedIn={this.state.loggedIn} username={this.state.username} recentArr={this.state.recentArr} />} />
-						<Route exact path='/signup' render={() => <SignUp update_user={this.update_user} />} />
-						<Route exact path='/signin' render={() => <SignIn update_user={this.update_user} />} />
-						<Route exact path='/tournament' render={() => <TournCreate username={this.state.username} update_user={this.props.update_user} loggedIn={this.state.loggedIn} />} />
+						<Route exact path='/'
+							render={() => <Landing
+								update_user={this.update_user}
+								loggedIn={this.state.loggedIn}
+								username={this.state.username}
+								recentArr={this.state.recentArr}
+							/>}
+						/>
+						<Route exact path='/signup'
+							render={() => <SignUp
+								update_user={this.update_user}
+							/>}
+						/>
+						<Route exact path='/signin'
+							render={() => <SignIn
+								update_user={this.update_user}
+							/>}
+						/>
+						<Route exact path='/tournament'
+							render={() => <TournCreate
+								username={this.state.username}
+								update_user={this.props.update_user}
+								loggedIn={this.state.loggedIn}
+							/>}
+						/>
 						<Route exact path='/tournament/:owner/:name' component={TournDisplay} />
 					</Switch>
 				</div>
