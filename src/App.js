@@ -7,6 +7,7 @@ import SignIn from './pages/SignIn';
 import Landing from './pages/Landing'
 import TournCreate from './pages/TournamentCreate';
 import TournDisplay from './pages/TournamentDisplay';
+import TournyJoin from './pages/TournamentJoin';
 import API from './utils/API';
 
 
@@ -101,6 +102,11 @@ class App extends React.Component {
 							/>}
 						/>
 						<Route exact path='/tournament/:owner/:name' component={TournDisplay} />
+						<Route exact path='/join'
+							render={()=> <TournyJoin
+								username={this.state.username}
+							/>} 
+						/>
 					</Switch>
 				</div>
 			</Router>
