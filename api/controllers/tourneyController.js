@@ -7,7 +7,7 @@ const tourneyController = {
             limit: 5,
             order: [['createdAt', 'DESC']]
         }).then(dbTourneys => {
-            res.json(dbTourneys);
+            res.json({ tournament: dbTourneys});
         }).catch(err => res.json({ error: err }));
     },
 

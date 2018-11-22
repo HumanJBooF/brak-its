@@ -3,6 +3,7 @@
 *::before {
   box-sizing: border-box;
 }
+<<<<<<< HEAD
 
 .tournamentViewport {
 	overflow: scroll;
@@ -11,6 +12,11 @@
 
 .tournamentDisplay {
     background-color: #3d525c;
+=======
+
+.tournamentDisplay {
+    background: #3f5661;
+>>>>>>> 3e35f0788492da59adfe17f80cc74decccd8d1de
     display: flex;
     flex-flow: row nowrap;
 }
@@ -19,6 +25,7 @@
     display: flex;
     flex-grow: 1;
     flex-flow: column nowrap;
+<<<<<<< HEAD
 }
 
 .round:first-child .playerContainer::before {
@@ -32,4 +39,6 @@
   
 .round:last-child .playerContainer::after {
     display: none;
+=======
+>>>>>>> 3e35f0788492da59adfe17f80cc74decccd8d1de
 }

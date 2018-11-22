@@ -1,22 +1,48 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Container from '../Container';
 
-const RecentCard = () => (
-    <Container>
+const RecentCard = props => (
+
+    < Container >
         <div className="row">
-            <h3 className="RecentHead center-align">Recent Matches</h3>
-            <div className="card horizontal large grey lighten-4">
+            <div className="card large grey lighten-4">
                 <div className="card-content">
-                    <h1 className="center-align"> <strong> Recent Tournaments</strong></h1>
-                    <ul className="center-align">
-                        <li>League of legends tournament</li>
-                        <li>Runescape PVP challonge </li>
-                        <li>CS:GO NvS vs qp</li>
-                    </ul>
+                    <h1 className="col s12 center">
+                        <strong> Recent Tournaments</strong>
+                    </h1>
+                    <div className="row col s12">
+                        <table className="centered responsive-table highlight striped">
+                            <thead>
+                                <tr>
+                                    <th>Tournament Name</th>
+                                    <th>Game-Type</th>
+                                    <th>Organizer</th>
+                                    <th>Size</th>
+                                    <th>Format</th>
+                                    <th>Date</th>
+                                    <th>Active</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {props.recentarr.map((name, i) => (
+                                    <tr key={i}>
+                                        <td><Link to={`/tournament/${name.owner}/${name.name}`}><h6>{name.name}</h6></Link></td>
+                                        <td><h6>{name.gameType}</h6></td>
+                                        <td><h6>{name.owner}</h6></td>
+                                        <td><h6>{name.sizeLimit}</h6></td>
+                                        <td><h6>{name.format}</h6></td>
+                                        <td><h6>{name.date}</h6></td>
+                                        <td><h6>{`${name.isActive.toString().charAt(0).toUpperCase()}${name.isActive.toString().slice(1)}`}</h6></td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </Container>
+    </Container >
 )
 
 export default RecentCard;

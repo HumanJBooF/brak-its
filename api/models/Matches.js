@@ -6,35 +6,17 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             primaryKey: true
         },
-        p1_score: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
-        p2_score: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
-        winner: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        match_num: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
-        next_match: {
-            type: DataTypes.BOOLEAN,
-            default: false
-        }
-    }, {
-            paranoid: true
-        });
-    Matches.associate = models => {
-        Matches.belongsTo(models.tourneys, {
-            as: 'tourneyId',
-            foreignKey: 'tourney'
-        });
+        p1Score: { type: DataTypes.INTEGER },
+        p2Score: { type: DataTypes.INTEGER },
+        winner: { type: DataTypes.STRING },
+        matchNum: { type: DataTypes.INTEGER },
+        nextMatch: { type: DataTypes.BOOLEAN, defaultValue: false }
+    },
+        { paranoid: true }
+    );
 
+    Matches.associate = models => {
+        Matches.belongsTo(models.tourneys, { as: 'tourneyId', foreignKey: 'tourney' });
     }
 
     return Matches;
