@@ -48,7 +48,13 @@ class TournCreate extends React.Component {
     }
 
     handle_validity = tourneyInfo => {
-        console.log(tourneyInfo)
+        // console.log(tourneyInfo)
+        // console.log("tests start here");
+        // console.log(tourneyInfo.tourneyName.length);
+        // console.log(this.removeSpecials.test(tourneyInfo.tourneyName));
+        // console.log(tourneyInfo.description.length);
+        // console.log(tourneyInfo.description.length);
+        // console.log("end tests")
         return (tourneyInfo.tourneyName.length > 0)
             && (this.removeSpecials.test(tourneyInfo.tourneyName))
             && (tourneyInfo.description.length <= 250
@@ -63,15 +69,19 @@ class TournCreate extends React.Component {
     handle_submit = (event, date) => {
         event.preventDefault();
         this.setState({ startDate: date })
-        console.log(this.state.size);
+        // console.log(this.handle_validity({
+        //     tourneyName: this.state.tourneyName,
+        //     description: this.state.description,
+        //     type: this.state.type,
+        // }));
         this.handle_validity({
             tourneyName: this.state.tourneyName,
             description: this.state.description,
             type: this.state.type,
         })
-        console.log(this.state.startDate)
-
-            ? API.create_tournament({
+            ?
+            // console.log("YEET")
+            API.create_tournament({
                 tourneyName: this.state.tourneyName,
                 type: this.state.type,
                 description: this.state.description,
@@ -93,7 +103,7 @@ class TournCreate extends React.Component {
             // startDate: date
         });
         console.log(this.state.startDate)
-        console.log(this.state.tournyName);
+        console.log(this.state.tourneyName);
         switch (name) {
             case 'tourneyName':
                 value.length > 3

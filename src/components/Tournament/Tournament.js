@@ -6,7 +6,7 @@ const Tournament = props => (
     <div className="col s10 offset-s1 tournamentViewport">
         <div className="tournamentDisplay">
             {props.tourneyInfo.map(round => (
-                <Round key={round.length} roundInfo={round} />
+                <Round key={`roundSize${round.length}`} roundInfo={round} />
             ))}
         </div>
     </div>
