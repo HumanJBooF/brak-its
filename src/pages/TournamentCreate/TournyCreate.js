@@ -60,15 +60,14 @@ class TournCreate extends React.Component {
         console.log(this.state.date);
     }
 
-    handle_submit = event => {
+    handle_submit = (event, date) => {
         event.preventDefault();
-
+        this.setState({ startDate: date })
         console.log(this.state.size);
         this.handle_validity({
             tourneyName: this.state.tourneyName,
             description: this.state.description,
             type: this.state.type,
-            date: this.state.startDate
         })
         console.log(this.state.startDate)
 
@@ -89,8 +88,10 @@ class TournCreate extends React.Component {
         event.preventDefault();
         const value = event.target.value;
         const name = event.target.name;
-        this.setState({ startDate: date })
-        this.setState({ [name]: value });
+        this.setState({ 
+            [name]: value,
+            // startDate: date
+        });
         console.log(this.state.startDate)
         console.log(this.state.tournyName);
         switch (name) {
@@ -170,7 +171,7 @@ class TournCreate extends React.Component {
                                 <DatePicker
                                     selected={this.state.startDate}
                                     onChange={this.handle_date}
-                                    showTimeSelect
+                                    
                                     timeFormat="hh:mm"
                                     timeIntervals={15}
                                     dateFormat="MMMM d, yyyy h:mm aa"
