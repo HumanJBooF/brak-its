@@ -3,8 +3,6 @@ import Navbar from '../../components/Navbar';
 import RecentCard from '../../components/RecentCard';
 import Container from '../../components/Container';
 import Search from '../../components/Search';
-import Create from '../../components/Create';
-import API from '../../utils/API';
 import API from './../../utils/API';
 
 class LandingPage extends React.Component {
