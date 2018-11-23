@@ -1,7 +1,7 @@
 import React from 'react';
 import Container from '../../components/Container';
 import Tournament from '../../components/Tournament';
-
+import Navbar from '../../components/Navbar'
 
 class TournDisplay extends React.Component {
     state = {
@@ -380,15 +380,39 @@ class TournDisplay extends React.Component {
         roundInfo.sort((a, b) => {
             return a.boxOrder - b.boxOrder;
         });
-        
+
         return roundInfo;
     }
 
     render () {
         return (
             <>
+                <Navbar 
+                    update_user={this.props.update_user}
+                    loggedIn={this.props.loggedIn}
+                    username={this.props.username}
+                />
                 <Container>
-                    <Tournament tourneyInfo={this.state.tourneyInfo} key="willBeUUID" />
+                    <h6>Tourney Name Goes here</h6>
+
+                    {true /* if tournament is active */
+                        ? <Tournament tourneyInfo={this.state.tourneyInfo} key="willBeUUID" />
+                        : null
+                    }
+
+                    <div className="row">
+                        {true /* if tournament is pre-actvie */
+                            ? <p>join info</p>
+                            : null
+                        }
+
+                        <p>This is where info will go</p>
+                        
+                        {true /* if owner = logged in */
+                            ? <p>manager options show here</p>
+                            : null
+                        }
+                    </div>
                 </Container>
             </>
         )

@@ -17,7 +17,7 @@ class TournCreate extends React.Component {
         super(props);
         this.state = {
             tourneyName: '',
-            type: '',
+            gameType: '',
             description: '',
             sizeLimit: '',
             startDate: new Date(),
@@ -26,9 +26,10 @@ class TournCreate extends React.Component {
             typeError: '',
             DescriptError: '',
             username: this.props.username,
-            showSize: 'Select Size'
+            showSize: 'Select Size',
+            redirectTo: null
         }
-        this.handle_date= this.handle_date.bind(this)
+        this.handle_date = this.handle_date.bind(this)
     }
 
     componentDidMount() {
@@ -40,9 +41,9 @@ class TournCreate extends React.Component {
 
     //handle click to grab the value of the drop-down clicked.
     handle_click = event => {
-        this.setState({ 
+        this.setState({
             sizeLimit: event.currentTarget.dataset.id,
-            showSize:  `Chosen Size  ${event.currentTarget.dataset.id}`
+            showSize: `Chosen Size  ${event.currentTarget.dataset.id}`
         })
     }
 
@@ -61,25 +62,24 @@ class TournCreate extends React.Component {
     handle_submit = (event, date) => {
         event.preventDefault();
         this.setState({ startDate: date })
-        // console.log(this.handle_validity({
-        //     tourneyName: this.state.tourneyName,
-        //     description: this.state.description,
-        //     type: this.state.type,
-        // }));
         this.handle_validity({
             tourneyName: this.state.tourneyName,
             description: this.state.description,
-            type: this.state.type,
+            gameType: this.state.gameType,
         })
             ? API.create_tournament({
                 tourneyName: this.state.tourneyName,
-                type: this.state.type,
+                gameType: this.state.gameType,
                 description: this.state.description,
                 start: this.state.date,
                 sizeLimit: this.state.size,
                 owner: this.state.username
             }).then(newTourny => {
+                console.log(newTourny)
+                this.setState({ redirectTo: `/tournament/${this.props.username}/${this.state.tourneyName}` })
                 console.log('added yo')
+            }).catch(error => {
+                console.log(error)
             })
             : console.log(`didn't send`)
     }
@@ -88,11 +88,11 @@ class TournCreate extends React.Component {
         event.preventDefault();
         const value = event.target.value;
         const name = event.target.name;
-        this.setState({ 
+        this.setState({
             [name]: value,
             // startDate: date
         });
-      
+
         switch (name) {
             case 'tourneyName':
                 value.length > 3
@@ -120,110 +120,114 @@ class TournCreate extends React.Component {
 
 
     render() {
-        return (
-            <>
-                <Navbar 
-                    update_user={this.props.update_user} 
-                    username={this.props.username} 
-                    loggedIn={this.props.loggedIn} 
-                />
-                <Container>
-                    <div className="section white z-depth-3">
-                        {/* <div className="row"> */}
+        if (this.state.redirectTo) {
+            return <Redirect to={{ pathname: this.state.redirectTo }} />
+        } else {
+            return (
+                <>
+                    <Navbar
+                        update_user={this.props.update_user}
+                        username={this.props.username}
+                        loggedIn={this.props.loggedIn}
+                    />
+                    <Container>
+                        <div className="section white z-depth-3">
+                            {/* <div className="row"> */}
                             <form onSubmit={this.handle_submit} noValidate>
-                            <Container>
-                            <div className="row">
-                                <p>Enter your name</p>
-                                <input
-                                    type="text"
-                                    name="tourneyName"
-                                    id="tName"
-                                    maxLength="50"
-                                    onChange={this.handle_change}
-                                    className="col s12"
-                                />
-                                <label htmlFor="tName">{this.state.nameError}</label>
-                                <p>Enter the game type</p>
-                                <input
-                                    type="text"
-                                    name="type"
-                                    id="tType"
-                                    maxLength="35"
-                                    onChange={this.handle_change}
-                                    className="col s12"
-                                />
-                                <label htmlFor="tType">{this.state.typeError}</label>
-                                <p>Enter game description</p>
-                                <textarea
-                                    type="text"
-                                    name="description"
-                                    id="textarea"
-                                    maxLength="250"
-                                    onChange={this.handle_change}
-                                    className="col s12"
-                                />
-                                <label htmlFor="textarea">{this.state.descriptError}</label>
-                                </div>
+                                <Container>
+                                    <div className="row">
+                                        <p>Enter your name</p>
+                                        <input
+                                            type="text"
+                                            name="tourneyName"
+                                            id="tName"
+                                            maxLength="50"
+                                            onChange={this.handle_change}
+                                            className="col s12"
+                                        />
+                                        <label htmlFor="tName">{this.state.nameError}</label>
+                                        <p>Enter the game type</p>
+                                        <input
+                                            type="text"
+                                            name="type"
+                                            id="tType"
+                                            maxLength="35"
+                                            onChange={this.handle_change}
+                                            className="col s12"
+                                        />
+                                        <label htmlFor="tType">{this.state.typeError}</label>
+                                        <p>Enter game description</p>
+                                        <textarea
+                                            type="text"
+                                            name="description"
+                                            id="textarea"
+                                            maxLength="250"
+                                            onChange={this.handle_change}
+                                            className="col s12"
+                                        />
+                                        <label htmlFor="textarea">{this.state.descriptError}</label>
+                                    </div>
                                 </Container>
                                 <div className="row">
-                                <Container>
-                                <DatePicker
-                                    selected={this.state.startDate}
-                                    onChange={this.handle_date}
-                                    showTimeSelect
-                                    timeFormat="hh:mm"
-                                    timeIntervals={15}
-                                    dateFormat="MMMM d, yyyy h:mm aa"
-                                    timeCaption="Time"
-                                    className=" offset-s6"
-                                />
-                               
+                                    <Container>
+                                        <DatePicker
+                                            selected={this.state.startDate}
+                                            onChange={this.handle_date}
+                                            showTimeSelect
+                                            timeFormat="hh:mm"
+                                            timeIntervals={15}
+                                            dateFormat="MMMM d, yyyy h:mm aa"
+                                            timeCaption="Time"
+                                            className=" offset-s6"
+                                        />
 
-                                <a className='dropdown-trigger btn left col s5' data-target='dropdown1' style={styles.posDrop}>{this.state.showSize}</a>
-                                <ul id='dropdown1' className='dropdown-content'>
-                                    <li>
-                                        <h4
-                                            className="center-align"
-                                            onClick={this.handle_click.bind(this)}
-                                            data-id="4"> 4
+
+                                        <a className='dropdown-trigger btn left col s5' data-target='dropdown1' style={styles.posDrop}>{this.state.showSize}</a>
+                                        <ul id='dropdown1' className='dropdown-content'>
+                                            <li>
+                                                <h4
+                                                    className="center-align"
+                                                    onClick={this.handle_click.bind(this)}
+                                                    data-id="4"> 4
                                         </h4>
-                                    </li>
-                                    <li>
-                                        <h4
-                                            className="center-align"
-                                            onClick={this.handle_click.bind(this)}
-                                            data-id="8"> 8
+                                            </li>
+                                            <li>
+                                                <h4
+                                                    className="center-align"
+                                                    onClick={this.handle_click.bind(this)}
+                                                    data-id="8"> 8
                                         </h4>
-                                    </li>
-                                    <li>
-                                        <h4
-                                            className="center-align"
-                                            onClick={this.handle_click.bind(this)}
-                                            data-id="16"> 16
+                                            </li>
+                                            <li>
+                                                <h4
+                                                    className="center-align"
+                                                    onClick={this.handle_click.bind(this)}
+                                                    data-id="16"> 16
                                         </h4>
-                                    </li>
-                                    <li>
-                                        <h4 className="center-align"
-                                            onClick={this.handle_click.bind(this)}
-                                            data-id="32"> 32
+                                            </li>
+                                            <li>
+                                                <h4 className="center-align"
+                                                    onClick={this.handle_click.bind(this)}
+                                                    data-id="32"> 32
                                         </h4>
-                                    </li>
-                                </ul>
-                                </Container>
-                                <button
-                                    style={styles.createbtn}
-                                    className="btn left col s12"
-                                    onClick={() => console.log(`clicked`)}
-                                    type="submit"
-                                >
-                                    Create Tournament!
+                                            </li>
+                                        </ul>
+                                    </Container>
+                                    <button
+                                        style={styles.createbtn}
+                                        className="btn left col s12"
+                                        onClick={() => console.log(`clicked`)}
+                                        type="submit"
+                                    >
+                                        Create Tournament!
                                 </button>
-                            </div>
+                                </div>
                             </form>
                         </div>
-                </Container>
-            </>
-        )
+                    </Container>
+                </>
+            )
+        }
     }
 }
 
