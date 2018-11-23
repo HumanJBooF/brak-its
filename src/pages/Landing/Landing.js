@@ -51,7 +51,11 @@ class LandingPage extends React.Component {
                     username={this.props.username} 
                 />
                 <Container>
-                    <Search />
+                    {this.props.loggedIn 
+                    ? <Search />
+                    : null
+                    }
+                    
                     <RecentCard 
                         recentarr={this.state.recentArr}
                     />
