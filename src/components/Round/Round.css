@@ -12,7 +12,11 @@
     content: "";
     display: block;
     height: 30px;
+<<<<<<< HEAD
+    border-left: 2px solid white;
+=======
     border-left: 2px solid lightgreen;
+>>>>>>> 3e35f0788492da59adfe17f80cc74decccd8d1de
     position: absolute;
     left: -10px;
     top: 50%;
@@ -24,8 +28,13 @@
     content: "";
     display: block;
     border: 2px solid transparent;
+<<<<<<< HEAD
+    border-top-color: purple;
+    border-right-color: purple;
+=======
     border-top-color: turquoise;
     border-right-color: turquoise;
+>>>>>>> 3e35f0788492da59adfe17f80cc74decccd8d1de
     height: 50%;
     position: absolute;
     right: -10px;
@@ -37,8 +46,13 @@
     content: "";
     display: block;
     border: 2px solid transparent;
+<<<<<<< HEAD
+    border-bottom-color: red;
+    border-right-color: red;
+=======
     border-bottom-color: yellow;
     border-right-color: yellow;
+>>>>>>> 3e35f0788492da59adfe17f80cc74decccd8d1de
     height: 50%;
     position: absolute;
     right: -10px;
@@ -46,6 +60,13 @@
     bottom: 50%;
 }
 
+<<<<<<< HEAD
+.player {
+    border: 2px solid white;
+    width: 100%;
+    text-align: center;
+    color: white;
+=======
 .round:last-child .playerContainer::after {
     display: none;
 }
@@ -62,19 +83,27 @@
     color: white;
     text-align: center;
     line-height: 1
+>>>>>>> 3e35f0788492da59adfe17f80cc74decccd8d1de
 }
 
 .player::before {
     content: "";
     display: block;
     width: 10px;
+<<<<<<< HEAD
+    border-bottom: 2px solid lightgreen;
+=======
     border-bottom: 2px solid #00ff00;
+>>>>>>> 3e35f0788492da59adfe17f80cc74decccd8d1de
     margin-left: -2px;
     position: absolute;
     top: 50%;
     left: -10px;
+<<<<<<< HEAD
+=======
 }
 
 .round:first-child .player::before {
     display: none;
+>>>>>>> 3e35f0788492da59adfe17f80cc74decccd8d1de
 }
