@@ -31,7 +31,9 @@ const RecentCard = props => (
                                         <td><h6>{name.sizeLimit}</h6></td>
                                         <td><h6>{name.format}</h6></td>
                                         <td><h6>{name.date}</h6></td>
-                                        <td><h6>{`${name.isActive.toString().charAt(0).toUpperCase()}${name.isActive.toString().slice(1)}`}</h6></td>
+                                        <td><h6>
+                                            {`${name.isActive.toString().charAt(0).toUpperCase()}${name.isActive.toString().slice(1)}`}
+                                        </h6></td>
                                     </tr>
                                 ))}
                             </tbody>
