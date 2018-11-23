@@ -24,7 +24,7 @@ const tourneyController = {
     create: (req, res) => {
         db.tourneys.create(req.body)
             .then(dbTourney => {
-                console.log(dbTourney);
+                res.json({tournament: dbTourney})
             }).catch(err => res.json({ error: err }));
     }
 };
