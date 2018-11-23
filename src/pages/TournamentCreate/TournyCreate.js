@@ -47,7 +47,6 @@ class TournCreate extends React.Component {
     }
 
     handle_validity = tourneyInfo => {
-
         return (tourneyInfo.tourneyName.length > 0)
             && (this.removeSpecials.test(tourneyInfo.tourneyName))
             && (tourneyInfo.description.length <= 250
@@ -62,7 +61,11 @@ class TournCreate extends React.Component {
     handle_submit = (event, date) => {
         event.preventDefault();
         this.setState({ startDate: date })
-        console.log(this.state.size);
+        // console.log(this.handle_validity({
+        //     tourneyName: this.state.tourneyName,
+        //     description: this.state.description,
+        //     type: this.state.type,
+        // }));
         this.handle_validity({
             tourneyName: this.state.tourneyName,
             description: this.state.description,
@@ -89,6 +92,7 @@ class TournCreate extends React.Component {
             [name]: value,
             // startDate: date
         });
+      
         switch (name) {
             case 'tourneyName':
                 value.length > 3
