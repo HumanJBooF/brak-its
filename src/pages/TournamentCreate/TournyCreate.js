@@ -9,26 +9,29 @@ import styles from './TournyStyles';
 import API from '../../utils/API';
 
 import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 import M from 'materialize-css/dist/js/materialize.min.js';
 
 class TournCreate extends React.Component {
-
-    state = {
-        tourneyName: '',
-        type: '',
-        description: '',
-        sizeLimit: '',
-        startDate: new Date(),
-        date: '',
-        owner: '',
-        nameError: '',
-        typeError: '',
-        DescriptError: '',
-        username: this.props.username,
-        dropDownDisplay: ''
+    constructor(props) {
+        super(props);
+        this.state = {
+            tourneyName: '',
+            type: '',
+            description: '',
+            sizeLimit: '',
+            startDate: new Date(),
+            owner: '',
+            nameError: '',
+            typeError: '',
+            DescriptError: '',
+            username: this.props.username,
+            showSize: 'Select Size'
+        }
+        this.handle_date= this.handle_date.bind(this)
     }
 
-    componentDidMount () {
+    componentDidMount() {
         M.AutoInit();
     }
     //RegEx to remove all special charcters 
@@ -36,50 +39,71 @@ class TournCreate extends React.Component {
     removeSpecials = RegExp(/^([a-zA-Z0-9_\s]*)$/)
 
     //handle click to grab the value of the drop-down clicked.
-    handle_click = (event, date) => {
-        const dates = event.target.value
-        // const chosenSize = event.currentTarget.dataset.id;
-        this.setState({ sizeLimit: event.currentTarget.dataset.id, startDate: dates });
-        console.log(this.state.size, this.state.startDate);
+    handle_click = event => {
+        this.setState({ 
+            sizeLimit: event.currentTarget.dataset.id,
+            showSize:  `Chosen Size  ${event.currentTarget.dataset.id}`
+        });
+        console.log(this.state.size);
     }
 
     handle_validity = tourneyInfo => {
-        console.log(tourneyInfo)
+        // console.log(tourneyInfo)
+        // console.log("tests start here");
+        // console.log(tourneyInfo.tourneyName.length);
+        // console.log(this.removeSpecials.test(tourneyInfo.tourneyName));
+        // console.log(tourneyInfo.description.length);
+        // console.log(tourneyInfo.description.length);
+        // console.log("end tests")
         return (tourneyInfo.tourneyName.length > 0)
             && (this.removeSpecials.test(tourneyInfo.tourneyName))
             && (tourneyInfo.description.length <= 250
                 & tourneyInfo.description.length > 0) ? true : false;
     }
 
-    handle_submit = event => {
+    handle_date = date => {
+        this.setState({ startDate: date })
+        console.log(this.state.date);
+    }
+
+    handle_submit = (event, date) => {
         event.preventDefault();
-        console.log(this.state.size);
+        this.setState({ startDate: date })
+        // console.log(this.handle_validity({
+        //     tourneyName: this.state.tourneyName,
+        //     description: this.state.description,
+        //     type: this.state.type,
+        // }));
         this.handle_validity({
             tourneyName: this.state.tourneyName,
             description: this.state.description,
             type: this.state.type,
         })
-
-            ? API.create_tournament({
+            ?
+            // console.log("YEET")
+            API.create_tournament({
                 tourneyName: this.state.tourneyName,
                 type: this.state.type,
                 description: this.state.description,
                 start: this.state.date,
                 sizeLimit: this.state.size,
                 owner: this.state.username
-            }).then( newTourny => {
+            }).then(newTourny => {
                 console.log('added yo')
             })
             : console.log(`didn't send`)
     }
 
-    handle_change = event => {
+    handle_change = (event, date) => {
         event.preventDefault();
         const value = event.target.value;
         const name = event.target.name;
-        this.setState({ [name]: value });
-        console.log(this.state.Startdate)
-        console.log(this.state.tournyName);
+        this.setState({ 
+            [name]: value,
+            // startDate: date
+        });
+        console.log(this.state.startDate)
+        console.log(this.state.tourneyName);
         switch (name) {
             case 'tourneyName':
                 value.length > 3
@@ -103,18 +127,23 @@ class TournCreate extends React.Component {
                 break;
         }
     }
-    
 
 
-    render () {
+
+    render() {
         return (
             <>
-                <Navbar update_user={this.props.update_user} username={this.props.username} loggedIn={this.props.loggedIn} />
+                <Navbar 
+                    update_user={this.props.update_user} 
+                    username={this.props.username} 
+                    loggedIn={this.props.loggedIn} 
+                />
                 <Container>
-
                     <div className="section white z-depth-3">
-                        <div className="row">
+                        {/* <div className="row"> */}
                             <form onSubmit={this.handle_submit} noValidate>
+                            <Container>
+                            <div className="row">
                                 <p>Enter your name</p>
                                 <input
                                     type="text"
@@ -142,20 +171,26 @@ class TournCreate extends React.Component {
                                     id="textarea"
                                     maxLength="250"
                                     onChange={this.handle_change}
-                                    className="col s6"
+                                    className="col s12"
                                 />
                                 <label htmlFor="textarea">{this.state.descriptError}</label>
-
+                                </div>
+                                </Container>
+                                <div className="row">
+                                <Container>
                                 <DatePicker
-                                    id="dates"
-                                    name="date"
-                                    // onClick={this.handle_click.bind(this)}
-                                    onChange={this.handle_change}
                                     selected={this.state.startDate}
-                                    className=""
-                                    style={styles.calen}
+                                    onChange={this.handle_date}
+                                    
+                                    timeFormat="hh:mm"
+                                    timeIntervals={15}
+                                    dateFormat="MMMM d, yyyy h:mm aa"
+                                    timeCaption="Time"
+                                    className=" offset-s6"
                                 />
-                                <a className='dropdown-trigger btn left' data-target='dropdown1' style={styles.posDrop}>Select Size</a>
+                               
+                                
+                                <a className='dropdown-trigger btn left col s5' data-target='dropdown1' style={styles.posDrop}>{this.state.showSize}</a>
                                 <ul id='dropdown1' className='dropdown-content' onClick={() => console.log("clicked")}>
                                     <li>
                                         <h4
@@ -185,6 +220,7 @@ class TournCreate extends React.Component {
                                         </h4>
                                     </li>
                                 </ul>
+                                </Container>
                                 <button
                                     style={styles.createbtn}
                                     className="btn left col s12"
@@ -192,10 +228,11 @@ class TournCreate extends React.Component {
                                     type="submit"
                                 >
                                     Create Tournament!
-                                    </button>
+                                </button>
+                            </div>
                             </form>
                         </div>
-                    </div>
+                    {/* </div> */}
                 </Container>
             </>
         )

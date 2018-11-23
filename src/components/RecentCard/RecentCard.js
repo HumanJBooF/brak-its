@@ -1,10 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Container from '../Container';
+// import Container from '../Container';
 
 const RecentCard = props => (
-
-    < Container >
         <div className="row">
             <div className="card large grey lighten-4">
                 <div className="card-content">
@@ -42,7 +40,6 @@ const RecentCard = props => (
                 </div>
             </div>
         </div>
-    </Container >
 )
 
 export default RecentCard;

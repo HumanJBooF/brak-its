@@ -10,18 +10,15 @@ import TournDisplay from './pages/TournamentDisplay';
 import TournyJoin from './pages/TournamentJoin';
 import API from './utils/API';
 
-
 class App extends React.Component {
 
 	state = {
 		loggedIn: false,
-		username: null,
-		recentArr: [],
+		username: null
 	}
 
 	componentDidMount = () => {
 		this.check_user();
-		this.get_recent();
 	}
 
 	update_user = userObj => {
@@ -42,35 +39,6 @@ class App extends React.Component {
 		});
 	}
 
-	get_recent = () => {
-		API.show_recent()
-			.then(recent => {
-				const getTourneys = [];
-				recent.data.tournament.forEach(tourneyElems => {
-					const tourneyObj = {
-						name: tourneyElems.tourneyName,
-						id: tourneyElems.uuid,
-						description: tourneyElems.description,
-						sizeLimit: tourneyElems.sizeLimit,
-						date: tourneyElems.date,
-						time: tourneyElems.time,
-						format: tourneyElems.format,
-						gameType: tourneyElems.gameType,
-						owner: tourneyElems.owner,
-						isActive: tourneyElems.isActive
-					}
-
-					getTourneys.push(tourneyObj);
-
-					console.log('in loop', getTourneys);
-				});
-				this.setState({
-					recentArr: [...this.state.recentArr, ...getTourneys]
-				});
-			});
-	}
-
-
 	render () {
 		return (
 			<Router>
@@ -81,7 +49,6 @@ class App extends React.Component {
 								update_user={this.update_user}
 								loggedIn={this.state.loggedIn}
 								username={this.state.username}
-								recentArr={this.state.recentArr}
 							/>}
 						/>
 						<Route exact path='/signup'
