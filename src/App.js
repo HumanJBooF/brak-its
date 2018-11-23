@@ -16,7 +16,7 @@ class App extends React.Component {
 	state = {
 		loggedIn: false,
 		username: null,
-		recentArr: [],
+		recentArr: []
 	}
 
 	componentDidMount = () => {

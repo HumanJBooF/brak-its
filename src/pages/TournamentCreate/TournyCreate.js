@@ -43,12 +43,11 @@ class TournCreate extends React.Component {
         this.setState({ 
             sizeLimit: event.currentTarget.dataset.id,
             showSize:  `Chosen Size  ${event.currentTarget.dataset.id}`
-        });
-        console.log(this.state.size);
+        })
     }
 
     handle_validity = tourneyInfo => {
-        console.log(tourneyInfo)
+
         return (tourneyInfo.tourneyName.length > 0)
             && (this.removeSpecials.test(tourneyInfo.tourneyName))
             && (tourneyInfo.description.length <= 250
@@ -69,8 +68,6 @@ class TournCreate extends React.Component {
             description: this.state.description,
             type: this.state.type,
         })
-        console.log(this.state.startDate)
-
             ? API.create_tournament({
                 tourneyName: this.state.tourneyName,
                 type: this.state.type,
@@ -92,8 +89,6 @@ class TournCreate extends React.Component {
             [name]: value,
             // startDate: date
         });
-        console.log(this.state.startDate)
-        console.log(this.state.tournyName);
         switch (name) {
             case 'tourneyName':
                 value.length > 3
@@ -171,7 +166,7 @@ class TournCreate extends React.Component {
                                 <DatePicker
                                     selected={this.state.startDate}
                                     onChange={this.handle_date}
-                                    
+                                    showTimeSelect
                                     timeFormat="hh:mm"
                                     timeIntervals={15}
                                     dateFormat="MMMM d, yyyy h:mm aa"
@@ -179,9 +174,9 @@ class TournCreate extends React.Component {
                                     className=" offset-s6"
                                 />
                                
-                                
+
                                 <a className='dropdown-trigger btn left col s5' data-target='dropdown1' style={styles.posDrop}>{this.state.showSize}</a>
-                                <ul id='dropdown1' className='dropdown-content' onClick={() => console.log("clicked")}>
+                                <ul id='dropdown1' className='dropdown-content'>
                                     <li>
                                         <h4
                                             className="center-align"
@@ -222,7 +217,6 @@ class TournCreate extends React.Component {
                             </div>
                             </form>
                         </div>
-                    {/* </div> */}
                 </Container>
             </>
         )
