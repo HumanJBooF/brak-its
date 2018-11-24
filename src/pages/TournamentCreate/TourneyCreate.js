@@ -70,7 +70,7 @@ class TourneyCreate extends React.Component {
                 tourneyName: this.state.tourneyName,
                 gameType: this.state.gameType,
                 description: this.state.description,
-                start: this.state.date,
+                date: this.state.date,
                 sizeLimit: this.state.size,
                 owner: this.state.username
             }).then(newTourny => {

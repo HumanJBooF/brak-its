@@ -23,13 +23,23 @@ class TourneyJoin extends React.Component {
             username: this.props.username,
             tourneyId: this.state.tournament.id,
         }
-        API.join_tournament(userTourney).then(result => {
-            const userObj = {
-                username: result.data.user.username,
-                id: result.data.user.uuid
-            };
-            this.setState({ players: [...this.state.players, userObj] });
-        });
+        let checkUser = this.state.players.map(obj => obj.username.toLowerCase());
+        this.join_tourney(checkUser, userTourney)
+    }
+
+    join_tourney = (checkUser, userTourney) => {
+
+        if (checkUser.includes(userTourney.username.toLowerCase())) {
+            console.log(`${userTourney.username} has already joined!`); // SWEET ALERT
+        } else {
+            API.join_tournament(userTourney).then(result => {
+                const userObj = {
+                    username: result.data.user.username,
+                    id: result.data.user.uuid
+                };
+                this.setState({ players: [...this.state.players, userObj] });
+            })
+        }
     }
 
     get_tourney = () => {

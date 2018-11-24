@@ -56,7 +56,9 @@ const tourneyController = {
             const userId = user.uuid
             console.log(userId)
             db.tourneys.findOne({
-                uuid: tourneyId,
+                where: {
+                    uuid: tourneyId
+                }
             }).then(tourney => {
                 console.log(tourney, 'IN THE .THEN')
                 tourney.addUsers(userId).then(() => {
@@ -75,7 +77,7 @@ const tourneyController = {
             }
         }).then(tourney => {
             tourney.getUsers().then(usersTourney => {
-                //send all users to matches here gonna start in the morning
+                console.log(usersTourney)
             })
         })
     }
