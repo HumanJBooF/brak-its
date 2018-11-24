@@ -7,7 +7,7 @@ import SignIn from './pages/SignIn';
 import Landing from './pages/Landing'
 import TournCreate from './pages/TournamentCreate';
 import TournDisplay from './pages/TournamentDisplay';
-import TournyJoin from './pages/TournamentJoin';
+import TourneyJoin from './pages/TournamentJoin';
 import API from './utils/API';
 
 class App extends React.Component {
@@ -64,15 +64,18 @@ class App extends React.Component {
 						<Route exact path='/tournament'
 							render={() => <TournCreate
 								username={this.state.username}
-								update_user={this.props.update_user}
+								update_user={this.update_user}
 								loggedIn={this.state.loggedIn}
 							/>}
 						/>
-						<Route exact path='/tournament/:owner/:name' component={TournDisplay} />
-						<Route exact path='/join'
-							render={()=> <TournyJoin
+						<Route exact path='/display' component={TournDisplay} />
+						<Route exact path='/join/:owner/:id'
+							render={props => <TourneyJoin
+								{...props}
+								update_user={this.update_user}
 								username={this.state.username}
-							/>} 
+								loggedIn={this.state.loggedIn}
+							/>}
 						/>
 					</Switch>
 				</div>

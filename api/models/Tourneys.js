@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         time: { type: DataTypes.TIME },
         actualSize: { type: DataTypes.STRING },
         sizeLimit: { type: DataTypes.STRING },
-        format: { type: DataTypes.STRING, defaultValue: 'single-elim' },
+        format: { type: DataTypes.STRING, defaultValue: 'Single-elim' },
         gameType: { type: DataTypes.STRING },
         owner: { type: DataTypes.STRING },
         isActive: { type: DataTypes.BOOLEAN, defaultValue: false }
@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     );
 
     Tourneys.associate = models => {
-        Tourneys.hasMany(models.users, { as: 'tourneyId', foreignKey: 'tourneys' });
+        Tourneys.belongsToMany(models.users, { through: "usersTourney" });
     }
 
     return Tourneys;
