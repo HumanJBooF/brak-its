@@ -39,7 +39,7 @@ app.use(routes);
 
 
 
-db.sequelize.sync({ force: false }).then(() => {
+db.sequelize.sync({ force: true }).then(() => {
   // Starts the server to begin listening
   // =============================================================
   app.listen(PORT, () => {
