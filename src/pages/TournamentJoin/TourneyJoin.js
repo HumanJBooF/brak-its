@@ -18,6 +18,16 @@ class TourneyJoin extends React.Component {
         this.get_tourney();
     }
 
+    //TEST FOR GETTING ALL USERS OF TOURNAMENT
+    // get_users = () => {
+    //     const tourneyId = this.state.tournament.id;
+
+    //     API.get_users_tournament({ id: tourneyId }).then(result => {
+    //         let users = result.data.users.map(user => user.username)
+    //         console.log(users)
+    //     })
+    // }
+
     handle_click = () => {
         const userTourney = {
             username: this.props.username,
@@ -121,6 +131,14 @@ class TourneyJoin extends React.Component {
                             onClick={this.handle_click}
                         />
                     </div>
+
+                    {/* <div className="center-align col s12 truncate">
+                        <Button
+                            btn={this.state.btn}
+                            style={styles.subBtn}
+                            onClick={this.get_users}
+                        />
+                    </div> */}
                 </Container>
             </>
         )

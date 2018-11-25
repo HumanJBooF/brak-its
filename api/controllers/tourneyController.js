@@ -70,14 +70,17 @@ const tourneyController = {
     },
 
     get_all_users_tourney: (req, res) => {
-        const tourneyId = req.body.tourneyId;
-        db.tourney.findOne({
+        console.log(req.body.id)
+        const id = req.body.id;
+        db.tourneys.findOne({
             where: {
-                uuid: tourneyId
+                uuid: id
             }
         }).then(tourney => {
-            tourney.getUsers().then(usersTourney => {
-                console.log(usersTourney)
+            tourney.getUsers({
+                order: [['createdAt', 'ASC']]
+            }).then(usersTourney => {
+                res.json({ users: usersTourney })
             })
         })
     }
