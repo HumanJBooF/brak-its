@@ -6,42 +6,42 @@ import Search from '../../components/Search';
 import API from './../../utils/API';
 
 class LandingPage extends React.Component {
-    state  = {
-		recentArr: []
+    state = {
+        recentArr: []
     }
-    
+
     componentDidMount = () => {
         this.get_recent();
     }
 
     get_recent = () => {
-		API.show_recent()
-			.then(recent => {
-				const getTourneys = [];
-				recent.data.tournament.forEach(tourneyElems => {
-					const tourneyObj = {
-						name: tourneyElems.tourneyName,
-						id: tourneyElems.uuid,
-						description: tourneyElems.description,
-						sizeLimit: tourneyElems.sizeLimit,
-						date: tourneyElems.date,
-						time: tourneyElems.time,
-						format: tourneyElems.format,
-						gameType: tourneyElems.gameType,
-						owner: tourneyElems.owner,
-						isActive: tourneyElems.isActive
-					}
+        API.show_recent()
+            .then(recent => {
+                const getTourneys = [];
+                recent.data.tournament.forEach(tourneyElems => {
+                    const tourneyObj = {
+                        name: tourneyElems.tourneyName,
+                        id: tourneyElems.uuid,
+                        description: tourneyElems.description,
+                        sizeLimit: tourneyElems.sizeLimit,
+                        date: tourneyElems.date,
+                        time: tourneyElems.time,
+                        format: tourneyElems.format,
+                        gameType: tourneyElems.gameType,
+                        owner: tourneyElems.owner,
+                        isActive: tourneyElems.isActive
+                    }
 
-					getTourneys.push(tourneyObj);
+                    getTourneys.push(tourneyObj);
 
-					console.log('in loop', getTourneys);
-				});
-				this.setState({
-					recentArr: [...this.state.recentArr, ...getTourneys]
-				});
-			});
+                    console.log('in loop', getTourneys);
+                });
+                this.setState({
+                    recentArr: [...this.state.recentArr, ...getTourneys]
+                });
+            });
     }
-    
+
     render () {
         return (
             <>
@@ -55,9 +55,9 @@ class LandingPage extends React.Component {
                         <Search
                             loggedIn={this.props.loggedIn}
                         />
-                       
+
                     </div>
-                    <RecentCard 
+                    <RecentCard
                         recentarr={this.state.recentArr}
                     />
                 </Container>

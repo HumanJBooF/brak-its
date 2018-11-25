@@ -54,17 +54,14 @@ const tourneyController = {
             }
         }).then(user => {
             const userId = user.uuid
-            console.log(userId)
             db.tourneys.findOne({
                 where: {
                     uuid: tourneyId
                 }
             }).then(tourney => {
-                console.log(tourney, 'IN THE .THEN')
-                tourney.addUsers(userId).then(() => {
-                    res.json({ user: user })
-                })
-
+                tourney.update({ actualSize: +1 })
+                tourney.addUsers(userId)
+                    .then(() => res.json({ user: user }))
             })
         })
     },

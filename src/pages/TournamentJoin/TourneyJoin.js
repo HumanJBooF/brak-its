@@ -114,10 +114,10 @@ class TourneyJoin extends React.Component {
                         </div>
 
                         <div className="col s12 m3" >
-                            <ul className="collection" style={styles.collect}>
-                                <li className="center-align">Player List</li>
+                            <ul className="collection with-header" style={styles.collect}>
+                                <li className="center-align collection-header">Player List {this.state.players.length}/{this.state.tournament.sizeLimit}</li>
                                 {this.state.players.map((user, i) => {
-                                    return <li key={i} className="collection-item">{user.username}</li>
+                                    return <li key={i} className="collection-item center-align">{user.username}</li>
                                 })
                                 }
 
