@@ -1,7 +1,6 @@
 import React from 'react';
 import Button from '../../components/Button';
 import Container from '../../components/Container';
-// import Card from '../../components/Card';
 import Navbar from '../../components/Navbar'
 import styles from './JoinStyles';
 import API from '../../utils/API';
@@ -10,6 +9,8 @@ class TourneyJoin extends React.Component {
 
     state = {
         btn: 'Join Tournament!',
+        early: 'Start Tournament Early?',
+        full: 'Start Tournament',
         tournament: {},
         players: []
     }
@@ -18,15 +19,16 @@ class TourneyJoin extends React.Component {
         this.get_tourney();
     }
 
-    //TEST FOR GETTING ALL USERS OF TOURNAMENT
-    // get_users = () => {
-    //     const tourneyId = this.state.tournament.id;
 
-    //     API.get_users_tournament({ id: tourneyId }).then(result => {
-    //         let users = result.data.users.map(user => user.username)
-    //         console.log(users)
-    //     })
-    // }
+    get_users = () => {
+        const tourneyId = this.state.tournament.id;
+
+        API.get_users_tournament({ id: tourneyId }).then(result => {
+            console.log(result.data.users)
+            let users = result.data.users.map(user => user.username)
+            this.sort_players(users)
+        })
+    }
 
     handle_click = () => {
         const userTourney = {
@@ -91,8 +93,123 @@ class TourneyJoin extends React.Component {
         })
     }
 
+    sort_players = players => {
+        console.log(players)
+        // Will be a list of the seed order
+        let seeds = this.seeding_order(players.length);
+
+        const firstRound = [];
+        const highplayers = Math.pow(2, Math.ceil(Math.log2(players.length)));
+        const byeWeeks = highplayers - players.length;
+        seeds.map(index => {
+            if (index <= seeds.length - byeWeeks) {
+                firstRound.push(players[index - 1])
+                console.log(players, index, ' IN THE IF')
+            }
+            else {
+                firstRound.push(null)
+            }
+        })
+
+        return this.get_db_ready(firstRound);
+    }
+
+    get_db_ready = arr => {
+        const dbFirstRound = [];
+
+        for (let i = 0; i < arr.length / 2; i++) {
+            dbFirstRound[i] = {
+                player1: arr[(i * 2)],
+                player2: arr[(i * 2) + 1],
+                matchNum: i,
+            }
+        }
+        console.log(dbFirstRound)
+        return dbFirstRound
+    }
+
+    seeding_order = tourneyplayers => {
+        let players;
+
+        if (Math.log2(tourneyplayers) % 1 === 0) {
+            players = tourneyplayers
+        }
+
+        else {
+            players = Math.pow(2, Math.ceil(Math.log2(tourneyplayers)))
+        }
+
+        // The rounds to run is how many times the incrementer for the seed index is incremented
+        const roundsToRun = Math.log2(players);
+        const seedOrder = [];
+
+        // Starts with a 0 in the first position (sorta hacky) that way its not adding half the players + undefined in the first iteration
+        let playerIndexOrder = [0];
+
+        // Starts at 1 because math numbers !== loop numbers, to visualize what this is doing check the large commented section at the bottom of this func
+        for (let round = 1; round < roundsToRun + 1; round++) {
+            const tempArr = [];
+            // Base is half of the players first time, then half of the previous the next, half again, etc.
+            let base = players / Math.pow(2, round);
+
+            // pushes the index into the array
+            for (let playerIndex = 0; playerIndex < Math.pow(2, round - 1); playerIndex++) {
+                // Uses unshift to preserve order
+                tempArr.unshift(base + playerIndexOrder[playerIndex]);
+            }
+
+            // Compunds the array
+            playerIndexOrder = playerIndexOrder.concat(tempArr);
+        }
+
+        // Puts the player in the right place
+        for (let player = 0; player < playerIndexOrder.length; player++) {
+            seedOrder[playerIndexOrder[player]] = player + 1;
+        }
+
+        console.log(`SEED ORDER: ${seedOrder}`)
+        return seedOrder;
+        // -----------------------------------------------------------------------------------------------------------------
+
+        // seedOrder[(players.length/2)] = atPlayer
+
+        // //
+
+        // seedOrder[(players.length/4) + (players.length/2)] = atPlayer + 1
+
+        // seedOrder[(players.length/4)] = atPlayer + 2
+
+        // //
+
+        // seedOrder[(players.length/8) + (players.length/4)] = atPlayer + 3
+
+        // seedOrder[(players.length/8) + (players.length/4) + (players.length/2)] = atPlayer + 4
+
+        // seedOrder[(players.length/8) + (players.length/2)] = atPlayer + 5
+
+        // seedOrder[(players.length/8)] = atPlayer + 6
+
+        // //
+
+        // seedOrder[(players.length/16) + (players.length/8)] = atPlayer + 7
+
+        // seedOrder[(players.length/16) + (players.length/8) + (players.length/2)] = atPlayer + 8
+
+        // seedOrder[(players.length/16) + (players.length/8) + (players.length/4) + (players.length/2)] = atPlayer + 9
+
+        // seedOrder[(players.length/16) + (players.length/8) + (players.length/4)] = atPlayer + 10
+
+        // seedOrder[(players.length/16) + (players.length/4)] = atPlayer + 11
+
+        // seedOrder[(players.length/16) + (players.length/4) + (players.length/2)] = atPlayer + 12
+
+        // seedOrder[(players.length/16) + (players.length/2)] = atPlayer + 13
+
+        // seedOrder[(players.length/16)] = atPlayer + 14
+    }
 
     render () {
+
         return (
             <>
                 <Navbar
@@ -132,13 +249,14 @@ class TourneyJoin extends React.Component {
                         />
                     </div>
 
-                    {/* <div className="center-align col s12 truncate">
-                        <Button
-                            btn={this.state.btn}
-                            style={styles.subBtn}
-                            onClick={this.get_users}
-                        />
-                    </div> */}
+                    {this.props.username === this.state.tournament.owner &&
+                        <div className="center-align col s12 truncate">
+                            <Button
+                                owner={this.state.tournament.sizeLimit === this.state.players.length ? this.state.full : this.state.early}
+                                style={styles.subBtn}
+                                onClick={this.get_users}
+                            />
+                        </div>}
                 </Container>
             </>
         )
