@@ -13,9 +13,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import M from 'materialize-css/dist/js/materialize.min.js';
 
 class TournCreate extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
+
+        state = {
             tourneyName: '',
             gameType: '',
             description: '',
@@ -29,8 +28,6 @@ class TournCreate extends React.Component {
             showSize: 'Select Size',
             redirectTo: null
         }
-        this.handle_date = this.handle_date.bind(this)
-    }
 
     componentDidMount() {
         M.AutoInit();
@@ -54,30 +51,28 @@ class TournCreate extends React.Component {
                 & tourneyInfo.description.length > 0) ? true : false;
     }
 
-    handle_date = date => {
-        this.setState({ startDate: date })
-        console.log(this.state.date);
-    }
 
     handle_submit = (event, date) => {
         event.preventDefault();
         this.setState({ startDate: date })
+        console.log('date', this.state.startDate)
         this.handle_validity({
             tourneyName: this.state.tourneyName,
             description: this.state.description,
             gameType: this.state.gameType,
-        })
+        })   
             ? API.create_tournament({
                 tourneyName: this.state.tourneyName,
                 gameType: this.state.gameType,
                 description: this.state.description,
-                start: this.state.date,
-                sizeLimit: this.state.size,
+                date: this.state.startDate,
+                sizeLimit: this.state.sizeLimit,
                 owner: this.state.username
             }).then(newTourny => {
                 console.log(newTourny)
-                this.setState({ redirectTo: `/tournament/${this.props.username}/${this.state.tourneyName}` })
+                this.setState({ redirectTo: `/join/${newTourny.data.tournament.owner}/${newTourny.data.tournament.uuid}` })
                 console.log('added yo')
+             
             }).catch(error => {
                 console.log(error)
             })
@@ -89,7 +84,7 @@ class TournCreate extends React.Component {
         const value = event.target.value;
         const name = event.target.name;
         this.setState({
-            [name]: value,
+            [name]: value
             // startDate: date
         });
 
@@ -181,9 +176,8 @@ class TournCreate extends React.Component {
                                             className=" offset-s6"
                                         />
 
-
                                         <a className='dropdown-trigger btn left col s5' data-target='dropdown1' style={styles.posDrop}>{this.state.showSize}</a>
-                                        <ul id='dropdown1' className='dropdown-content'>
+                                        <ul id='dropdown1' className='dropdown-content' name="size">
                                             <li>
                                                 <h4
                                                     className="center-align"
@@ -220,7 +214,7 @@ class TournCreate extends React.Component {
                                         type="submit"
                                     >
                                         Create Tournament!
-                                </button>
+                                    </button>
                                 </div>
                             </form>
                         </div>
