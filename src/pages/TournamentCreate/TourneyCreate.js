@@ -1,6 +1,5 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import 'react-datepicker/dist/react-datepicker.css';
 import 'materialize-css/dist/css/materialize.min.css';
 import Navbar from '../../components/Navbar';
 import Container from '../../components/Container';
@@ -82,10 +81,7 @@ class TournCreate extends React.Component {
         event.preventDefault();
         const value = event.target.value;
         const name = event.target.name;
-        this.setState({
-            [name]: value
-            // startDate: date
-        });
+        this.setState({ [name]: value });
 
         switch (name) {
             case 'tourneyName':
@@ -166,10 +162,9 @@ class TournCreate extends React.Component {
                                     <Container>
                                         <DatePicker
                                             selected={this.state.startDate}
-                                            onChange={this.handle_date}
                                             showTimeSelect
                                             timeFormat="hh:mm"
-                                            timeIntervals={15}
+                                            timeIntervals={60}
                                             dateFormat="MMMM d, yyyy h:mm aa"
                                             timeCaption="Time"
                                             className=" offset-s6"
