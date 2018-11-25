@@ -66,11 +66,11 @@ class TournCreate extends React.Component {
                 gameType: this.state.gameType,
                 description: this.state.description,
                 date: this.state.startDate,
-                sizeLimitdw: this.state.sizeLimit,
+                sizeLimit: this.state.sizeLimit,
                 owner: this.state.username
             }).then(newTourny => {
                 console.log(newTourny)
-                this.setState({ redirectTo: `/tournament/${this.props.username}/${this.state.tourneyName}` })
+                this.setState({ redirectTo: `/join/${newTourny.data.tournament.owner}/${newTourny.data.tournament.uuid}` })
                 console.log('added yo')
              
             }).catch(error => {
