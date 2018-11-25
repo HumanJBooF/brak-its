@@ -5,7 +5,7 @@ import 'materialize-css/dist/css/materialize.min.css';
 import Navbar from '../../components/Navbar';
 import Container from '../../components/Container';
 import Card from '../../components/Card';
-import styles from './TournyStyles';
+import styles from './TourneyStyles';
 import API from '../../utils/API';
 
 import DatePicker from 'react-datepicker';
@@ -14,22 +14,22 @@ import M from 'materialize-css/dist/js/materialize.min.js';
 
 class TournCreate extends React.Component {
 
-        state = {
-            tourneyName: '',
-            gameType: '',
-            description: '',
-            sizeLimit: '',
-            startDate: new Date(),
-            owner: '',
-            nameError: '',
-            typeError: '',
-            DescriptError: '',
-            username: this.props.username,
-            showSize: 'Select Size',
-            redirectTo: null
-        }
+    state = {
+        tourneyName: '',
+        gameType: '',
+        description: '',
+        sizeLimit: '',
+        startDate: new Date(),
+        owner: '',
+        nameError: '',
+        typeError: '',
+        DescriptError: '',
+        username: this.props.username,
+        showSize: 'Select Size',
+        redirectTo: null
+    }
 
-    componentDidMount() {
+    componentDidMount () {
         M.AutoInit();
     }
     //RegEx to remove all special charcters 
@@ -58,9 +58,8 @@ class TournCreate extends React.Component {
         console.log('date', this.state.startDate)
         this.handle_validity({
             tourneyName: this.state.tourneyName,
-            description: this.state.description,
-            gameType: this.state.gameType,
-        })   
+            description: this.state.description
+        })
             ? API.create_tournament({
                 tourneyName: this.state.tourneyName,
                 gameType: this.state.gameType,
@@ -72,7 +71,7 @@ class TournCreate extends React.Component {
                 console.log(newTourny)
                 this.setState({ redirectTo: `/join/${newTourny.data.tournament.owner}/${newTourny.data.tournament.uuid}` })
                 console.log('added yo')
-             
+
             }).catch(error => {
                 console.log(error)
             })
@@ -114,7 +113,7 @@ class TournCreate extends React.Component {
 
 
 
-    render() {
+    render () {
         if (this.state.redirectTo) {
             return <Redirect to={{ pathname: this.state.redirectTo }} />
         } else {
@@ -144,7 +143,7 @@ class TournCreate extends React.Component {
                                         <p>Enter the game type</p>
                                         <input
                                             type="text"
-                                            name="type"
+                                            name="gameType"
                                             id="tType"
                                             maxLength="35"
                                             onChange={this.handle_change}

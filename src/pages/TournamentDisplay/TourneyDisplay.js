@@ -3,7 +3,7 @@ import Container from '../../components/Container';
 import Tournament from '../../components/Tournament';
 import Navbar from '../../components/Navbar'
 
-class TournDisplay extends React.Component {
+class TourneyDisplay extends React.Component {
     state = {
         tourneyInfo: []
     }
@@ -250,7 +250,7 @@ class TournDisplay extends React.Component {
     //                 roundInfo.push(match);
     //         }
     //     });
-        
+
     //     roundInfo.sort((a, b) => {
     //         return a.match_num - b.match_num;
     //     });
@@ -281,8 +281,8 @@ class TournDisplay extends React.Component {
             indexTraker += roundSize;
         }
 
-        if(dbResponse[indexTraker - 1]) {
-            switch(dbResponse[indexTraker - 1].winner) {
+        if (dbResponse[indexTraker - 1]) {
+            switch (dbResponse[indexTraker - 1].winner) {
                 case null:
                     tourneyInfo.push([{
                         player: false,
@@ -292,7 +292,7 @@ class TournDisplay extends React.Component {
                         winner: null,
                         boxOrder: (indexTraker * 2) + 1
                     }]);
-                break;
+                    break;
                 case dbResponse[indexTraker - 1].player_1:
                     tourneyInfo.push([{
                         player: dbResponse[indexTraker - 1].player_1,
@@ -302,7 +302,7 @@ class TournDisplay extends React.Component {
                         winner: null,
                         boxOrder: (indexTraker * 2) + 1
                     }]);
-                break;
+                    break;
                 case dbResponse[indexTraker - 1].player_2:
                     tourneyInfo.push([{
                         player: dbResponse[indexTraker - 1].player_2,
@@ -312,9 +312,9 @@ class TournDisplay extends React.Component {
                         winner: null,
                         boxOrder: (indexTraker * 2) + 1
                     }]);
-                break;
+                    break;
                 default:
-                console.log('Should not be possible to see this, this means the response has a winner of something other than P1, P2, or null for the last round :(')
+                    console.log('Should not be possible to see this, this means the response has a winner of something other than P1, P2, or null for the last round :(')
             }
         } else {
             tourneyInfo.push([{
@@ -327,7 +327,7 @@ class TournDisplay extends React.Component {
             }]);
         }
 
-        
+
 
         this.setState({ tourneyInfo: tourneyInfo })
 
@@ -337,10 +337,10 @@ class TournDisplay extends React.Component {
     sort_rounds = (dbResponse, roundSize, indexTraker) => {
         const roundInfo = [];
 
-        for(let currentIndex = indexTraker; currentIndex < roundSize + indexTraker; currentIndex++) {
+        for (let currentIndex = indexTraker; currentIndex < roundSize + indexTraker; currentIndex++) {
             let currentMatch = dbResponse[currentIndex];
 
-            switch(currentMatch) {
+            switch (currentMatch) {
                 case undefined:
                     roundInfo.push({
                         player: false,
@@ -350,30 +350,30 @@ class TournDisplay extends React.Component {
                         winner: null,
                         boxOrder: (currentIndex * 2) + 1
                     }, {
-                        player: false,
-                        score: null,
-                        match_num: null,
-                        next_match: null,
-                        winner: null,
-                        boxOrder: (currentIndex * 2) + 2
-                    })
-                break;
+                            player: false,
+                            score: null,
+                            match_num: null,
+                            next_match: null,
+                            winner: null,
+                            boxOrder: (currentIndex * 2) + 2
+                        })
+                    break;
                 default:
-                roundInfo.push({
-                    player: currentMatch.player_1,
-                    score: currentMatch.p1_score,
-                    match_num: currentMatch.match_num,
-                    next_match: currentMatch.next_match,
-                    winner: currentMatch.winner,
-                    boxOrder: (currentMatch.match_num * 2) - 1
-                }, {
-                    player: currentMatch.player_2,
-                    score: currentMatch.p2_score,
-                    match_num: currentMatch.match_num,
-                    next_match: currentMatch.next_match,
-                    winner: currentMatch.winner,
-                    boxOrder: currentMatch.match_num * 2
-                })
+                    roundInfo.push({
+                        player: currentMatch.player_1,
+                        score: currentMatch.p1_score,
+                        match_num: currentMatch.match_num,
+                        next_match: currentMatch.next_match,
+                        winner: currentMatch.winner,
+                        boxOrder: (currentMatch.match_num * 2) - 1
+                    }, {
+                            player: currentMatch.player_2,
+                            score: currentMatch.p2_score,
+                            match_num: currentMatch.match_num,
+                            next_match: currentMatch.next_match,
+                            winner: currentMatch.winner,
+                            boxOrder: currentMatch.match_num * 2
+                        })
             }
         }
 
@@ -387,7 +387,7 @@ class TournDisplay extends React.Component {
     render () {
         return (
             <>
-                <Navbar 
+                <Navbar
                     update_user={this.props.update_user}
                     loggedIn={this.props.loggedIn}
                     username={this.props.username}
@@ -407,7 +407,7 @@ class TournDisplay extends React.Component {
                         }
 
                         <p>This is where info will go</p>
-                        
+
                         {true /* if owner = logged in */
                             ? <p>manager options show here</p>
                             : null
@@ -419,4 +419,4 @@ class TournDisplay extends React.Component {
     }
 }
 
-export default TournDisplay;
+export default TourneyDisplay;

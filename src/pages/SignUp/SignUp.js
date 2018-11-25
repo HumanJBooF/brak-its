@@ -69,7 +69,7 @@ class SignUp extends React.Component {
     check_validity = userInfo => {
         return (userInfo.username.length > 0)
             && (this.emailRegEx.test(userInfo.email))
-            && (userInfo.password.length >= 8 
+            && (userInfo.password.length >= 8
                 && userInfo.password === userInfo.confirm) ? true : false
     }
 
@@ -84,12 +84,8 @@ class SignUp extends React.Component {
         switch (name) {
             case 'username':
                 value.length === 0
-                    ? this.setState({
-                        usernameDescription: 'Please enter a valid username'
-                    })
-                    : this.setState({
-                        usernameDescription: 'Valid username'
-                    })
+                    ? this.setState({ usernameDescription: 'Please enter a valid username' })
+                    : this.setState({ usernameDescription: 'Valid username' })
                 break;
             case 'email':
                 this.emailRegEx.test(value)

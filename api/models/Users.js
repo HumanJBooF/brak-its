@@ -15,8 +15,9 @@ module.exports = (sequelize, DataTypes) => {
         { paranoid: true }
     );
     Users.associate = models => {
-        Users.hasOne(models.matches, { as: 'player1', foreignKey: 'playerOne' });
-        Users.hasOne(models.matches, { as: 'player2', foreignKey: 'playerTwo' });
+        Users.hasMany(models.matches, { as: 'player1', foreignKey: 'playerOne' });
+        Users.hasMany(models.matches, { as: 'player2', foreignKey: 'playerTwo' });
+        Users.belongsToMany(models.tourneys, { through: "usersTourney" });
     }
 
     Users.prototype.validPassword = function (password) {
