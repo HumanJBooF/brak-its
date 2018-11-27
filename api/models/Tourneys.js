@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         tourneyName: { type: DataTypes.STRING },
         description: { type: DataTypes.STRING, allowNull: true },
-        date: { type: DataTypes.DATE },
+        date: { type: DataTypes.STRING },
         actualSize: { type: DataTypes.INTEGER, defaultValue: 0 },
         sizeLimit: { type: DataTypes.INTEGER },
         format: { type: DataTypes.STRING, defaultValue: 'Single-elim' },

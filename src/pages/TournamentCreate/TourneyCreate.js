@@ -12,10 +12,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import M from 'materialize-css/dist/js/materialize.min.js';
 
 class TournCreate extends React.Component {
-
     state = {
         tourneyName: '',
-        gameType: '',
+        type: '',
         description: '',
         sizeLimit: '',
         startDate: new Date(),
@@ -28,9 +27,10 @@ class TournCreate extends React.Component {
         redirectTo: null
     }
 
-    componentDidMount () {
-        M.AutoInit();
+    componentDidMount() {  
+        M.AutoInit() 
     }
+
     //RegEx to remove all special charcters 
     //EXCEPT: spaces - dashes - underscores (allows upper, lower, and numeric)
     removeSpecials = RegExp(/^([a-zA-Z0-9_\s]*)$/)
@@ -44,35 +44,42 @@ class TournCreate extends React.Component {
     }
 
     handle_validity = tourneyInfo => {
+
         return (tourneyInfo.tourneyName.length > 0)
             && (this.removeSpecials.test(tourneyInfo.tourneyName))
             && (tourneyInfo.description.length <= 250
                 & tourneyInfo.description.length > 0) ? true : false;
     }
 
+    handle_date = date => {
+        this.setState({ startDate: date }, () => {
+            console.log(this.state.date);
+        })
+    }
 
     handle_submit = (event, date) => {
         event.preventDefault();
-        this.setState({ startDate: date })
-        console.log('date', this.state.startDate)
+        this.setState({ startDate: date }, () => {
+            console.log(this.state.startDate)
+        })
+        console.log(this.state.size);
         this.handle_validity({
             tourneyName: this.state.tourneyName,
-            description: this.state.description
+            description: this.state.description,
+            type: this.state.type,
         })
             ? API.create_tournament({
                 tourneyName: this.state.tourneyName,
-                gameType: this.state.gameType,
+                type: this.state.type,
                 description: this.state.description,
                 date: this.state.startDate,
                 sizeLimit: this.state.sizeLimit,
                 owner: this.state.username
             }).then(newTourny => {
-                console.log(newTourny)
-                this.setState({ redirectTo: `/join/${newTourny.data.tournament.owner}/${newTourny.data.tournament.uuid}` })
                 console.log('added yo')
-
-            }).catch(error => {
-                console.log(error)
+                this.setState({
+                    redirectTo: `/join/${newTourny.data.tournament.owner}/${newTourny.data.tournament.uuid}`
+                })
             })
             : console.log(`didn't send`)
     }
@@ -107,9 +114,9 @@ class TournCreate extends React.Component {
         }
     }
 
+    //I bless the rains down in africa
 
-
-    render () {
+    render() {
         if (this.state.redirectTo) {
             return <Redirect to={{ pathname: this.state.redirectTo }} />
         } else {
@@ -139,7 +146,7 @@ class TournCreate extends React.Component {
                                         <p>Enter the game type</p>
                                         <input
                                             type="text"
-                                            name="gameType"
+                                            name="type"
                                             id="tType"
                                             maxLength="35"
                                             onChange={this.handle_change}
@@ -163,15 +170,15 @@ class TournCreate extends React.Component {
                                         <DatePicker
                                             selected={this.state.startDate}
                                             showTimeSelect
-                                            timeFormat="hh:mm"
+                                            timeFormat="HH:mm a"
                                             timeIntervals={60}
-                                            dateFormat="MMMM d, yyyy h:mm aa"
+                                            dateFormat="MMMM d, yyyy h:mm a"
                                             timeCaption="Time"
                                             className=" offset-s6"
                                         />
 
                                         <a className='dropdown-trigger btn left col s5' data-target='dropdown1' style={styles.posDrop}>{this.state.showSize}</a>
-                                        <ul id='dropdown1' className='dropdown-content' name="size">
+                                        <ul id='dropdown1' className='dropdown-content'>
                                             <li>
                                                 <h4
                                                     className="center-align"

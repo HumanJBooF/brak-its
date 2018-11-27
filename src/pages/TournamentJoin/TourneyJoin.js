@@ -4,6 +4,7 @@ import Container from '../../components/Container';
 import Navbar from '../../components/Navbar'
 import styles from './JoinStyles';
 import API from '../../utils/API';
+// import Moment from 'react-moment';
 
 class TourneyJoin extends React.Component {
 
@@ -224,17 +225,27 @@ class TourneyJoin extends React.Component {
                                     <span className="card-title center-align truncate">Tournament Info</span>
                                     <p>Name: {this.state.tournament.name}</p>
                                     <p>type: {this.state.tournament.gameType}</p>
-                                    <p>date: {this.state.tournament.date}</p>
-                                    <p>Time: {this.state.tournament.time}</p>
+                                    {/* <Moment */}
+                                        {/* format="MM/DD/YYYY"
+                                        add={this.state.tournament.date}
+                                    > */}
+                                    {/* <p>date: {this.state.tournament.date}</p> */}
+                                  
+                                    <p>Time: {this.state.tournament.time}</p>  
+                                    {/* </Moment> */}
                                 </div>
                             </div>
                         </div>
 
                         <div className="col s12 m3" >
                             <ul className="collection with-header" style={styles.collect}>
-                                <li className="center-align collection-header">Player List {this.state.players.length}/{this.state.tournament.sizeLimit}</li>
+                                <li className="center-align collection-header">
+                                    Player List {this.state.players.length}/{this.state.tournament.sizeLimit}
+                                </li>
                                 {this.state.players.map((user, i) => {
-                                    return <li key={i} className="collection-item center-align">{user.username}</li>
+                                    return <li key={i} 
+                                            className="collection-item center-align">{user.username}
+                                        </li>
                                 })
                                 }
 
