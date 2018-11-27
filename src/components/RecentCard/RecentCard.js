@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+// import Moment from 'react-moment'; 
 // import Container from '../Container';
 
 const RecentCard = props => (
@@ -19,6 +20,7 @@ const RecentCard = props => (
                                 <th>Size</th>
                                 <th>Format</th>
                                 <th>Date</th>
+                                <th>Time</th>
                                 <th>Active</th>
                             </tr>
                         </thead>
@@ -30,7 +32,8 @@ const RecentCard = props => (
                                     <td><h6>{name.owner}</h6></td>
                                     <td><h6>{name.sizeLimit}</h6></td>
                                     <td><h6>{name.format}</h6></td>
-                                    <td><h6>{name.date}</h6></td>
+                                    <td><h6>{name.date.slice(0, name.date.indexOf("T"))}</h6></td>
+                                    <td><h6>{name.date.slice(name.date.indexOf("T") + 1, name.date.indexOf("."))}</h6></td>
                                     <td><h6>
                                         {`${name.isActive.toString().charAt(0).toUpperCase()}${name.isActive.toString().slice(1)}`}
                                     </h6></td>

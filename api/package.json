@@ -22,8 +22,7 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.3",
     "sequelize": "^4.41.0",
-    "sweetalert": "^2.1.2",
-    "moment": "^2.22.2"
+    "sweetalert": "^2.1.2"
   },
   "devDependencies": {},
   "scripts": {

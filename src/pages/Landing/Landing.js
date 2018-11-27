@@ -25,7 +25,7 @@ class LandingPage extends React.Component {
                         description: tourneyElems.description,
                         sizeLimit: tourneyElems.sizeLimit,
                         date: tourneyElems.date,
-                        time: tourneyElems.time,
+                        // time: tourneyElems.date.slice(11, -8),
                         format: tourneyElems.format,
                         gameType: tourneyElems.gameType,
                         owner: tourneyElems.owner,
