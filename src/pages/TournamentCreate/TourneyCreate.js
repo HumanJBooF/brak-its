@@ -1,6 +1,5 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import 'react-datepicker/dist/react-datepicker.css';
 import 'materialize-css/dist/css/materialize.min.css';
 import Navbar from '../../components/Navbar';
 import Container from '../../components/Container';
@@ -170,7 +169,6 @@ class TournCreate extends React.Component {
                                     <Container>
                                         <DatePicker
                                             selected={this.state.startDate}
-                                            onChange={this.handle_date}
                                             showTimeSelect
                                             timeFormat="HH:mm a"
                                             timeIntervals={60}
