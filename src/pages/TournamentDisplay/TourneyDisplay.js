@@ -5,179 +5,180 @@ import Navbar from '../../components/Navbar'
 
 class TourneyDisplay extends React.Component {
     state = {
-        tourneyInfo: []
+        tourneyInfo: [],
+        admin: false
     }
-
-    //================================================================================================
-
-    tempMatchData = [
-        // Round 1
-        {
-            player_1: "1",
-            player_2: null,
-            p1_score: 10,
-            p2_score: null,
-            winner: "1",
-            match_num: 1,
-            next_match: 5
-        }, {
-            player_1: "4",
-            player_2: "5",
-            p1_score: 15,
-            p2_score: 12,
-            winner: "4",
-            match_num: 2,
-            next_match: 5
-        }, {
-            player_1: "2",
-            player_2: null,
-            p1_score: 8,
-            p2_score: null,
-            winner: "2",
-            match_num: 3,
-            next_match: 6
-        }, {
-            player_1: "3",
-            player_2: "6",
-            p1_score: 18,
-            p2_score: 20,
-            winner: "6",
-            match_num: 4,
-            next_match: 6
-        },
-        // Round 2
-        {
-            player_1: "1",
-            player_2: "4",
-            p1_score: 14,
-            p2_score: 17,
-            winner: "4",
-            match_num: 5,
-            next_match: 7
-        }, {
-            player_1: "2",
-            player_2: "6",
-            p1_score: 12,
-            p2_score: 10,
-            winner: "2",
-            match_num: 6,
-            next_match: 7
-        },
-        // Round 3
-        {
-            player_1: "4",
-            player_2: "2",
-            p1_score: 60,
-            p2_score: 3,
-            winner: "4",
-            match_num: 7,
-            next_match: 8
-        }
-    ];
 
     //================================================================================================
 
     // tempMatchData = [
     //     // Round 1
     //     {
-    //         player_1: "7",
-    //         player_2: "8",
-    //         p1_score: 18,
-    //         p2_score: 20,
-    //         winner: "8",
-    //         match_num: 4,
-    //         next_match: 10
-    //     }, {
-    //         player_1: "9",
-    //         player_2: "10",
-    //         p1_score: 5,
-    //         p2_score: 13,
-    //         winner: "10",
-    //         match_num: 5,
-    //         next_match: 11
-    //     }, {
-    //         player_1: "11",
-    //         player_2: "12",
-    //         p1_score: 17,
-    //         p2_score: 13,
-    //         winner: "11",
-    //         match_num: 6,
-    //         next_match: 11
-    //     }, {
-    //         player_1: "13",
-    //         player_2: "14",
-    //         p1_score: 16,
-    //         p2_score: 12,
-    //         winner: "13",
-    //         match_num: 7,
-    //         next_match: 12
-    //     }, {
-    //         player_1: "15",
-    //         player_2: "16",
-    //         p1_score: 18,
-    //         p2_score: 20,
-    //         winner: "16",
-    //         match_num: 8,
-    //         next_match: 12
-    //     },{
     //         player_1: "1",
-    //         player_2: "2",
+    //         player_2: null,
     //         p1_score: 10,
-    //         p2_score: 20,
-    //         winner: "2",
+    //         p2_score: null,
+    //         winner: "1",
     //         match_num: 1,
-    //         next_match: 9
+    //         next_match: 5
     //     }, {
-    //         player_1: "3",
-    //         player_2: "4",
+    //         player_1: "4",
+    //         player_2: "5",
     //         p1_score: 15,
     //         p2_score: 12,
-    //         winner: "3",
+    //         winner: "4",
     //         match_num: 2,
-    //         next_match: 9
+    //         next_match: 5
     //     }, {
-    //         player_1: "5",
-    //         player_2: "6",
+    //         player_1: "2",
+    //         player_2: null,
     //         p1_score: 8,
-    //         p2_score: 12,
-    //         winner: "6",
+    //         p2_score: null,
+    //         winner: "2",
     //         match_num: 3,
-    //         next_match: 10
+    //         next_match: 6
+    //     }, {
+    //         player_1: "3",
+    //         player_2: "6",
+    //         p1_score: 18,
+    //         p2_score: 20,
+    //         winner: "6",
+    //         match_num: 4,
+    //         next_match: 6
     //     },
     //     // Round 2
     //     {
+    //         player_1: "1",
+    //         player_2: "4",
+    //         p1_score: 14,
+    //         p2_score: 17,
+    //         winner: "4",
+    //         match_num: 5,
+    //         next_match: 7
+    //     }, {
     //         player_1: "2",
-    //         player_2: "3",
-    //         p1_score: 15,
-    //         p2_score: 11,
-    //         winner: "2",
-    //         match_num: 9,
-    //         next_match: 13
-    //     }, {
-    //         player_1: "6",
-    //         player_2: "8",
+    //         player_2: "6",
     //         p1_score: 12,
-    //         p2_score: 18,
-    //         winner: "8",
-    //         match_num: 10,
-    //         next_match: 13
-    //     }, {
-    //         player_1: "10",
-    //         player_2: "11",
-    //         p1_score: 12,
-    //         p2_score: 16,
-    //         winner: "11",
-    //         match_num: 11,
-    //         next_match: 14
-    //     }, {
-    //         player_1: "13",
-    //         player_2: "16",
-    //         p1_score: 20,
     //         p2_score: 10,
-    //         winner: "13",
-    //         match_num: 12,
-    //         next_match: 14
+    //         winner: "2",
+    //         match_num: 6,
+    //         next_match: 7
     //     },
+    //     // Round 3
+    //     {
+    //         player_1: "4",
+    //         player_2: "2",
+    //         p1_score: 60,
+    //         p2_score: 3,
+    //         winner: "4",
+    //         match_num: 7,
+    //         next_match: 8
+    //     }
+    // ];
+
+    //================================================================================================
+
+    tempMatchData = [
+        // Round 1
+        {
+            player_1: "7",
+            player_2: "8",
+            p1_score: 18,
+            p2_score: 20,
+            winner: "8",
+            match_num: 4,
+            next_match: 10
+        }, {
+            player_1: "9",
+            player_2: "10",
+            p1_score: 5,
+            p2_score: 13,
+            winner: "10",
+            match_num: 5,
+            next_match: 11
+        }, {
+            player_1: "11",
+            player_2: "12",
+            p1_score: 17,
+            p2_score: 13,
+            winner: "11",
+            match_num: 6,
+            next_match: 11
+        }, {
+            player_1: "13",
+            player_2: "14",
+            p1_score: 16,
+            p2_score: 12,
+            winner: "13",
+            match_num: 7,
+            next_match: 12
+        }, {
+            player_1: "15",
+            player_2: "16",
+            p1_score: 18,
+            p2_score: 20,
+            winner: "16",
+            match_num: 8,
+            next_match: 12
+        },{
+            player_1: "1",
+            player_2: "2",
+            p1_score: 10,
+            p2_score: 20,
+            winner: "2",
+            match_num: 1,
+            next_match: 9
+        }, {
+            player_1: "3",
+            player_2: "4",
+            p1_score: null,
+            p2_score: null,
+            winner: null,
+            match_num: 2,
+            next_match: 9
+        }, {
+            player_1: "5",
+            player_2: "6",
+            p1_score: 8,
+            p2_score: 12,
+            winner: "6",
+            match_num: 3,
+            next_match: 10
+        },
+        // Round 2
+        {
+            player_1: "2",
+            player_2: undefined,
+            p1_score: null,
+            p2_score: null,
+            winner: null,
+            match_num: 9,
+            next_match: 13
+        }, {
+            player_1: "6",
+            player_2: "8",
+            p1_score: null,
+            p2_score: null,
+            winner: null,
+            match_num: 10,
+            next_match: 13
+        }, {
+            player_1: "10",
+            player_2: "11",
+            p1_score: null,
+            p2_score: null,
+            winner: null,
+            match_num: 11,
+            next_match: 14
+        }, {
+            player_1: "13",
+            player_2: "16",
+            p1_score: null,
+            p2_score: null,
+            winner: null,
+            match_num: 12,
+            next_match: 14
+        },
     //     // Round 3
     //     {
     //         player_1: "2",
@@ -206,17 +207,17 @@ class TourneyDisplay extends React.Component {
     //         match_num: 15,
     //         next_match: 16
     //     }
-    // ];
+    ];
 
     //================================================================================================
 
-    tempTourneyData = {
-        size: 8
-    };
-
     // tempTourneyData = {
-    //     size: 16
-    // }
+    //     size: 8
+    // };
+
+    tempTourneyData = {
+        size: 16
+    }
 
 
     // componentDidMount = () => {
@@ -261,13 +262,15 @@ class TourneyDisplay extends React.Component {
     // ======================================================================================
 
     componentDidMount = () => {
-        //Get tournament data (for now just grab whats listed above), should be an api call to the db
+        // Check the permission of who is logged in
+        this.check_permission();
+        // Get tournament data (for now just grab whats listed above), should be an api call to the db
         const dbResponse = this.tempMatchData
         // Should ALWAYS be the high natural power of 2 needed
         const size = this.tempTourneyData.size
 
         const tourneyInfo = [];
-        const roundsToRun = Math.log2(size)
+        const roundsToRun = Math.ceil(Math.log2(size));
 
         let indexTraker = 0;
 
@@ -285,12 +288,13 @@ class TourneyDisplay extends React.Component {
             switch (dbResponse[indexTraker - 1].winner) {
                 case null:
                     tourneyInfo.push([{
-                        player: false,
+                        player: undefined,
                         score: null,
                         match_num: null,
                         next_match: null,
                         winner: null,
-                        boxOrder: (indexTraker * 2) + 1
+                        boxOrder: (indexTraker * 2) + 1,
+                        isActvie: false
                     }]);
                     break;
                 case dbResponse[indexTraker - 1].player_1:
@@ -300,7 +304,8 @@ class TourneyDisplay extends React.Component {
                         match_num: null,
                         next_match: null,
                         winner: null,
-                        boxOrder: (indexTraker * 2) + 1
+                        boxOrder: (indexTraker * 2) + 1,
+                        isActvie: false
                     }]);
                     break;
                 case dbResponse[indexTraker - 1].player_2:
@@ -310,20 +315,23 @@ class TourneyDisplay extends React.Component {
                         match_num: null,
                         next_match: null,
                         winner: null,
-                        boxOrder: (indexTraker * 2) + 1
+                        boxOrder: (indexTraker * 2) + 1,
+                        isActvie: false
                     }]);
                     break;
                 default:
                     console.log('Should not be possible to see this, this means the response has a winner of something other than P1, P2, or null for the last round :(')
+                    break;
             }
         } else {
             tourneyInfo.push([{
-                player: false,
+                player: undefined,
                 score: null,
                 match_num: null,
                 next_match: null,
                 winner: null,
-                boxOrder: (indexTraker * 2) + 1
+                boxOrder: (indexTraker * 2) + 1,
+                isActvie: false
             }]);
         }
 
@@ -339,24 +347,38 @@ class TourneyDisplay extends React.Component {
 
         for (let currentIndex = indexTraker; currentIndex < roundSize + indexTraker; currentIndex++) {
             let currentMatch = dbResponse[currentIndex];
+            let isActiveValue;
+
+            if(currentMatch === undefined) {
+                isActiveValue = false
+            } else {
+                if(currentMatch.player_1 === null || currentMatch.player_2 === null || currentMatch.player_1 === undefined || currentMatch.player_2 === undefined || currentMatch.winner !== null) {
+                    isActiveValue = false
+                } else {
+                    isActiveValue = true;
+                }
+            }
+
 
             switch (currentMatch) {
                 case undefined:
                     roundInfo.push({
-                        player: false,
+                        player: undefined,
                         score: null,
                         match_num: null,
                         next_match: null,
                         winner: null,
-                        boxOrder: (currentIndex * 2) + 1
+                        boxOrder: (currentIndex * 2) + 1,
+                        isActive: isActiveValue
                     }, {
-                            player: false,
-                            score: null,
-                            match_num: null,
-                            next_match: null,
-                            winner: null,
-                            boxOrder: (currentIndex * 2) + 2
-                        })
+                        player: undefined,
+                        score: null,
+                        match_num: null,
+                        next_match: null,
+                        winner: null,
+                        boxOrder: (currentIndex * 2) + 2,
+                        isActive: isActiveValue
+                    })
                     break;
                 default:
                     roundInfo.push({
@@ -365,15 +387,18 @@ class TourneyDisplay extends React.Component {
                         match_num: currentMatch.match_num,
                         next_match: currentMatch.next_match,
                         winner: currentMatch.winner,
-                        boxOrder: (currentMatch.match_num * 2) - 1
+                        boxOrder: (currentMatch.match_num * 2) - 1,
+                        isActive: isActiveValue
                     }, {
-                            player: currentMatch.player_2,
-                            score: currentMatch.p2_score,
-                            match_num: currentMatch.match_num,
-                            next_match: currentMatch.next_match,
-                            winner: currentMatch.winner,
-                            boxOrder: currentMatch.match_num * 2
-                        })
+                        player: currentMatch.player_2,
+                        score: currentMatch.p2_score,
+                        match_num: currentMatch.match_num,
+                        next_match: currentMatch.next_match,
+                        winner: currentMatch.winner,
+                        boxOrder: currentMatch.match_num * 2,
+                        isActive: isActiveValue
+                    });
+                    break;
             }
         }
 
@@ -382,6 +407,20 @@ class TourneyDisplay extends React.Component {
         });
 
         return roundInfo;
+    }
+
+    check_permission = () => {
+        if(this.props.loggedIn) {
+            if(this.props.username === this.props.username) {
+                this.setState({ admin: true })
+            }
+        }
+    }
+
+    handle_win = (event) => {
+        event.preventDefault();
+        // console.log("Hopefully the player: ", event._targetInst.memoizedProps.playerinfo)
+        const playerInfo = {...event._targetInst.memoizedProps.playerinfo};
     }
 
     render () {
@@ -393,19 +432,14 @@ class TourneyDisplay extends React.Component {
                     username={this.props.username}
                 />
                 <Container>
-                    <h6>Tourney Name Goes here</h6>
+                    <h6>{`${this.state.admin}`}</h6>
 
                     {true /* if tournament is active */
-                        ? <Tournament tourneyInfo={this.state.tourneyInfo} key="willBeUUID" />
+                        ? <Tournament tourneyInfo={this.state.tourneyInfo} admin={this.state.admin} handle_win={event => {this.handle_win(event)}}/>
                         : null
                     }
 
                     <div className="row">
-                        {true /* if tournament is pre-actvie */
-                            ? <p>join info</p>
-                            : null
-                        }
-
                         <p>This is where info will go</p>
 
                         {true /* if owner = logged in */

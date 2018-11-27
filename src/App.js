@@ -45,7 +45,7 @@ class App extends React.Component {
 				<div>
 					<Switch>
 						<Route exact path='/'
-							render={() => <Landing
+							component={() => <Landing
 								update_user={this.update_user}
 								loggedIn={this.state.loggedIn}
 								username={this.state.username}
@@ -62,15 +62,21 @@ class App extends React.Component {
 							/>}
 						/>
 						<Route exact path='/tournament'
-							render={() => <TournCreate
+							component={() => <TournCreate
 								username={this.state.username}
 								update_user={this.update_user}
 								loggedIn={this.state.loggedIn}
 							/>}
 						/>
-						<Route exact path='/display' component={TournDisplay} />
+						<Route exact path='/display'
+							component={() => <TournDisplay
+								username={this.state.username}
+								update_user={this.update_user}
+								loggedIn={this.state.loggedIn}
+							/>}
+						/>
 						<Route exact path='/join/:owner/:id'
-							render={props => <TourneyJoin
+							component={props => <TourneyJoin
 								{...props}
 								update_user={this.update_user}
 								username={this.state.username}
