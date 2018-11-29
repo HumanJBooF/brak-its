@@ -6,6 +6,7 @@ import Navbar from '../../components/Navbar'
 class TourneyDisplay extends React.Component {
     state = {
         tourneyInfo: [],
+        matchesUsed: [],
         admin: false
     }
 
@@ -15,7 +16,7 @@ class TourneyDisplay extends React.Component {
     //     // Round 1
     //     {
     //         player_1: "1",
-    //         player_2: null,
+    //         player_2: "bye",
     //         p1_score: 10,
     //         p2_score: null,
     //         winner: "1",
@@ -31,7 +32,7 @@ class TourneyDisplay extends React.Component {
     //         next_match: 5
     //     }, {
     //         player_1: "2",
-    //         player_2: null,
+    //         player_2: "bye",
     //         p1_score: 8,
     //         p2_score: null,
     //         winner: "2",
@@ -148,7 +149,7 @@ class TourneyDisplay extends React.Component {
         // Round 2
         {
             player_1: "2",
-            player_2: undefined,
+            player_2: null,
             p1_score: null,
             p2_score: null,
             winner: null,
@@ -281,6 +282,8 @@ class TourneyDisplay extends React.Component {
                 this.sort_rounds(dbResponse, roundSize, indexTraker)
             );
 
+            console.log(this.state.matchesUsed)
+
             indexTraker += roundSize;
         }
 
@@ -288,7 +291,7 @@ class TourneyDisplay extends React.Component {
             switch (dbResponse[indexTraker - 1].winner) {
                 case null:
                     tourneyInfo.push([{
-                        player: undefined,
+                        player: null,
                         score: null,
                         match_num: null,
                         next_match: null,
@@ -325,7 +328,7 @@ class TourneyDisplay extends React.Component {
             }
         } else {
             tourneyInfo.push([{
-                player: undefined,
+                player: null,
                 score: null,
                 match_num: null,
                 next_match: null,
@@ -344,6 +347,7 @@ class TourneyDisplay extends React.Component {
 
     sort_rounds = (dbResponse, roundSize, indexTraker) => {
         const roundInfo = [];
+        const matchesUsed = [];
 
         for (let currentIndex = indexTraker; currentIndex < roundSize + indexTraker; currentIndex++) {
             let currentMatch = dbResponse[currentIndex];
@@ -363,7 +367,7 @@ class TourneyDisplay extends React.Component {
             switch (currentMatch) {
                 case undefined:
                     roundInfo.push({
-                        player: undefined,
+                        player: null,
                         score: null,
                         match_num: null,
                         next_match: null,
@@ -371,7 +375,7 @@ class TourneyDisplay extends React.Component {
                         boxOrder: (currentIndex * 2) + 1,
                         isActive: isActiveValue
                     }, {
-                        player: undefined,
+                        player: null,
                         score: null,
                         match_num: null,
                         next_match: null,
@@ -398,6 +402,9 @@ class TourneyDisplay extends React.Component {
                         boxOrder: currentMatch.match_num * 2,
                         isActive: isActiveValue
                     });
+
+                    matchesUsed.push(currentMatch.match_num);
+
                     break;
             }
         }
@@ -405,6 +412,15 @@ class TourneyDisplay extends React.Component {
         roundInfo.sort((a, b) => {
             return a.boxOrder - b.boxOrder;
         });
+
+        const newArr = [...this.state.matchesUsed, ...matchesUsed]
+
+        console.log("here", newArr)
+
+
+        this.setState({ matchesUsed: newArr })
+
+        console.log('state', this.state.matchesUsed)
 
         return roundInfo;
     }
@@ -421,6 +437,54 @@ class TourneyDisplay extends React.Component {
         event.preventDefault();
         // console.log("Hopefully the player: ", event._targetInst.memoizedProps.playerinfo)
         const playerInfo = {...event._targetInst.memoizedProps.playerinfo};
+        // playerInfo = {
+        //     boxOrder
+        //     isActive
+        //     match_num
+        //     next_match
+        //     player
+        //     score
+        //     winner
+        // }
+
+        // Ask if manager wants to make player win, sweetmodal if true continue, if not boot
+
+        // update current to reflect scores/win
+
+        console.log(this.state.matchesUsed, playerInfo.next_match)
+
+        if(this.state.matchesUsed.includes(playerInfo.next_match)) {
+            console.log("should be update")
+            // Should only need the opposite player name, everything else is the same as create
+
+            if(playerInfo.match_num % 2) {
+                console.log("e");
+                // Is player 1
+                const updateAt = playerInfo.next_match
+
+                const updatedRound = {
+                    player1: playerInfo.player
+                }
+            } else {
+                console.log("o")
+                // Is player 2
+            }
+        } else {
+            console.log("Should be create")
+            //
+
+            if(playerInfo.match_num % 2) {
+                console.log("e");
+                // Is player 1
+            } else {
+                console.log("o")
+                // Is player 2
+            }
+        }
+
+        
+
+        // re-get info from db, re-render page
     }
 
     render () {
