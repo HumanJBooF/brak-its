@@ -4,7 +4,6 @@ import Container from '../../components/Container';
 import Navbar from '../../components/Navbar'
 import styles from './JoinStyles';
 import API from '../../utils/API';
-// import Moment from 'react-moment';
 
 class TourneyJoin extends React.Component {
 
@@ -22,11 +21,13 @@ class TourneyJoin extends React.Component {
 
 
     get_users = () => {
+        console.log('helllooo')
         const tourneyId = this.state.tournament.id;
 
         API.get_users_tournament({ id: tourneyId }).then(result => {
-            console.log(result.data.users)
-            let users = result.data.users.map(user => user.username)
+            console.log(result.data.users, "USERS")
+            let users = result.data.users.map(user => user.signUp.id)
+            console.log(users, 'ID')
             this.sort_players(users)
         })
     }
@@ -229,44 +230,13 @@ class TourneyJoin extends React.Component {
 
         console.log(`SEED ORDER: ${seedOrder}`)
         return seedOrder;
-        // -----------------------------------------------------------------------------------------------------------------
-
-        // seedOrder[(players.length/2)] = atPlayer
-
-        // //
-
-        // seedOrder[(players.length/4) + (players.length/2)] = atPlayer + 1
-
-        // seedOrder[(players.length/4)] = atPlayer + 2
-
-        // //
-
-        // seedOrder[(players.length/8) + (players.length/4)] = atPlayer + 3
-
-        // seedOrder[(players.length/8) + (players.length/4) + (players.length/2)] = atPlayer + 4
-
-        // seedOrder[(players.length/8) + (players.length/2)] = atPlayer + 5
-
-        // seedOrder[(players.length/8)] = atPlayer + 6
-
-        // //
-
-        // seedOrder[(players.length/16) + (players.length/8)] = atPlayer + 7
-
-        // seedOrder[(players.length/16) + (players.length/8) + (players.length/2)] = atPlayer + 8
-
-        // seedOrder[(players.length/16) + (players.length/8) + (players.length/4) + (players.length/2)] = atPlayer + 9
-
-        // seedOrder[(players.length/16) + (players.length/8) + (players.length/4)] = atPlayer + 10
-
-        // seedOrder[(players.length/16) + (players.length/4)] = atPlayer + 11
-
-        // seedOrder[(players.length/16) + (players.length/4) + (players.length/2)] = atPlayer + 12
-
-        // seedOrder[(players.length/16) + (players.length/2)] = atPlayer + 13
-
-        // seedOrder[(players.length/16)] = atPlayer + 14
     }
+
+//     set_matches = matches => {
+//         API.send_users_to_matches(matches).then(result => {
+//             console.log(result.data)
+//         })
+//     }
 
     render () {
 
@@ -285,12 +255,12 @@ class TourneyJoin extends React.Component {
                                     <p>Name: {this.state.tournament.name}</p>
                                     <p>type: {this.state.tournament.gameType}</p>
                                     {/* <Moment */}
-                                        {/* format="MM/DD/YYYY"
+                                    {/* format="MM/DD/YYYY"
                                         add={this.state.tournament.date}
                                     > */}
                                     {/* <p>date: {this.state.tournament.date}</p> */}
-                                  
-                                    <p>Time: {this.state.tournament.time}</p>  
+
+                                    <p>Time: {this.state.tournament.time}</p>
                                     {/* </Moment> */}
                                 </div>
                             </div>
@@ -302,24 +272,30 @@ class TourneyJoin extends React.Component {
                                     Player List {this.state.players.length}/{this.state.tournament.sizeLimit}
                                 </li>
                                 {this.state.players.map((user, i) => {
-                                    return <li key={i} 
-                                            className="collection-item center-align">{user.username}
-                                        </li>
+                                    return <li key={i}
+                                        className="collection-item center-align">{user.username}
+                                    </li>
                                 })
                                 }
 
                             </ul>
                         </div>
                     </div>
-                    <div className="center-align col s12 truncate">
-                        <Button
-                            btn={this.state.btn}
-                            style={styles.subBtn}
-                            onClick={this.handle_click}
-                        />
-                    </div>
+                    {!this.props.loggedIn || this.state.players.length === this.state.tournament.sizeLimit
+                        ?
+                        <>
+                        </>
+                        :
+                        <div className="center-align col s12 truncate">
+                            <Button
+                                btn={this.state.btn}
+                                style={styles.subBtn}
+                                onClick={this.handle_click}
+                            />
+                        </div>
+                    }
 
-                    {this.props.username === this.state.tournament.owner &&
+                    {this.props.username === this.state.tournament.owner && this.state.players.length >= 2 &&
                         <div className="center-align col s12 truncate">
                             <Button
                                 owner={this.state.tournament.sizeLimit === this.state.players.length ? this.state.full : this.state.early}

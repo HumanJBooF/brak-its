@@ -11,7 +11,7 @@ const logout = props => {
                 username: null
             });
         }
-    }).catch( err => console.log(`LOGOUT ERROR: ${err}`));
+    }).catch(err => console.log(`LOGOUT ERROR: ${err}`));
 }
 
 const Navbar = props => (

@@ -37,8 +37,6 @@ if (process.env.NODE_ENV === 'production') {
 // Basic route
 app.use(routes);
 
-
-
 db.sequelize.sync({ force: false }).then(() => {
   // Starts the server to begin listening
   // =============================================================

@@ -33,16 +33,14 @@ const tourneyController = {
             where: {
                 uuid: req.body.uuid
             }
-        }).then(dbTourney => {
-            res.json({ tournament: dbTourney });
-        }).catch(err => res.json({ error: err }))
+        }).then(dbTourney => res.json({ tournament: dbTourney }))
+            .catch(err => res.json({ error: err }))
     },
 
     create: (req, res) => {
         db.tourneys.create(req.body)
-            .then(dbTourney => {
-                res.json({ tournament: dbTourney })
-            }).catch(err => res.json({ error: err }));
+            .then(dbTourney => res.json({ tournament: dbTourney }))
+            .catch(err => res.json({ error: err }));
     },
 
     join_tourney: (req, res) => {
@@ -62,8 +60,9 @@ const tourneyController = {
                 tourney.update({ actualSize: +1 })
                 tourney.addUsers(userId)
                     .then(() => res.json({ user: user }))
-            })
-        })
+                    .catch(err => res.json({ err: err }));
+            }).catch(err => res.json({ err: err }));
+        }).catch(err => res.json({ err: err }));
     },
 
     get_all_users_tourney: (req, res) => {
@@ -77,10 +76,21 @@ const tourneyController = {
             tourney.getUsers({
                 order: [['createdAt', 'ASC']]
             }).then(usersTourney => {
-                res.json({ users: usersTourney })
-            })
-        })
+                res.json({ users: usersTourney });
+            }).catch(err => res.json({ err: err }));
+        }).catch(err => res.json({ err: err }));
+    },
+
+    send_users_to_matches: (req, res) => {
+        const userArr = req.body;
+        console.log(userArr.map(obj => obj.tourneyId))
+        // db.tourneys.findOne({
+        //     where: {
+        //         uuid: id
+        //     }
+        // })
     }
-};
+}
+
 
 module.exports = tourneyController;
