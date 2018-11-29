@@ -6,12 +6,12 @@ const Player = props => (
         {(props.admin && props.player.isActive)
             ? <button className="player playerButton" playerinfo={props.player} onClick={event => {props.handle_win(event)}}>{
                 props.player.player === null
-                    ? "BYE"
+                    ? ""
                     : props.player.player
             }</button>
             : <div className="player">{
                 props.player.player === null
-                    ? "BYE"
+                    ? ""
                     : props.player.player
             }</div>
         }

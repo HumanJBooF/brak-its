@@ -136,7 +136,7 @@ class TourneyJoin extends React.Component {
                 })
             } else {
                 firstRound.push({
-                    player: null,
+                    player: "Bye Round",
                     matchNum: matchNumbersInfo[0][Math.ceil((i + 1) / 2) - 1],
                     nextMatch: matchNumbersInfo[1][(Math.ceil((i + 1) / 4)) - 1],
                     boxNum: i + 1
@@ -163,31 +163,30 @@ class TourneyJoin extends React.Component {
                 player1: firstRound[i].player,
                 player2: firstRound[i + 1].player,
                 matchNum: firstRound[i].matchNum,
-                nextMatch: firstRound[i].nextMatch,
-                tourneyId: this.state.tournament.id
+                nextMatch: firstRound[i].nextMatch
             })
         }
 
-        if (secondRound) {
+        if(secondRound) {
             for (let i = 0; i < secondRound.length; i++) {
                 if (secondRound[i].boxNum % 2 === 1) {
                     dbSecondRound.push({
                         player1: secondRound[i].player,
-                        player2: secondRound[i + 1]
-                            ? secondRound[i + 1].boxNum % 2 === 1
-                                ? null
-                                : secondRound[i + 1].player
-                            : null,
+                        player2: secondRound[i + 1] 
+                                    ? secondRound[i + 1].boxNum % 2 === 1
+                                        ? null
+                                        : secondRound[i + 1].player
+                                    : null,
                         matchNum: secondRound[i].matchNum,
                         nextMatch: secondRound[i].nextMatch
                     })
                 }
             }
         }
-        const rounds = [...dbFirstRound, ...dbSecondRound]
-        console.log(rounds, 'MATCH ARR')
 
-        return this.set_matches(dbFirstRound, dbSecondRound)
+        console.log([...dbFirstRound, ...dbSecondRound])
+
+        return [...dbFirstRound, ...dbSecondRound]
     }
 
     seeding_order = tourneyplayers => {
@@ -233,11 +232,11 @@ class TourneyJoin extends React.Component {
         return seedOrder;
     }
 
-    set_matches = matches => {
-        API.send_users_to_matches(matches).then(result => {
-            console.log(result.data)
-        })
-    }
+//     set_matches = matches => {
+//         API.send_users_to_matches(matches).then(result => {
+//             console.log(result.data)
+//         })
+//     }
 
     render () {
 
