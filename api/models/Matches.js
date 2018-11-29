@@ -6,8 +6,8 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             primaryKey: true
         },
-        p1Score: { type: DataTypes.INTEGER },
-        p2Score: { type: DataTypes.INTEGER },
+        // playerOne: { type: DataTypes.STRING, defaultValue: null },
+        // playerTwo: { type: DataTypes.STRING, defaultValue: null },
         winner: { type: DataTypes.STRING },
         matchNum: { type: DataTypes.INTEGER },
         nextMatch: { type: DataTypes.BOOLEAN, defaultValue: false }
@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     );
 
     Matches.associate = models => {
-        Matches.belongsTo(models.tourneys, { as: 'tourneyId', foreignKey: 'tourney' });
+        Matches.belongsTo(models.tourneys, { as: 'tourney' });
     }
 
     return Matches;

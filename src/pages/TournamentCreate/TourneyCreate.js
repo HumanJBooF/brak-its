@@ -14,7 +14,7 @@ import M from 'materialize-css/dist/js/materialize.min.js';
 class TournCreate extends React.Component {
     state = {
         tourneyName: '',
-        type: '',
+        gameType: '',
         description: '',
         sizeLimit: '',
         startDate: new Date(),
@@ -27,8 +27,8 @@ class TournCreate extends React.Component {
         redirectTo: null
     }
 
-    componentDidMount() {  
-        M.AutoInit() 
+    componentDidMount () {
+        M.AutoInit()
     }
 
     //RegEx to remove all special charcters 
@@ -65,12 +65,11 @@ class TournCreate extends React.Component {
         console.log(this.state.size);
         this.handle_validity({
             tourneyName: this.state.tourneyName,
-            description: this.state.description,
-            type: this.state.type,
+            description: this.state.description
         })
             ? API.create_tournament({
                 tourneyName: this.state.tourneyName,
-                type: this.state.type,
+                gameType: this.state.gameType,
                 description: this.state.description,
                 date: this.state.startDate,
                 sizeLimit: this.state.sizeLimit,
@@ -116,7 +115,7 @@ class TournCreate extends React.Component {
 
     //I bless the rains down in africa
 
-    render() {
+    render () {
         if (this.state.redirectTo) {
             return <Redirect to={{ pathname: this.state.redirectTo }} />
         } else {
@@ -146,7 +145,7 @@ class TournCreate extends React.Component {
                                         <p>Enter the game type</p>
                                         <input
                                             type="text"
-                                            name="type"
+                                            name="gameType"
                                             id="tType"
                                             maxLength="35"
                                             onChange={this.handle_change}

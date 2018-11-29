@@ -76,7 +76,7 @@ class App extends React.Component {
 							/>}
 						/>
 						<Route exact path='/join/:owner/:id'
-							component={props => <TourneyJoin
+							render={props => <TourneyJoin
 								{...props}
 								update_user={this.update_user}
 								username={this.state.username}

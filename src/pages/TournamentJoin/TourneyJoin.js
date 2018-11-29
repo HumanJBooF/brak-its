@@ -4,7 +4,6 @@ import Container from '../../components/Container';
 import Navbar from '../../components/Navbar'
 import styles from './JoinStyles';
 import API from '../../utils/API';
-// import Moment from 'react-moment';
 
 class TourneyJoin extends React.Component {
 
@@ -22,11 +21,13 @@ class TourneyJoin extends React.Component {
 
 
     get_users = () => {
+        console.log('helllooo')
         const tourneyId = this.state.tournament.id;
 
         API.get_users_tournament({ id: tourneyId }).then(result => {
-            console.log(result.data.users)
-            let users = result.data.users.map(user => user.username)
+            console.log(result.data.users, "USERS")
+            let users = result.data.users.map(user => user.signUp.id)
+            console.log(users, 'ID')
             this.sort_players(users)
         })
     }
@@ -100,33 +101,93 @@ class TourneyJoin extends React.Component {
         let seeds = this.seeding_order(players.length);
 
         const firstRound = [];
-        const highplayers = Math.pow(2, Math.ceil(Math.log2(players.length)));
-        const byeWeeks = highplayers - players.length;
-        seeds.map(index => {
-            if (index <= seeds.length - byeWeeks) {
-                firstRound.push(players[index - 1])
-                console.log(players, index, ' IN THE IF')
+        const secondRound = [];
+        const matchNumbersInfo = [];
+
+        const roundsToRun = Math.ceil(Math.log2(players.length));
+        const highPlayers = Math.pow(2, roundsToRun);
+        const byeWeeks = highPlayers - players.length;
+
+        let indexTracker = 0;
+
+        for (let currentRound = 0; currentRound < roundsToRun; currentRound++) {
+            const roundInfo = [];
+
+            const roundSize = highPlayers / (Math.pow(2, currentRound) * 2);
+
+            for (let currentMatch = 1; currentMatch < roundSize + 1; currentMatch++) {
+                roundInfo.push(currentMatch + indexTracker)
             }
-            else {
-                firstRound.push(null)
-            }
-        })
 
-        return this.get_db_ready(firstRound);
-    }
+            matchNumbersInfo.push(roundInfo);
 
-    get_db_ready = arr => {
-        const dbFirstRound = [];
+            indexTracker += roundSize
+        }
 
-        for (let i = 0; i < arr.length / 2; i++) {
-            dbFirstRound[i] = {
-                player1: arr[(i * 2)],
-                player2: arr[(i * 2) + 1],
-                matchNum: i,
+        for (let i = 0; i < seeds.length; i++) {
+            const seedIndex = seeds[i];
+
+            if (seedIndex <= seeds.length - byeWeeks) {
+                firstRound.push({
+                    player: players[seedIndex - 1],
+                    matchNum: matchNumbersInfo[0][Math.ceil((i + 1) / 2) - 1],
+                    nextMatch: matchNumbersInfo[1][(Math.ceil((i + 1) / 4)) - 1],
+                    boxNum: i + 1
+                })
+            } else {
+                firstRound.push({
+                    player: null,
+                    matchNum: matchNumbersInfo[0][Math.ceil((i + 1) / 2) - 1],
+                    nextMatch: matchNumbersInfo[1][(Math.ceil((i + 1) / 4)) - 1],
+                    boxNum: i + 1
+                });
+
+                secondRound.push({
+                    player: firstRound[i - 1].player,
+                    matchNum: matchNumbersInfo[1][(Math.ceil((i + 1) / 4)) - 1],
+                    nextMatch: matchNumbersInfo[2] ? matchNumbersInfo[2][Math.ceil((i + 1) / 8) - 1] : null,
+                    boxNum: highPlayers + ((i + 1) / 2)
+                })
             }
         }
-        console.log(dbFirstRound)
-        return dbFirstRound
+
+        return this.get_db_ready(firstRound, secondRound);
+    }
+
+    get_db_ready = (firstRound, secondRound) => {
+        const dbFirstRound = [];
+        const dbSecondRound = [];
+
+        for (let i = 0; i < firstRound.length; i += 2) {
+            dbFirstRound.push({
+                player1: firstRound[i].player,
+                player2: firstRound[i + 1].player,
+                matchNum: firstRound[i].matchNum,
+                nextMatch: firstRound[i].nextMatch,
+                tourneyId: this.state.tournament.id
+            })
+        }
+
+        if (secondRound) {
+            for (let i = 0; i < secondRound.length; i++) {
+                if (secondRound[i].boxNum % 2 === 1) {
+                    dbSecondRound.push({
+                        player1: secondRound[i].player,
+                        player2: secondRound[i + 1]
+                            ? secondRound[i + 1].boxNum % 2 === 1
+                                ? null
+                                : secondRound[i + 1].player
+                            : null,
+                        matchNum: secondRound[i].matchNum,
+                        nextMatch: secondRound[i].nextMatch
+                    })
+                }
+            }
+        }
+        const rounds = [...dbFirstRound, ...dbSecondRound]
+        console.log(rounds, 'MATCH ARR')
+
+        return this.set_matches(dbFirstRound, dbSecondRound)
     }
 
     seeding_order = tourneyplayers => {
@@ -170,43 +231,12 @@ class TourneyJoin extends React.Component {
 
         console.log(`SEED ORDER: ${seedOrder}`)
         return seedOrder;
-        // -----------------------------------------------------------------------------------------------------------------
+    }
 
-        // seedOrder[(players.length/2)] = atPlayer
-
-        // //
-
-        // seedOrder[(players.length/4) + (players.length/2)] = atPlayer + 1
-
-        // seedOrder[(players.length/4)] = atPlayer + 2
-
-        // //
-
-        // seedOrder[(players.length/8) + (players.length/4)] = atPlayer + 3
-
-        // seedOrder[(players.length/8) + (players.length/4) + (players.length/2)] = atPlayer + 4
-
-        // seedOrder[(players.length/8) + (players.length/2)] = atPlayer + 5
-
-        // seedOrder[(players.length/8)] = atPlayer + 6
-
-        // //
-
-        // seedOrder[(players.length/16) + (players.length/8)] = atPlayer + 7
-
-        // seedOrder[(players.length/16) + (players.length/8) + (players.length/2)] = atPlayer + 8
-
-        // seedOrder[(players.length/16) + (players.length/8) + (players.length/4) + (players.length/2)] = atPlayer + 9
-
-        // seedOrder[(players.length/16) + (players.length/8) + (players.length/4)] = atPlayer + 10
-
-        // seedOrder[(players.length/16) + (players.length/4)] = atPlayer + 11
-
-        // seedOrder[(players.length/16) + (players.length/4) + (players.length/2)] = atPlayer + 12
-
-        // seedOrder[(players.length/16) + (players.length/2)] = atPlayer + 13
-
-        // seedOrder[(players.length/16)] = atPlayer + 14
+    set_matches = matches => {
+        API.send_users_to_matches(matches).then(result => {
+            console.log(result.data)
+        })
     }
 
     render () {
@@ -226,12 +256,12 @@ class TourneyJoin extends React.Component {
                                     <p>Name: {this.state.tournament.name}</p>
                                     <p>type: {this.state.tournament.gameType}</p>
                                     {/* <Moment */}
-                                        {/* format="MM/DD/YYYY"
+                                    {/* format="MM/DD/YYYY"
                                         add={this.state.tournament.date}
                                     > */}
                                     {/* <p>date: {this.state.tournament.date}</p> */}
-                                  
-                                    <p>Time: {this.state.tournament.time}</p>  
+
+                                    <p>Time: {this.state.tournament.time}</p>
                                     {/* </Moment> */}
                                 </div>
                             </div>
@@ -243,24 +273,30 @@ class TourneyJoin extends React.Component {
                                     Player List {this.state.players.length}/{this.state.tournament.sizeLimit}
                                 </li>
                                 {this.state.players.map((user, i) => {
-                                    return <li key={i} 
-                                            className="collection-item center-align">{user.username}
-                                        </li>
+                                    return <li key={i}
+                                        className="collection-item center-align">{user.username}
+                                    </li>
                                 })
                                 }
 
                             </ul>
                         </div>
                     </div>
-                    <div className="center-align col s12 truncate">
-                        <Button
-                            btn={this.state.btn}
-                            style={styles.subBtn}
-                            onClick={this.handle_click}
-                        />
-                    </div>
+                    {!this.props.loggedIn || this.state.players.length === this.state.tournament.sizeLimit
+                        ?
+                        <>
+                        </>
+                        :
+                        <div className="center-align col s12 truncate">
+                            <Button
+                                btn={this.state.btn}
+                                style={styles.subBtn}
+                                onClick={this.handle_click}
+                            />
+                        </div>
+                    }
 
-                    {this.props.username === this.state.tournament.owner &&
+                    {this.props.username === this.state.tournament.owner && this.state.players.length >= 2 &&
                         <div className="center-align col s12 truncate">
                             <Button
                                 owner={this.state.tournament.sizeLimit === this.state.players.length ? this.state.full : this.state.early}
