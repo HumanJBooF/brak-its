@@ -100,33 +100,92 @@ class TourneyJoin extends React.Component {
         let seeds = this.seeding_order(players.length);
 
         const firstRound = [];
-        const highplayers = Math.pow(2, Math.ceil(Math.log2(players.length)));
-        const byeWeeks = highplayers - players.length;
-        seeds.map(index => {
-            if (index <= seeds.length - byeWeeks) {
-                firstRound.push(players[index - 1])
-                console.log(players, index, ' IN THE IF')
+        const secondRound = [];
+        const matchNumbersInfo = [];
+
+        const roundsToRun = Math.ceil(Math.log2(players.length));
+        const highPlayers = Math.pow(2, roundsToRun);
+        const byeWeeks = highPlayers - players.length;
+
+        let indexTracker = 0;
+
+        for (let currentRound = 0; currentRound < roundsToRun; currentRound++) {
+            const roundInfo = [];
+
+            const roundSize = highPlayers / (Math.pow(2, currentRound) * 2);
+
+            for (let currentMatch = 1; currentMatch < roundSize + 1; currentMatch++) {
+                roundInfo.push(currentMatch + indexTracker)
             }
-            else {
-                firstRound.push(null)
-            }
-        })
 
-        return this.get_db_ready(firstRound);
-    }
+            matchNumbersInfo.push(roundInfo);
 
-    get_db_ready = arr => {
-        const dbFirstRound = [];
+            indexTracker += roundSize
+        }
 
-        for (let i = 0; i < arr.length / 2; i++) {
-            dbFirstRound[i] = {
-                player1: arr[(i * 2)],
-                player2: arr[(i * 2) + 1],
-                matchNum: i,
+        for (let i = 0; i < seeds.length; i++) {
+            const seedIndex = seeds[i];
+
+            if (seedIndex <= seeds.length - byeWeeks) {
+                firstRound.push({
+                    player: players[seedIndex - 1],
+                    matchNum: matchNumbersInfo[0][Math.ceil((i + 1) / 2) - 1],
+                    nextMatch: matchNumbersInfo[1][(Math.ceil((i + 1) / 4)) - 1],
+                    boxNum: i + 1
+                })
+            } else {
+                firstRound.push({
+                    player: "Bye Round",
+                    matchNum: matchNumbersInfo[0][Math.ceil((i + 1) / 2) - 1],
+                    nextMatch: matchNumbersInfo[1][(Math.ceil((i + 1) / 4)) - 1],
+                    boxNum: i + 1
+                });
+
+                secondRound.push({
+                    player: firstRound[i - 1].player,
+                    matchNum: matchNumbersInfo[1][(Math.ceil((i + 1) / 4)) - 1],
+                    nextMatch: matchNumbersInfo[2] ? matchNumbersInfo[2][Math.ceil((i + 1) / 8) - 1] : null,
+                    boxNum: highPlayers + ((i + 1) / 2)
+                })
             }
         }
-        console.log(dbFirstRound)
-        return dbFirstRound
+
+        return this.get_db_ready(firstRound, secondRound);
+    }
+
+    get_db_ready = (firstRound, secondRound) => {
+        const dbFirstRound = [];
+        const dbSecondRound = [];
+
+        for (let i = 0; i < firstRound.length; i += 2) {
+            dbFirstRound.push({
+                player1: firstRound[i].player,
+                player2: firstRound[i + 1].player,
+                matchNum: firstRound[i].matchNum,
+                nextMatch: firstRound[i].nextMatch
+            })
+        }
+
+        if(secondRound) {
+            for (let i = 0; i < secondRound.length; i++) {
+                if (secondRound[i].boxNum % 2 === 1) {
+                    dbSecondRound.push({
+                        player1: secondRound[i].player,
+                        player2: secondRound[i + 1] 
+                                    ? secondRound[i + 1].boxNum % 2 === 1
+                                        ? null
+                                        : secondRound[i + 1].player
+                                    : null,
+                        matchNum: secondRound[i].matchNum,
+                        nextMatch: secondRound[i].nextMatch
+                    })
+                }
+            }
+        }
+
+        console.log([...dbFirstRound, ...dbSecondRound])
+
+        return [...dbFirstRound, ...dbSecondRound]
     }
 
     seeding_order = tourneyplayers => {
