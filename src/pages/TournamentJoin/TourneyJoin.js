@@ -14,6 +14,8 @@ class TourneyJoin extends React.Component {
         full: 'Start Tournament',
         tournament: {},
         players: [],
+        date: '',
+        time: null,
         redirectTo: null
     }
 
@@ -63,7 +65,7 @@ class TourneyJoin extends React.Component {
             const tournament = recent.data.tournament
             const users = recent.data.users
             const userArr = [];
-
+  
             const tourney = {
                 name: tournament.tourneyName,
                 id: tournament.uuid,
@@ -86,7 +88,8 @@ class TourneyJoin extends React.Component {
             })
             this.setState({
                 tournament: tourney,
-                players: [...this.state.players, ...userArr]
+                players: [...this.state.players, ...userArr],
+               date: tournament.date.slice(0, tournament.date.indexOf("T"))
             })
         })
     }
@@ -246,13 +249,13 @@ class TourneyJoin extends React.Component {
                                 <div className="card blue-grey darken-1" style={styles.card} >
                                     <div className="card-content white-text">
                                         <span className="card-title center-align truncate">Tournament Info</span>
-                                        <p>Name: {this.state.tournament.name}</p>
-                                        <p>type: {this.state.tournament.gameType}</p>
-                                        <p>Time: {this.state.tournament.time}</p>
+                                  <p>Name: {this.state.tournament.name} </p>
+                                    <p>Type: {this.state.tournament.gameType} </p>
+                                    <p>Date: {this.state.date} </p>
+                                    <p>Time: {this.state.tournament.time} </p>
                                     </div>
                                 </div>
                             </div>
-
                             <div className="col s12 m3" >
                                 <ul className="collection with-header" style={styles.collect}>
                                     <li className="center-align collection-header">
@@ -264,7 +267,6 @@ class TourneyJoin extends React.Component {
                                         </li>
                                     })
                                     }
-
                                 </ul>
                             </div>
                         </div>
@@ -281,7 +283,6 @@ class TourneyJoin extends React.Component {
                                 />
                             </div>
                         }
-
                         {this.props.username === this.state.tournament.owner && this.state.players.length >= 2 &&
                             <div className="center-align col s12 truncate">
                                 <Button

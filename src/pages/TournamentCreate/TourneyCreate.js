@@ -6,7 +6,6 @@ import Container from '../../components/Container';
 import Card from '../../components/Card';
 import styles from './TourneyStyles';
 import API from '../../utils/API';
-
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import M from 'materialize-css/dist/js/materialize.min.js';
@@ -126,8 +125,9 @@ class TournCreate extends React.Component {
                         loggedIn={this.props.loggedIn}
                     />
                     <Container>
-                        <div className="section white z-depth-3">
-                            {/* <div className="row"> */}
+
+                        {/* <div className="row"> */}
+                        <div className="wrap" style={styles.wrap}>
                             <form onSubmit={this.handle_submit} noValidate>
                                 <Container>
                                     <div className="row">
@@ -139,6 +139,7 @@ class TournCreate extends React.Component {
                                             maxLength="50"
                                             onChange={this.handle_change}
                                             className="col s12"
+                                            style={styles.inputs}
                                         />
                                         <label htmlFor="tName">{this.state.nameError}</label>
                                         <p>Enter the game type</p>
@@ -149,18 +150,23 @@ class TournCreate extends React.Component {
                                             maxLength="35"
                                             onChange={this.handle_change}
                                             className="col s12"
+                                            style={styles.inputs}
                                         />
                                         <label htmlFor="tType">{this.state.typeError}</label>
-                                        <p>Enter game description</p>
-                                        <textarea
-                                            type="text"
-                                            name="description"
-                                            id="textarea"
-                                            maxLength="250"
-                                            onChange={this.handle_change}
-                                            className="col s12"
-                                        />
-                                        <label htmlFor="textarea">{this.state.descriptError}</label>
+                                        <div className="row">
+                                            <h6 className="center-align">Enter game description</h6>
+                                            <textarea
+                                                type="text"
+                                                name="description"
+                                                id="textarea"
+                                                maxLength="250"
+                                                onChange={this.handle_change}
+                                                className="white col s12"
+                                                style={styles.textArea}
+
+                                            />
+                                            <label htmlFor="textarea">{this.state.descriptError}</label>
+                                        </div>
                                     </div>
                                 </Container>
                                 <div className="row">
@@ -168,48 +174,47 @@ class TournCreate extends React.Component {
                                         <DatePicker
                                             selected={this.state.startDate}
                                             showTimeSelect
-                                            timeFormat="HH:mm a"
+                                            timeFormat="h:mm a"
                                             timeIntervals={60}
                                             dateFormat="MMMM d, yyyy h:mm a"
                                             timeCaption="Time"
-                                            className=" offset-s6"
+                                            className=""
                                         />
 
-                                        <a className='dropdown-trigger btn left col s5' data-target='dropdown1' style={styles.posDrop}>{this.state.showSize}</a>
+                                        <a className='dropdown-trigger btn left light-blue col s5' data-target='dropdown1' style={styles.posDrop}>{this.state.showSize}</a>
                                         <ul id='dropdown1' className='dropdown-content'>
                                             <li>
                                                 <h4
                                                     className="center-align"
                                                     onClick={this.handle_click.bind(this)}
                                                     data-id="4"> 4
-                                        </h4>
+                                                </h4>
                                             </li>
                                             <li>
                                                 <h4
                                                     className="center-align"
                                                     onClick={this.handle_click.bind(this)}
                                                     data-id="8"> 8
-                                        </h4>
+                                                </h4>
                                             </li>
                                             <li>
                                                 <h4
                                                     className="center-align"
                                                     onClick={this.handle_click.bind(this)}
                                                     data-id="16"> 16
-                                        </h4>
+                                                </h4>
                                             </li>
                                             <li>
                                                 <h4 className="center-align"
                                                     onClick={this.handle_click.bind(this)}
                                                     data-id="32"> 32
-                                        </h4>
+                                                 </h4>
                                             </li>
                                         </ul>
                                     </Container>
                                     <button
                                         style={styles.createbtn}
-                                        className="btn left col s12"
-                                        onClick={() => console.log(`clicked`)}
+                                        className="btn left light-blue col s12"
                                         type="submit"
                                     >
                                         Create Tournament!

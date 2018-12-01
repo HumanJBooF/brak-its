@@ -9,7 +9,7 @@ import TournCreate from './pages/TournamentCreate';
 import TournDisplay from './pages/TournamentDisplay';
 import TourneyJoin from './pages/TournamentJoin';
 import API from './utils/API';
-
+import SearchPage from './pages/SearchPage';
 class App extends React.Component {
 
 	state = {
@@ -84,6 +84,16 @@ class App extends React.Component {
 								loggedIn={this.state.loggedIn}
 							/>}
 						/>
+
+						<Route exact path='/search/:search'
+							render={ props => <SearchPage
+								{...props}
+								update_user={this.update_user}
+								username={this.state.username}
+								loggedIn={this.state.loggedIn}
+							/>}
+						/>
+							
 					</Switch>
 				</div>
 			</Router>

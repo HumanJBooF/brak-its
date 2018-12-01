@@ -16,20 +16,20 @@ const logout = props => {
 
 const Navbar = props => (
     <nav className="" style={styles.nav}>
-        <div className="nav-wrapper">
-            <div className="brand-logo"><Link to="/">[Brakits]</Link></div>
+        <div className="nav-wrapper" style={styles.wrap}>
+            <div className="brand-logo" style={styles.logoFont}><Link to="/">[Brakits]</Link></div>
             {!props.loggedIn
                 ? (
-                    <ul className="right">
-                        <li><Link to="/signup">Sign Up</Link></li>
-                        <li><Link to="/signin">Sign In</Link></li>
+                    <ul className="right" >
+                        <li><Link to="/signup" style={styles.userFont}>Sign Up</Link></li>
+                        <li><Link to="/signin" style={styles.userFont}>Sign In</Link></li>
                     </ul>
                 )
                 : (
                     // just concept again showing that we can grab the current logged in user and display their name
                     <ul className="right">
-                        <li><Link to='#!' username={props.username}>{props.username}</Link></li>
-                        <li><Link to='#!' onClick={() => logout(props)}>Logout</Link></li>
+                        <li><Link to='#!' style={styles.userFont} username={props.username}>{props.username}</Link></li>
+                        <li><Link to='#!' style={styles.userFont} onClick={() => logout(props)}>Logout</Link></li>
                     </ul>
                 )}
         </div>

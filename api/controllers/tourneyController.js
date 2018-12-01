@@ -117,9 +117,21 @@ const tourneyController = {
                 }).catch(err => res.json({ err: err }));
             }).catch(err => res.json({ err: err }));
         })
-    }
-}
+    },
 
+    //search bar query
+    find_search: (req, res) => {     
+        const searchTerm = req.params.search;
+        console.log(searchTerm)
+        db.tourneys.findAll({
+            where: {
+                gameType: searchTerm,
+                isActive: false
+            }
+        }).then( tourneys => res.json({ tourneys: tourneys }))
+            .catch( error => res.json({ error }))
+    },
+}
 
 
 module.exports = tourneyController;
