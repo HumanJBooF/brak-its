@@ -129,7 +129,7 @@ class TourneyJoin extends React.Component {
                 })
             } else {
                 firstRound.push({
-                    player: "Bye Round",
+                    player: null,
                     matchNum: matchNumbersInfo[0][Math.ceil((i + 1) / 2) - 1],
                     nextMatch: matchNumbersInfo[1][(Math.ceil((i + 1) / 4)) - 1],
                     boxNum: i + 1
