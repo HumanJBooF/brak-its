@@ -44,7 +44,6 @@ class TournCreate extends React.Component {
     }
 
     handle_validity = tourneyInfo => {
-
         return (tourneyInfo.tourneyName.length > 0)
             && (this.removeSpecials.test(tourneyInfo.tourneyName))
             && (tourneyInfo.description.length <= 250
@@ -61,8 +60,8 @@ class TournCreate extends React.Component {
         event.preventDefault();
         this.setState({ startDate: date }, () => {
             console.log(this.state.startDate)
-        })
-        console.log(this.state.size);
+        });
+
         this.handle_validity({
             tourneyName: this.state.tourneyName,
             description: this.state.description
@@ -96,7 +95,7 @@ class TournCreate extends React.Component {
                     ? this.setState({ nameError: "proper Tournament name" })
                     : this.setState({ nameError: "Now that's not a proper name!" })
                 break;
-            case 'type':
+            case 'gameType':
                 value.length <= 35 & value.length > 3
                     ? this.setState({ typeError: "GAME ON!" })
                     : this.setState({ typeError: "You sure that's a real game?" })

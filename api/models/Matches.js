@@ -1,23 +1,23 @@
 module.exports = (sequelize, DataTypes) => {
-    const Matches = sequelize.define('matches', {
-        uuid: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
+    const Match = sequelize.define('match', {
+        id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
             allowNull: false,
             primaryKey: true
         },
-        // playerOne: { type: DataTypes.STRING, defaultValue: null },
-        // playerTwo: { type: DataTypes.STRING, defaultValue: null },
-        winner: { type: DataTypes.STRING },
+        winner: { type: DataTypes.INTEGER },
         matchNum: { type: DataTypes.INTEGER },
         nextMatch: { type: DataTypes.BOOLEAN, defaultValue: false }
     },
         { paranoid: true }
     );
 
-    Matches.associate = models => {
-        Matches.belongsTo(models.tourneys, { as: 'tourney' });
+    Match.associate = models => {
+        Match.belongsTo(models.tourneys, { as: 'tourney' });
+        Match.belongsTo(models.signUp, { as: 'player1' });
+        Match.belongsTo(models.signUp, { as: 'player2' });
     }
 
-    return Matches;
+    return Match;
 }

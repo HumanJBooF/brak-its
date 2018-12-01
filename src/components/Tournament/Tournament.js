@@ -4,15 +4,15 @@ import './Tournament.css';
 
 const Tournament = props => (
     <>
-    <div className="row">
-        <div className="col s12 tournamentViewport">
-            <div className="tournamentDisplay">
-                {props.tourneyInfo.map(round => (
-                    <Round key={`roundSize${round.length}`} roundInfo={round} admin={props.admin} handle_win={event => {props.handle_win(event)}}/>
-                ))}
+        <div className="row">
+            <div className="col s12 tournamentViewport">
+                <div className="tournamentDisplay">
+                    {props.allMatches.map(round => (
+                        <Round key={`roundSize${round.length}`} roundInfo={round} admin={props.admin} handle_win={event => { props.handle_win(event) }} />
+                    ))}
+                </div>
             </div>
         </div>
-    </div>
     </>
 )
 

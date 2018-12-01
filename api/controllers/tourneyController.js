@@ -57,16 +57,14 @@ const tourneyController = {
                     uuid: tourneyId
                 }
             }).then(tourney => {
-                tourney.update({ actualSize: +1 })
-                tourney.addUsers(userId)
-                    .then(() => res.json({ user: user }))
+                tourney.update({ actualSize: db.sequelize.literal('actualSize + 1') })
+                tourney.addUsers(userId).then(() => res.json({ user: user }))
                     .catch(err => res.json({ err: err }));
             }).catch(err => res.json({ err: err }));
         }).catch(err => res.json({ err: err }));
     },
 
     get_all_users_tourney: (req, res) => {
-        console.log(req.body.id)
         const id = req.body.id;
         db.tourneys.findOne({
             where: {
@@ -82,15 +80,46 @@ const tourneyController = {
     },
 
     send_users_to_matches: (req, res) => {
-        const userArr = req.body;
-        console.log(userArr.map(obj => obj.tourneyId))
-        // db.tourneys.findOne({
-        //     where: {
-        //         uuid: id
-        //     }
-        // })
+        const matches = req.body.matches;
+        const tourneyId = req.body.matches[0].tourneyUuid
+
+        db.match.bulkCreate(matches, {
+            include: [{
+                model: db.signUp, as: 'player1'
+            }, {
+                model: db.signUp, as: 'player2'
+            }, {
+                model: db.tourneys, as: 'tourneys'
+            }]
+        }).then(match => {
+            res.json({ match: match })
+            db.tourneys.update({ isActive: true }, { where: { uuid: tourneyId } })
+                .then(tourney => console.log(tourney))
+                .catch(err => res.json({ err: err }))
+        }).catch(err => res.json({ err: err }))
+    },
+
+    get_players: (req, res) => {
+        const id = req.params.id;
+        db.tourneys.findOne({
+            where: {
+                uuid: id
+            }
+        }).then(tourney => {
+            tourney.getUsers({}).then(users => {
+                db.match.findAll({
+                    where: {
+                        tourneyUuid: id
+                    }
+                }).then(matches => {
+                    const userMatches = { matches, users };
+                    res.json(userMatches);
+                }).catch(err => res.json({ err: err }));
+            }).catch(err => res.json({ err: err }));
+        })
     }
 }
+
 
 
 module.exports = tourneyController;
