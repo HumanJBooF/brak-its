@@ -36,9 +36,9 @@ if (process.env.NODE_ENV === 'production') {
 
 // Basic route
 app.use(routes);
-const seeds = require('./config/seeds/seeds')
+// const seeds = require('./config/seeds/seeds')
 db.sequelize.sync({ force: false }).then(() => {
-  // db.users.bulkCreate(seeds.userSeeds);
+  // db.users.bulkCreate(seeds.userSeeds)
   // db.tourneys.bulkCreate(seeds.tourneySeeds)
   // Starts the server to begin listening
   // =============================================================

@@ -8,6 +8,7 @@ class TourneyDisplay extends React.Component {
     state = {
         tourneyInfo: {},
         allMatches: [],
+        matchesUsed: [],
         matches: [],
         size: null,
         matchNumbersInfo: [],
@@ -19,12 +20,10 @@ class TourneyDisplay extends React.Component {
         this.get_tourney();
     }
 
-    check_permission = _cb => {
+    check_permission = () => {
         if (this.props.loggedIn) {
             if (this.state.tourneyInfo.owner === this.props.username) {
-                this.setState({ admin: true }, () => {
-                    _cb()
-                })
+                this.setState({ admin: true })
             }
         }
     }
@@ -47,11 +46,8 @@ class TourneyDisplay extends React.Component {
                 isActive: tournament.isActive
             };
 
-            this.setState({ tourneyInfo: tourney }, () => {
-                this.check_permission(() => {
-                    this.tournament_set_up();
-                });
-            })
+
+            this.tournament_set_up(tourney)
         })
     }
 
@@ -69,8 +65,8 @@ class TourneyDisplay extends React.Component {
             })
             user.filter(obj => {
                 matches.filter(match => {
-                    if (obj.id === match.player1Id) match.player1Id = obj.username;
-                    if (obj.id === match.player2Id) match.player2Id = obj.username;
+                    if (obj.id === match.player1Id) match["player1Name"] = obj.username;
+                    if (obj.id === match.player2Id) match['player2Name'] = obj.username;
                 })
             })
             const size = Math.pow(2, Math.ceil(Math.log2(users.length)))
@@ -82,7 +78,7 @@ class TourneyDisplay extends React.Component {
         })
     }
 
-    tournament_set_up = () => {
+    tournament_set_up = (tourney) => {
         const info = {
             roundInfo: [],
             matchNumbersInfo: [],
@@ -121,6 +117,7 @@ class TourneyDisplay extends React.Component {
                 case null:
                     info.roundInfo.push([{
                         player: null,
+                        playerId: null,
                         score: null,
                         matchNum: null,
                         nextMatch: null,
@@ -131,7 +128,8 @@ class TourneyDisplay extends React.Component {
                     break;
                 case this.state.matches[index - 1].player1Id:
                     info.roundInfo.push([{
-                        player: this.state.matches[index - 1].player1Id,
+                        player: this.state.matches[index - 1].player1Name,
+                        playerId: this.state.matches[index - 1].player1Id,
                         score: null,
                         matchNum: null,
                         nextMatch: null,
@@ -142,7 +140,8 @@ class TourneyDisplay extends React.Component {
                     break;
                 case this.state.matches[index - 1].player2Id:
                     info.roundInfo.push([{
-                        player: this.state.matches[index - 1].player2Id,
+                        player: this.state.matches[index - 1].player2Name,
+                        playerId: this.state.matches[index - 1].player2Id,
                         score: null,
                         matchNum: null,
                         nextMatch: null,
@@ -158,6 +157,7 @@ class TourneyDisplay extends React.Component {
         } else {
             info.roundInfo.push([{
                 player: null,
+                playerId: null,
                 score: null,
                 matchNum: null,
                 nextMatch: null,
@@ -168,10 +168,11 @@ class TourneyDisplay extends React.Component {
         }
 
         this.setState({
+            tourneyInfo: tourney,
             allMatches: info.roundInfo,
             matchNumbersInfo: info.matchNumbersInfo,
             matchesUsed: info.matchesUsed
-        });
+        }, () => this.check_permission());
     }
 
     generate_matchNumbers = roundsToRun => {
@@ -217,6 +218,7 @@ class TourneyDisplay extends React.Component {
                 case undefined:
                     roundInfo.push({
                         player: null,
+                        playerId: null,
                         score: null,
                         matchNum: null,
                         nextMatch: null,
@@ -225,6 +227,7 @@ class TourneyDisplay extends React.Component {
                         isActive: isActiveValue
                     }, {
                             player: null,
+                            playerId: null,
                             score: null,
                             matchNum: null,
                             nextMatch: null,
@@ -235,14 +238,16 @@ class TourneyDisplay extends React.Component {
                     break;
                 default:
                     roundInfo.push({
-                        player: currentMatch.player1Id,
+                        player: currentMatch.player1Name,
+                        playerId: currentMatch.player1Id,
                         matchNum: currentMatch.matchNum,
                         nextMatch: currentMatch.nextMatch,
                         winner: currentMatch.winner,
                         boxOrder: (currentMatch.matchNum * 2) - 1,
                         isActive: isActiveValue
                     }, {
-                            player: currentMatch.player2Id,
+                            player: currentMatch.player2Name,
+                            playerId: currentMatch.player2Id,
                             matchNum: currentMatch.matchNum,
                             nextMatch: currentMatch.nextMatch,
                             winner: currentMatch.winner,
@@ -266,12 +271,68 @@ class TourneyDisplay extends React.Component {
     handle_win = event => {
         event.preventDefault()
         const playerInfo = { ...event._targetInst.memoizedProps.playerinfo };
-        console.log(playerInfo)
+        // playerInfo = {
+        //     boxOrder
+        //     isActive
+        //     match_num
+        //     next_match
+        //     player
+        //     score
+        //     winner
+        // }
+
+        // const size = this.state.size
+        const playerNum = playerInfo.matchNum % 2 ? 'player1' : 'player2'
+
+        // Ask if manager wants to make player win, sweetmodal if true continue, if not boot
+
+        // update current to reflect scores/win
+        console.log(this.state.matchesUsed, playerInfo.nextMatch)
+
+        if (this.state.matchesUsed.includes(playerInfo.nextMatch)) {
+            console.log('should be update')
+            // Should only need the opposite player name, everything else is the same as create
+
+
+            const updateNextInfo = {};
+            const updateCurrentInfo = {
+                winner: playerInfo.player
+            };
+
+            updateNextInfo[playerNum] = playerInfo.player;
+
+            console.log(updateNextInfo);
+            console.log(updateCurrentInfo);
+        } else {
+            let currentMatchIndex;
+            const playerNum = playerInfo.matchNum % 2 ? 'player1Id' : 'player2Id';
+            const createInfo = {};
+            this.state.matchNumbersInfo.map((round, i) => {
+                if (round.includes(playerInfo.matchNum)) {
+                    currentMatchIndex = this.state.matchNumbersInfo[i].indexOf(playerInfo.matchNum);
+                    createInfo['matchNum'] = this.state.matchNumbersInfo[i + 1][Math.floor(currentMatchIndex / 2)];
+                    if (this.state.matchNumbersInfo[i + 2]) {
+                        createInfo['nextMatch'] = this.state.matchNumbersInfo[i + 2][Math.floor(currentMatchIndex / 4)];
+                    } else {
+                        createInfo.nextMatch = null;
+                    }
+                }
+            })
+
+            createInfo.tourneyUuid = this.state.tourneyInfo.id
+            createInfo[playerNum] = playerInfo.playerId;
+            console.log(createInfo, 'CREATE INFO')
+        }
+
+
+
+        // re-get info from db, re-render page
     }
 
     render () {
         return (
             <>
+
                 <Navbar
                     update_user={this.props.update_user}
                     loggedIn={this.props.loggedIn}
@@ -286,6 +347,7 @@ class TourneyDisplay extends React.Component {
                 </Container>
             </>
         )
+
     }
 }
 
