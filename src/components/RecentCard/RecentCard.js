@@ -1,7 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import Moment from 'react-moment'; 
-// import Container from '../Container';
 
 const RecentCard = props => (
     <div className="row">
@@ -11,7 +9,7 @@ const RecentCard = props => (
                     <strong> Recent Tournaments</strong>
                 </h1>
                 <div className="row col s12">
-                    <table className="centered responsive-table highlight striped">
+                    <table className="centered highlight striped">
                         <thead>
                             <tr>
                                 <th>Tournament Name</th>

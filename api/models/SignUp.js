@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     );
 
     SignUp.associate = models => {
-        SignUp.hasMany(models.matches, { foreignKey: 'player1' })
-        SignUp.hasMany(models.matches, { foreignKey: 'player2' })
+        SignUp.hasMany(models.match, { foreignKey: 'player1Id' })
+        SignUp.hasMany(models.match, { foreignKey: 'player2Id' })
     }
     return SignUp;
 }

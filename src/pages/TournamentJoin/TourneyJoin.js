@@ -4,6 +4,7 @@ import Container from '../../components/Container';
 import Navbar from '../../components/Navbar'
 import styles from './JoinStyles';
 import API from '../../utils/API';
+import { Redirect } from 'react-router-dom';
 
 class TourneyJoin extends React.Component {
 
@@ -12,7 +13,8 @@ class TourneyJoin extends React.Component {
         early: 'Start Tournament Early?',
         full: 'Start Tournament',
         tournament: {},
-        players: []
+        players: [],
+        redirectTo: null
     }
 
     componentDidMount = () => {
@@ -21,13 +23,11 @@ class TourneyJoin extends React.Component {
 
 
     get_users = () => {
-        console.log('helllooo')
         const tourneyId = this.state.tournament.id;
 
         API.get_users_tournament({ id: tourneyId }).then(result => {
             console.log(result.data.users, "USERS")
-            let users = result.data.users.map(user => user.signUp.id)
-            console.log(users, 'ID')
+            let users = result.data.users.map(user => user.signUp.id);
             this.sort_players(users)
         })
     }
@@ -57,53 +57,46 @@ class TourneyJoin extends React.Component {
     }
 
     get_tourney = () => {
-        // deconstructed this.props.match.params.owner // .id
-        const { match: { params: { owner, id } } } = this.props
+        const { match: { params: { owner, id } } } = this.props;
 
         API.show_one(owner, id).then(recent => {
             const tournament = recent.data.tournament
             const users = recent.data.users
             const userArr = [];
 
-            if (!tournament) {
-                // stuff here
-            } else {
-                const tourney = {
-                    name: tournament.tourneyName,
-                    id: tournament.uuid,
-                    description: tournament.description,
-                    sizeLimit: tournament.sizeLimit,
-                    date: tournament.date,
-                    time: tournament.time,
-                    format: tournament.format,
-                    gameType: tournament.gameType,
-                    owner: tournament.owner,
-                    isActive: tournament.isActive
-                }
-                users.forEach(user => {
-                    const userObj = {
-                        username: user.username,
-                        id: user.uuid
-                    }
-                    userArr.push(userObj);
-                })
-                this.setState({
-                    tournament: tourney,
-                    players: [...this.state.players, ...userArr]
-                })
+            const tourney = {
+                name: tournament.tourneyName,
+                id: tournament.uuid,
+                description: tournament.description,
+                sizeLimit: tournament.sizeLimit,
+                date: tournament.date,
+                time: tournament.time,
+                format: tournament.format,
+                gameType: tournament.gameType,
+                owner: tournament.owner,
+                isActive: tournament.isActive
             }
+
+            users.forEach(user => {
+                const userObj = {
+                    username: user.username,
+                    id: user.uuid
+                }
+                userArr.push(userObj);
+            })
+            this.setState({
+                tournament: tourney,
+                players: [...this.state.players, ...userArr]
+            })
         })
     }
 
     sort_players = players => {
-        console.log(players)
-        // Will be a list of the seed order
         let seeds = this.seeding_order(players.length);
-
+        console.log(seeds)
         const firstRound = [];
         const secondRound = [];
         const matchNumbersInfo = [];
-
         const roundsToRun = Math.ceil(Math.log2(players.length));
         const highPlayers = Math.pow(2, roundsToRun);
         const byeWeeks = highPlayers - players.length;
@@ -160,34 +153,35 @@ class TourneyJoin extends React.Component {
 
         for (let i = 0; i < firstRound.length; i += 2) {
             dbFirstRound.push({
-                player1: firstRound[i].player,
-                player2: firstRound[i + 1].player,
+                player1Id: firstRound[i].player,
+                player2Id: firstRound[i + 1].player,
                 matchNum: firstRound[i].matchNum,
                 nextMatch: firstRound[i].nextMatch,
-                tourneyId: this.state.tournament.id
+                tourneyUuid: this.state.tournament.id,
+                winner: firstRound[i + 1].player === null ? firstRound[i].player : null
             })
         }
-
         if (secondRound) {
             for (let i = 0; i < secondRound.length; i++) {
                 if (secondRound[i].boxNum % 2 === 1) {
                     dbSecondRound.push({
-                        player1: secondRound[i].player,
-                        player2: secondRound[i + 1]
+                        player1Id: secondRound[i].player,
+                        player2Id: secondRound[i + 1]
                             ? secondRound[i + 1].boxNum % 2 === 1
                                 ? null
                                 : secondRound[i + 1].player
                             : null,
                         matchNum: secondRound[i].matchNum,
-                        nextMatch: secondRound[i].nextMatch
+                        nextMatch: secondRound[i].nextMatch,
+                        tourneyUuid: this.state.tournament.id
                     })
                 }
             }
         }
-        const rounds = [...dbFirstRound, ...dbSecondRound]
-        console.log(rounds, 'MATCH ARR')
 
-        return this.set_matches(dbFirstRound, dbSecondRound)
+        const matches = [...dbFirstRound, ...dbSecondRound];
+        console.log(matches)
+        return this.set_matches(matches)
     }
 
     seeding_order = tourneyplayers => {
@@ -196,7 +190,6 @@ class TourneyJoin extends React.Component {
         if (Math.log2(tourneyplayers) % 1 === 0) {
             players = tourneyplayers
         }
-
         else {
             players = Math.pow(2, Math.ceil(Math.log2(tourneyplayers)))
         }
@@ -219,8 +212,6 @@ class TourneyJoin extends React.Component {
                 // Uses unshift to preserve order
                 tempArr.unshift(base + playerIndexOrder[playerIndex]);
             }
-
-            // Compunds the array
             playerIndexOrder = playerIndexOrder.concat(tempArr);
         }
 
@@ -228,85 +219,81 @@ class TourneyJoin extends React.Component {
         for (let player = 0; player < playerIndexOrder.length; player++) {
             seedOrder[playerIndexOrder[player]] = player + 1;
         }
-
-        console.log(`SEED ORDER: ${seedOrder}`)
         return seedOrder;
     }
 
     set_matches = matches => {
-        API.send_users_to_matches(matches).then(result => {
-            console.log(result.data)
-        })
+        API.send_users_to_matches({ matches: matches }).then(result => {
+            if (result.data) {
+                this.setState({ redirectTo: `/display/${this.state.tournament.name}/${this.state.tournament.owner}/${this.state.tournament.id}` })
+            }
+        });
     }
 
     render () {
-
-        return (
-            <>
-                <Navbar
-                    update_user={this.props.update_user}
-                    username={this.props.username}
-                    loggedIn={this.props.loggedIn} />
-                <Container>
-                    <div className="row" style={styles.cardCol} >
-                        <div className="col s12 m9" >
-                            <div className="card blue-grey darken-1" style={styles.card} >
-                                <div className="card-content white-text">
-                                    <span className="card-title center-align truncate">Tournament Info</span>
-                                    <p>Name: {this.state.tournament.name}</p>
-                                    <p>type: {this.state.tournament.gameType}</p>
-                                    {/* <Moment */}
-                                    {/* format="MM/DD/YYYY"
-                                        add={this.state.tournament.date}
-                                    > */}
-                                    {/* <p>date: {this.state.tournament.date}</p> */}
-
-                                    <p>Time: {this.state.tournament.time}</p>
-                                    {/* </Moment> */}
+        if (this.state.redirectTo) {
+            return <Redirect to={{ pathname: this.state.redirectTo }} />
+        } else {
+            return (
+                <>
+                    <Navbar
+                        update_user={this.props.update_user}
+                        username={this.props.username}
+                        loggedIn={this.props.loggedIn} />
+                    <Container>
+                        <div className="row" style={styles.cardCol} >
+                            <div className="col s12 m9" >
+                                <div className="card blue-grey darken-1" style={styles.card} >
+                                    <div className="card-content white-text">
+                                        <span className="card-title center-align truncate">Tournament Info</span>
+                                        <p>Name: {this.state.tournament.name}</p>
+                                        <p>type: {this.state.tournament.gameType}</p>
+                                        <p>Time: {this.state.tournament.time}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div className="col s12 m3" >
-                            <ul className="collection with-header" style={styles.collect}>
-                                <li className="center-align collection-header">
-                                    Player List {this.state.players.length}/{this.state.tournament.sizeLimit}
-                                </li>
-                                {this.state.players.map((user, i) => {
-                                    return <li key={i}
-                                        className="collection-item center-align">{user.username}
+                            <div className="col s12 m3" >
+                                <ul className="collection with-header" style={styles.collect}>
+                                    <li className="center-align collection-header">
+                                        Player List {this.state.players.length}/{this.state.tournament.sizeLimit}
                                     </li>
-                                })
-                                }
+                                    {this.state.players.map((user, i) => {
+                                        return <li key={i}
+                                            className="collection-item center-align">{user.username}
+                                        </li>
+                                    })
+                                    }
 
-                            </ul>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                    {!this.props.loggedIn || this.state.players.length === this.state.tournament.sizeLimit
-                        ?
-                        <>
-                        </>
-                        :
-                        <div className="center-align col s12 truncate">
-                            <Button
-                                btn={this.state.btn}
-                                style={styles.subBtn}
-                                onClick={this.handle_click}
-                            />
-                        </div>
-                    }
+                        {!this.props.loggedIn || this.state.players.length === this.state.tournament.sizeLimit
+                            ?
+                            <>
+                            </>
+                            :
+                            <div className="center-align col s12 truncate">
+                                <Button
+                                    btn={this.state.btn}
+                                    style={styles.subBtn}
+                                    onClick={this.handle_click}
+                                />
+                            </div>
+                        }
 
-                    {this.props.username === this.state.tournament.owner && this.state.players.length >= 2 &&
-                        <div className="center-align col s12 truncate">
-                            <Button
-                                owner={this.state.tournament.sizeLimit === this.state.players.length ? this.state.full : this.state.early}
-                                style={styles.subBtn}
-                                onClick={this.get_users}
-                            />
-                        </div>}
-                </Container>
-            </>
-        )
+                        {this.props.username === this.state.tournament.owner && this.state.players.length >= 2 &&
+                            <div className="center-align col s12 truncate">
+                                <Button
+                                    owner={this.state.tournament.sizeLimit === this.state.players.length ? this.state.full : this.state.early}
+                                    style={styles.subBtn}
+                                    onClick={this.get_users}
+                                />
+                            </div>}
+                    </Container>
+                </>
+            )
+        }
     }
 }
 

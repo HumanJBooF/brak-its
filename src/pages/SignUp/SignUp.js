@@ -89,21 +89,13 @@ class SignUp extends React.Component {
                 break;
             case 'email':
                 this.emailRegEx.test(value)
-                    ? this.setState({
-                        emailDescription: 'Valid Email'
-                    })
-                    : this.setState({
-                        emailDescription: 'Please enter a valid email'
-                    })
+                    ? this.setState({ emailDescription: 'Valid Email' })
+                    : this.setState({ emailDescription: 'Please enter a valid email' })
                 break;
             case 'password':
                 value.length >= 8
-                    ? this.setState({
-                        passwordDescription: 'Valid Password'
-                    })
-                    : this.setState({
-                        passwordDescription: 'Password must be 8 characters or longer'
-                    })
+                    ? this.setState({ passwordDescription: 'Valid Password' })
+                    : this.setState({ passwordDescription: 'Password must be 8 characters or longer' })
                 break;
             default:
                 //error function -> yet to be tested, but should be valid

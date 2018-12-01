@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Tourneys.associate = models => {
         Tourneys.belongsToMany(models.users, { through: "signUp", onDelete: 'CASCADE' });
-        // Tourneys.hasMany(models.matches, { foreignKey: 'tourneyId' })
+        Tourneys.hasMany(models.match, { as: 'tourneys' })
     }
 
     return Tourneys;

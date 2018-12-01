@@ -10,7 +10,8 @@ const apiController = {
     show_one: (owner, id) => { return axios.post(`/api/tournament/join/${owner}/${id}`) },
     join_tournament: userTourney => { return axios.post('/api/tournament/join_tournament', userTourney) },
     get_users_tournament: id => { return axios.post('/api/tournament/getusers', id) },
-    send_users_to_matches: userArr => { return axios.post('/api/tournament/setmatches', userArr) }
+    send_users_to_matches: userArr => { return axios.post('/api/tournament/setmatches', userArr) },
+    get_users_for_matches: id => { return axios.post(`/api/tournament/matches/${id}`) }
 };
 
 export default apiController;
