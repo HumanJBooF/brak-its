@@ -68,7 +68,14 @@ class App extends React.Component {
 								loggedIn={this.state.loggedIn}
 							/>}
 						/>
-						<Route exact path='/display' component={TournDisplay} />
+						<Route exact path='/display/:name/:owner/:id'
+							render={props => <TournDisplay
+								{...props}
+								username={this.state.username}
+								update_user={this.update_user}
+								loggedIn={this.state.loggedIn}
+							/>}
+						/>
 						<Route exact path='/join/:owner/:id'
 							render={props => <TourneyJoin
 								{...props}

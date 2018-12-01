@@ -8,20 +8,18 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             primaryKey: true
         },
-        username: { type: DataTypes.STRING, allowNull: false },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
-            isEmail: true
+            validate: { isEmail: true }
         },
+        username: { type: DataTypes.STRING, allowNull: false },
         password: { type: DataTypes.STRING, allowNull: false }
     },
         { paranoid: true }
     );
     Users.associate = models => {
-        Users.hasMany(models.matches, { as: 'player1', foreignKey: 'playerOne' });
-        Users.hasMany(models.matches, { as: 'player2', foreignKey: 'playerTwo' });
-        Users.belongsToMany(models.tourneys, { through: "usersTourney" });
+        Users.belongsToMany(models.tourneys, { through: "signUp", onDelete: 'CASCADE' });
     }
 
     Users.prototype.validPassword = function (password) {

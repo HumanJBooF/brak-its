@@ -22,7 +22,6 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-    console.log(`WHAT IS THIS: ${id.uuid}`)
     db.users.findOne({
         where: {
             uuid: id.uuid

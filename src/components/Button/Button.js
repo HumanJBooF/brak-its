@@ -1,16 +1,15 @@
 import React from 'react';
-// import styles from './btnStyles';
-import './btnStyles.css'
+import styles from './btnStyles';
+
 const Button = props => (
 
     <div className="col s12">
         <button
-            className="btn-large light-blue white-text col s12"
-            id="bhuton"
-            // style={styles.btn}
+            className="btn btn-large black-text col s12"
+            style={styles.btn}
             onClick={props.onClick}
         >
-            <strong>{props.btn}</strong>
+            {props.btn}{props.owner}
         </button>
     </div>
 )

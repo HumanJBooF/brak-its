@@ -29,7 +29,6 @@
 	display: none;
 }
 
-  
 .round:last-child .playerContainer::after {
     display: none;
 }

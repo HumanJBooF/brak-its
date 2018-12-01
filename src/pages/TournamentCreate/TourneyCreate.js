@@ -1,13 +1,11 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import 'react-datepicker/dist/react-datepicker.css';
 import 'materialize-css/dist/css/materialize.min.css';
 import Navbar from '../../components/Navbar';
 import Container from '../../components/Container';
 import Card from '../../components/Card';
 import styles from './TourneyStyles';
 import API from '../../utils/API';
-
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import M from 'materialize-css/dist/js/materialize.min.js';
@@ -15,7 +13,7 @@ import M from 'materialize-css/dist/js/materialize.min.js';
 class TournCreate extends React.Component {
     state = {
         tourneyName: '',
-        type: '',
+        gameType: '',
         description: '',
         sizeLimit: '',
         startDate: new Date(),
@@ -28,7 +26,7 @@ class TournCreate extends React.Component {
         redirectTo: null
     }
 
-    componentDidMount() {
+    componentDidMount () {
         M.AutoInit()
     }
 
@@ -45,7 +43,6 @@ class TournCreate extends React.Component {
     }
 
     handle_validity = tourneyInfo => {
-
         return (tourneyInfo.tourneyName.length > 0)
             && (this.removeSpecials.test(tourneyInfo.tourneyName))
             && (tourneyInfo.description.length <= 250
@@ -62,16 +59,15 @@ class TournCreate extends React.Component {
         event.preventDefault();
         this.setState({ startDate: date }, () => {
             console.log(this.state.startDate)
-        })
-        console.log(this.state.size);
+        });
+
         this.handle_validity({
             tourneyName: this.state.tourneyName,
-            description: this.state.description,
-            type: this.state.type,
+            description: this.state.description
         })
             ? API.create_tournament({
                 tourneyName: this.state.tourneyName,
-                gameType: this.state.type,
+                gameType: this.state.gameType,
                 description: this.state.description,
                 date: this.state.startDate,
                 sizeLimit: this.state.sizeLimit,
@@ -98,7 +94,7 @@ class TournCreate extends React.Component {
                     ? this.setState({ nameError: "proper Tournament name" })
                     : this.setState({ nameError: "Now that's not a proper name!" })
                 break;
-            case 'type':
+            case 'gameType':
                 value.length <= 35 & value.length > 3
                     ? this.setState({ typeError: "GAME ON!" })
                     : this.setState({ typeError: "You sure that's a real game?" })
@@ -117,7 +113,7 @@ class TournCreate extends React.Component {
 
     //I bless the rains down in africa
 
-    render() {
+    render () {
         if (this.state.redirectTo) {
             return <Redirect to={{ pathname: this.state.redirectTo }} />
         } else {
@@ -149,7 +145,7 @@ class TournCreate extends React.Component {
                                         <p>Enter the game type</p>
                                         <input
                                             type="text"
-                                            name="type"
+                                            name="gameType"
                                             id="tType"
                                             maxLength="35"
                                             onChange={this.handle_change}
@@ -177,7 +173,6 @@ class TournCreate extends React.Component {
                                     <Container>
                                         <DatePicker
                                             selected={this.state.startDate}
-                                            onChange={this.handle_date}
                                             showTimeSelect
                                             timeFormat="h:mm a"
                                             timeIntervals={60}

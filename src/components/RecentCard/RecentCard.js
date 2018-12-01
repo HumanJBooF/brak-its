@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './RecentStyles';
 import { Link } from 'react-router-dom';
 
-
 const RecentCard = props => (
     <div className="row">
         <div className="card large" style={styles.card}>
