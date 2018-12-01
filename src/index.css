@@ -4,10 +4,8 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #5D737E;
-  /* dark gunmetal */
-  /*gun metal but a little bit lighter */
-  /* background-color: rgb(44, 46, 66) */
+  background-color: #232C33;
+
 }
 
 code {

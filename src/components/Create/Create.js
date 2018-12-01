@@ -14,10 +14,10 @@ const CreateButton = () => (
 
     <Link to="/tournament">
         <button
-            className="btn waves-effect white right black-text"
+            className=" right btn-large waves-effect light-blue white-text"
             style={styles.btn}
         >
-            Create
+           <strong>Create Tournament</strong>
         </button>
     </Link>
 

@@ -5,6 +5,8 @@ import Navbar from '../../components/Navbar';
 import Button from "../../components/Button"
 import API from '../../utils/API';
 import { Redirect } from 'react-router-dom';
+import swal from 'sweetalert2'
+import './SignUpStyles.css';
 
 
 class SignUp extends React.Component {
@@ -22,8 +24,10 @@ class SignUp extends React.Component {
     }
 
     emailRegEx = RegExp(
-        /^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2}|io|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b/
+        /^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2}|io|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum|ch|)\b/
     )
+
+
 
     handle_submit = event => {
         event.preventDefault();
@@ -53,7 +57,11 @@ class SignUp extends React.Component {
                                 loggedIn: true,
                                 username: user.data.username
                             });
-                            this.setState({ redirectTo: '/' });
+                            
+                            swal(`Welcome to [Brakits] \n ${this.state.username}`, "Game On!", "success")
+                            .then(( onClick =>{
+                               this.setState({ redirectTo: '/' });  
+                            }));
                         }
                     })
 
@@ -61,7 +69,11 @@ class SignUp extends React.Component {
 
             }).catch(error => console.log(error))
             // todo add a couldn't send
-            : console.log('dont send');
+            : swal({
+                type: 'error',
+                title: 'Oops...Something went wrong!',
+                text: 'Double check the forms validation messages!',
+              });
 
         console.log(this.state.username)
     }
@@ -130,54 +142,54 @@ class SignUp extends React.Component {
                                 <form onSubmit={this.handle_submit} className="col s12" noValidate>
                                     <div className="row">
                                         <div className="username">
-                                            <div className="input field col s12 center-align">
+                                            <div className="input field col s12 center-align ">
                                                 <input
-                                                    id="userName"
+                                                    id="formStyles"
                                                     name="username"
                                                     type="text"
                                                     className="validate"
                                                     onChange={this.handle_change}
                                                 />
-                                                <label htmlFor="userName">{this.state.usernameDescription}</label>
+                                                <h6 htmlFor="userName">{this.state.usernameDescription}</h6>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="input field col s12 center-align">
                                             <input
-                                                id="Email"
+                                                id="formStyles"
                                                 name="email"
                                                 type="text"
                                                 className="validate"
                                                 onChange={this.handle_change}
                                             />
-                                            <label htmlFor="Email">{this.state.emailDescription}</label>
+                                            <h6 htmlFor="Email">{this.state.emailDescription}</h6>
                                         </div>
 
                                     </div>
                                     <div className="row">
                                         <div className="center-align input field col s12">
                                             <input
-                                                id="passWord"
+                                                id="formStyles"
                                                 name="password"
                                                 type="password"
                                                 noValidate
                                                 onChange={this.handle_change}
                                             />
-                                            <label htmlFor="passWord">{this.state.passwordDescription}</label>
+                                            <h6 htmlFor="passWord">{this.state.passwordDescription}</h6>
 
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="center-align input field col s12">
                                             <input
-                                                id="confrimPass"
+                                                id="formStyles"
                                                 name="confirm"
                                                 type="password"
                                                 noValidate
                                                 onChange={this.handle_change}
                                             />
-                                            <label htmlFor="passWord">{this.state.passwordConfirm}</label>
+                                            <h6 htmlFor="passWord">{this.state.passwordConfirm}</h6>
 
                                         </div>
                                     </div>

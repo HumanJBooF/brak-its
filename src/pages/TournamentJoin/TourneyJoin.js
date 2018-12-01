@@ -12,7 +12,10 @@ class TourneyJoin extends React.Component {
     state = {
         btn: 'Join Tournament!',
         tournament: {},
-        players: []
+        players: [],
+        date: '',
+        time: null,
+        times: null
     }
 
     componentDidMount = () => {
@@ -63,7 +66,7 @@ class TourneyJoin extends React.Component {
             const userArr = [];
 
             if (!tournament) {
-                // stuff here
+                //sweet alert
             } else {
                 const tourney = {
                     name: tournament.tourneyName,
@@ -71,7 +74,7 @@ class TourneyJoin extends React.Component {
                     description: tournament.description,
                     sizeLimit: tournament.sizeLimit,
                     date: tournament.date,
-                    time: tournament.time,
+                    time: tournament.date.slice(12, -8),
                     format: tournament.format,
                     gameType: tournament.gameType,
                     owner: tournament.owner,
@@ -86,36 +89,33 @@ class TourneyJoin extends React.Component {
                 })
                 this.setState({
                     tournament: tourney,
-                    players: [...this.state.players, ...userArr]
+                    players: [...this.state.players, ...userArr],
+                    date: tournament.date.slice(0, tournament.date.indexOf("T"))
                 })
             }
+           
         })
     }
 
 
     render () {
-        return (
+        return (   
             <>
                 <Navbar
                     update_user={this.props.update_user}
                     username={this.props.username}
-                    loggedIn={this.props.loggedIn} />
+                    loggedIn={this.props.loggedIn} 
+                />
                 <Container>
                     <div className="row" style={styles.cardCol} >
                         <div className="col s12 m9" >
                             <div className="card blue-grey darken-1" style={styles.card} >
                                 <div className="card-content white-text">
                                     <span className="card-title center-align truncate">Tournament Info</span>
-                                    <p>Name: {this.state.tournament.name}</p>
-                                    <p>type: {this.state.tournament.gameType}</p>
-                                    {/* <Moment */}
-                                        {/* format="MM/DD/YYYY"
-                                        add={this.state.tournament.date}
-                                    > */}
-                                    {/* <p>date: {this.state.tournament.date}</p> */}
-                                  
-                                    <p>Time: {this.state.tournament.time}</p>  
-                                    {/* </Moment> */}
+                                    <p>Name: {this.state.tournament.name} </p>
+                                    <p>Type: {this.state.tournament.gameType} </p>
+                                    <p>Date: {this.state.date} </p>
+                                    <p>Time: {this.state.tournament.time} </p>
                                 </div>
                             </div>
                         </div>
@@ -125,11 +125,11 @@ class TourneyJoin extends React.Component {
                                 <li className="center-align collection-header">
                                     Player List {this.state.players.length}/{this.state.tournament.sizeLimit}
                                 </li>
-                                {this.state.players.map((user, i) => {
+                                { this.state.players.map((user, i) => {
                                     return <li key={i} 
                                             className="collection-item center-align">{user.username}
                                         </li>
-                                })
+                                    })
                                 }
 
                             </ul>

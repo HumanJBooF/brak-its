@@ -10,6 +10,7 @@ const apiController = {
     show_one: (owner, id) => { return axios.post(`/api/tournament/join/${owner}/${id}`) },
     join_tournament: userTourney => { return axios.post('/api/tournament/join_tournament', userTourney) },
     // get_users_tournament: id => { return axios.post('/api/tournament/getusers', id) } 
+    find_search: (search) => { return axios.post(`/api/tournament/search/${search}`); }
 };
 
 export default apiController;

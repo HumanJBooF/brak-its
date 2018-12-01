@@ -7,7 +7,7 @@ import Card from '../../components/Card';
 import Button from '../../components/Button';
 import formStyle from './SignInStyle.js';
 import API from '../../utils/API';
-
+import swal from 'sweetalert2'
 class SignIn extends React.Component {
 
     state = {
@@ -50,6 +50,18 @@ class SignIn extends React.Component {
                         username: user.data.username
                     })
                     this.setState({ redirectTo: '/' });
+
+                    //custom swal
+                    const toast = swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                      });
+                    toast({
+                        type: 'success',
+                        title: 'Signed in successfully'
+                    })
                 }
             }).catch(error => console.log(error))
             // todo add a couldn't send
@@ -68,7 +80,9 @@ class SignIn extends React.Component {
                     <Navbar />
                     <Container>
                         <Card>
-                            <header className="center-align s12">Sign In!</header>
+                            <header className="center-align s12">
+                                <h4>Sign In!</h4>
+                            </header>
                             <div className="row">
                                 <form
                                     onSubmit={this.handle_submit}
@@ -78,13 +92,14 @@ class SignIn extends React.Component {
                                     <div className="row">
                                         <div className="input field col s12 center-align username">
                                             <input
+                                            style={formStyle.inputfields}
                                                 id="username"
                                                 type="text"
                                                 name="username"
                                                 className="validate"
                                                 onChange={this.handle_change}
                                             />
-                                            <label htmlFor="username">UserName</label>
+                                            <h5 htmlFor="username">UserName</h5>
                                         </div>
                                     </div>
                                     <div className="row">
@@ -95,8 +110,9 @@ class SignIn extends React.Component {
                                                 type="password"
                                                 className="validate"
                                                 onChange={this.handle_change}
+                                                style={formStyle.inputfields}
                                             />
-                                            <label htmlFor="password">Password</label>
+                                            <h5 htmlFor="password">Password</h5>
 
                                         </div>
                                     </div>

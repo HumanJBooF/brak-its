@@ -80,7 +80,35 @@ const tourneyController = {
                 res.json({ users: usersTourney })
             })
         })
-    }
-};
+    },
+
+    //search bar query
+    find_search: (req, res) => {     
+        const searchTerm = req.params.search;
+        console.log(searchTerm)
+        db.tourneys.findAll({
+            where: {
+                gameType: searchTerm,
+                isActive: false
+            }
+        }).then( tourneys => res.json({ tourneys: tourneys }))
+            .catch( error => res.json({ error }))
+    },
+//     find_search: (req, res) => {
+//         const queryResults = req.params.queryResults; //don't know what you called it but yes
+
+//         db.tourneys.findAll({
+//             where: {
+//                 gameType: searchTerm,
+//                 isActive: false
+//             }
+//         }).then(tourneys => res.json({ tourneys: tourneys })
+//             .catch(err => res.json({ err: err })
+    
+// };
+// }
+
+// };
+}
 
 module.exports = tourneyController;
