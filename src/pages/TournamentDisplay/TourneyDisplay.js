@@ -57,8 +57,10 @@ class TourneyDisplay extends React.Component {
 
     get_users = () => {
         const { match: { params: { name, owner, id } } } = this.props;
+
         API.get_users_for_matches(id).then(results => {
             const { matches, users } = results.data;
+
             let user = users.map(user => {
                 return {
                     username: user.username,

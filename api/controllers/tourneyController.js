@@ -46,6 +46,7 @@ const tourneyController = {
     join_tourney: (req, res) => {
         const tourneyId = req.body.tourneyId;
         const username = req.body.username;
+        console.log('HESAIEH:SAIEH:ISAEHISAEHISA:LEHI:LSAELSAEH:LIAS')
         db.users.findOne({
             where: {
                 username: username
@@ -82,7 +83,6 @@ const tourneyController = {
     send_users_to_matches: (req, res) => {
         const matches = req.body.matches;
         const tourneyId = req.body.matches[0].tourneyUuid
-
         db.match.bulkCreate(matches, {
             include: [{
                 model: db.signUp, as: 'player1'
