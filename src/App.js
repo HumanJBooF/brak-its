@@ -62,7 +62,7 @@ class App extends React.Component {
 							/>}
 						/>
 						<Route exact path='/tournament'
-							component={() => <TournCreate
+							render={() => <TournCreate
 								username={this.state.username}
 								update_user={this.update_user}
 								loggedIn={this.state.loggedIn}
