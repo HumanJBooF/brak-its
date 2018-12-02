@@ -116,29 +116,59 @@ const tourneyController = {
     },
 
     create_next_match: (req, res) => {
+        console.log(req.body)
         const match = req.body.match;
-        console.log(match);
+        const winner = req.body.winner.winner;
+        const matchNum = req.body.winner.matchNum;
+        const id = req.body.winner.tourneyUuid;
+        const nextMatch = req.body.winner.nextMatch;
         db.match.create(match)
             .then(match => {
-                res.json({ match: match })
+                db.match.update({ winner: winner }, {
+                    where: {
+                        winner: null,
+                        tourneyUuid: id,
+                        matchNum: matchNum,
+                        nextMatch: nextMatch
+                    }
+                }).then(winner => {
+                    res.json({ match: match, winner: winner })
+                    // db.match.findAll({ where: { tourneyUuid: id } })
+                    //     .then(matches => res.json({ matches: matches }))
+                    //     .catch(err => res.json({ err: err }))
+                })
+                    .catch(err => res.json({ err: err }))
             }).catch(err => res.json({ err: err }))
     },
 
     update_match: (req, res) => {
-
-        console.log(req.body)
-        const id = req.body.match.tourneyUuid;
-        const matchNum = req.body.match.matchNum;
-        const player = req.body.match.player;
-        db.match.update(player,
-            {
+        console.log(req.body.info.next)
+        const id = req.body.info.next.tourneyUuid;
+        const matchNum = req.body.info.next.matchNum;
+        const player = req.body.info.next.player;
+        const winner = req.body.info.winner.winner;
+        const matchWinNum = req.body.info.winner.matchNum;
+        const nextMatchWin = req.body.info.winner.nextMatch;
+        db.match.update(player, {
+            where: {
+                tourneyUuid: id,
+                matchNum: matchNum
+            }
+        }).then(match => {
+            db.match.update({ winner: winner }, {
                 where: {
+                    winner: null,
                     tourneyUuid: id,
-                    matchNum: matchNum
+                    matchNum: matchWinNum,
+                    nextMatch: nextMatchWin
                 }
-            }).then(match => {
-                res.json({ match: match })
+            }).then(winner => {
+                res.json({ match: match, winner: winner })
+                // db.match.findAll({ where: { tourneyUuid: id } })
+                //     .then(matches => res.json({ matches: matches }))
+                //     .catch(err => res.json({ err: err }))
             }).catch(err => res.json({ err: err }))
+        }).catch(err => res.json({ err: err }))
     },
 
     find_search: (req, res) => {
