@@ -17,7 +17,6 @@ class TourneyDisplay extends React.Component {
 
     componentDidMount = () => {
         this.get_users();
-        this.get_tourney();
     }
 
     check_permission = () => {
@@ -26,29 +25,6 @@ class TourneyDisplay extends React.Component {
                 this.setState({ admin: true })
             }
         }
-    }
-
-    get_tourney = () => {
-        const { match: { params: { name, owner, id } } } = this.props;
-        API.show_one(owner, id).then(results => {
-            const tournament = results.data.tournament;
-
-            const tourney = {
-                name: tournament.tourneyName,
-                id: tournament.uuid,
-                description: tournament.description,
-                sizeLimit: tournament.sizeLimit,
-                date: tournament.date,
-                time: tournament.time,
-                format: tournament.format,
-                gameType: tournament.gameType,
-                owner: tournament.owner,
-                isActive: tournament.isActive
-            };
-
-
-            this.tournament_set_up(tourney)
-        })
     }
 
     get_users = () => {
@@ -67,33 +43,51 @@ class TourneyDisplay extends React.Component {
                 matches.filter(match => {
                     if (obj.id === match.player1Id) match["player1Name"] = obj.username;
                     if (obj.id === match.player2Id) match['player2Name'] = obj.username;
-                })
-            })
-            const size = Math.pow(2, Math.ceil(Math.log2(users.length)))
-            this.setState({
-                matches: matches,
-                size: size
-            })
-
+                });
+            });
+            const size = Math.pow(2, Math.ceil(Math.log2(users.length)));
+            return this.get_tourney(matches, size);
         })
     }
 
-    tournament_set_up = (tourney) => {
+    get_tourney = (matches, size) => {
+        const { match: { params: { name, owner, id } } } = this.props;
+        API.show_one(owner, id).then(results => {
+            const tournament = results.data.tournament;
+
+            const tourney = {
+                name: tournament.tourneyName,
+                id: tournament.uuid,
+                description: tournament.description,
+                sizeLimit: tournament.sizeLimit,
+                date: tournament.date,
+                time: tournament.time,
+                format: tournament.format,
+                gameType: tournament.gameType,
+                owner: tournament.owner,
+                isActive: tournament.isActive
+            };
+
+            return this.tournament_set_up(tourney, matches, size)
+        })
+    }
+
+    tournament_set_up = (tourney, matches, size) => {
         const info = {
             roundInfo: [],
             matchNumbersInfo: [],
             matchesUsed: []
         };
 
-        const roundsToRun = Math.ceil(Math.log2(this.state.size));
+        const roundsToRun = Math.ceil(Math.log2(size));
         info.matchNumbersInfo = this.generate_matchNumbers(roundsToRun);
 
         let index = 0;
 
         for (let currentRound = 0; currentRound < roundsToRun; currentRound++) {
-            const roundSize = this.state.size / Math.pow(2, currentRound + 1);
+            const roundSize = size / Math.pow(2, currentRound + 1);
 
-            this.sort_rounds(roundSize, index).map((arr, i) => {
+            this.sort_rounds(roundSize, index, matches, currentRound).map((arr, i) => {
                 switch (i) {
                     case 0:
                         info.roundInfo.push(arr)
@@ -109,11 +103,10 @@ class TourneyDisplay extends React.Component {
             })
 
             index += roundSize;
-
         }
 
-        if (this.state.matches[index - 1]) {
-            switch (this.state.matches[index - 1].winner) {
+        if (matches[index - 1]) {
+            switch (matches[index - 1].winner) {
                 case null:
                     info.roundInfo.push([{
                         player: null,
@@ -123,31 +116,34 @@ class TourneyDisplay extends React.Component {
                         nextMatch: null,
                         winner: null,
                         boxOrder: (index * 2) + 1,
-                        isActvie: false
+                        isActvie: false,
+                        roundNum: roundsToRun + 1
                     }]);
                     break;
-                case this.state.matches[index - 1].player1Id:
+                case matches[index - 1].player1Id:
                     info.roundInfo.push([{
-                        player: this.state.matches[index - 1].player1Name,
-                        playerId: this.state.matches[index - 1].player1Id,
+                        player: matches[index - 1].player1Name,
+                        playerId: matches[index - 1].player1Id,
                         score: null,
                         matchNum: null,
                         nextMatch: null,
                         winner: null,
                         boxOrder: (index * 2) + 1,
-                        isActvie: false
+                        isActvie: false,
+                        roundNum: roundsToRun + 1
                     }]);
                     break;
-                case this.state.matches[index - 1].player2Id:
+                case matches[index - 1].player2Id:
                     info.roundInfo.push([{
-                        player: this.state.matches[index - 1].player2Name,
-                        playerId: this.state.matches[index - 1].player2Id,
+                        player: matches[index - 1].player2Name,
+                        playerId: matches[index - 1].player2Id,
                         score: null,
                         matchNum: null,
                         nextMatch: null,
                         winner: null,
                         boxOrder: (index * 2) + 1,
-                        isActvie: false
+                        isActvie: false,
+                        roundNum: roundsToRun + 1
                     }]);
                     break;
                 default:
@@ -163,15 +159,18 @@ class TourneyDisplay extends React.Component {
                 nextMatch: null,
                 winner: null,
                 boxOrder: (index * 2) + 1,
-                isActvie: false
+                isActvie: false,
+                roundNum: roundsToRun + 1
             }]);
         }
-
+        console.log(matches, 'matches')
         this.setState({
             tourneyInfo: tourney,
             allMatches: info.roundInfo,
             matchNumbersInfo: info.matchNumbersInfo,
-            matchesUsed: info.matchesUsed
+            matchesUsed: info.matchesUsed,
+            matches: matches,
+            size: size
         }, () => this.check_permission());
     }
 
@@ -195,13 +194,13 @@ class TourneyDisplay extends React.Component {
         return (matchNumbersInfo)
     }
 
-    sort_rounds = (roundSize, index) => {
+    sort_rounds = (roundSize, index, matches, currentRound) => {
         const roundInfo = [];
         const matchesUsed = [];
 
         for (let currentIndex = index; currentIndex < roundSize + index; currentIndex++) {
 
-            let currentMatch = this.state.matches[currentIndex];
+            let currentMatch = matches[currentIndex];
             let isActiveValue;
 
             if (currentMatch === undefined) {
@@ -217,23 +216,25 @@ class TourneyDisplay extends React.Component {
             switch (currentMatch) {
                 case undefined:
                     roundInfo.push({
-                        player: null,
+                        player: undefined,
                         playerId: null,
                         score: null,
                         matchNum: null,
                         nextMatch: null,
                         winner: null,
                         boxOrder: (currentIndex * 2) + 1,
-                        isActive: isActiveValue
+                        isActive: isActiveValue,
+                        roundNum: currentRound + 1
                     }, {
-                            player: null,
+                            player: undefined,
                             playerId: null,
                             score: null,
                             matchNum: null,
                             nextMatch: null,
                             winner: null,
                             boxOrder: (currentIndex * 2) + 2,
-                            isActive: isActiveValue
+                            isActive: isActiveValue,
+                            roundNum: currentRound + 1
                         })
                     break;
                 default:
@@ -244,7 +245,8 @@ class TourneyDisplay extends React.Component {
                         nextMatch: currentMatch.nextMatch,
                         winner: currentMatch.winner,
                         boxOrder: (currentMatch.matchNum * 2) - 1,
-                        isActive: isActiveValue
+                        isActive: isActiveValue,
+                        roundNum: currentRound + 1
                     }, {
                             player: currentMatch.player2Name,
                             playerId: currentMatch.player2Id,
@@ -252,7 +254,8 @@ class TourneyDisplay extends React.Component {
                             nextMatch: currentMatch.nextMatch,
                             winner: currentMatch.winner,
                             boxOrder: currentMatch.matchNum * 2,
-                            isActive: isActiveValue
+                            isActive: isActiveValue,
+                            roundNum: currentRound + 1
                         });
 
                     matchesUsed.push(currentMatch.matchNum);
@@ -271,62 +274,76 @@ class TourneyDisplay extends React.Component {
     handle_win = event => {
         event.preventDefault()
         const playerInfo = { ...event._targetInst.memoizedProps.playerinfo };
-        // playerInfo = {
-        //     boxOrder
-        //     isActive
-        //     match_num
-        //     next_match
-        //     player
-        //     score
-        //     winner
-        // }
-
-        // const size = this.state.size
-        const playerNum = playerInfo.matchNum % 2 ? 'player1' : 'player2'
+        console.log(playerInfo, 'PLAYERINFO')
+        const playerNum = playerInfo.matchNum % 2 ? 'player1Id' : 'player2Id'
 
         // Ask if manager wants to make player win, sweetmodal if true continue, if not boot
 
         // update current to reflect scores/win
-        console.log(this.state.matchesUsed, playerInfo.nextMatch)
 
         if (this.state.matchesUsed.includes(playerInfo.nextMatch)) {
             console.log('should be update')
             // Should only need the opposite player name, everything else is the same as create
 
+            const player = {};
+            player[playerNum] = playerInfo.playerId;
 
-            const updateNextInfo = {};
-            const updateCurrentInfo = {
-                winner: playerInfo.player
-            };
+            const info = {
+                next: {
+                    player: player,
+                    matchNum: playerInfo.nextMatch,
+                    tourneyUuid: this.state.tourneyInfo.id
+                },
+                winner: {
+                    winner: playerInfo.playerId,
+                    matchNum: playerInfo.matchNum,
+                    nextMatch: playerInfo.nextMatch,
+                }
+            }
+            console.log(info, 'NEXT')
 
-            updateNextInfo[playerNum] = playerInfo.player;
-
-            console.log(updateNextInfo);
-            console.log(updateCurrentInfo);
+            API.update_match({ info }).then(result => {
+                const { match, winner } = result.data;
+                console.log(match, winner)
+                this.get_users();
+            })
         } else {
             let currentMatchIndex;
             const playerNum = playerInfo.matchNum % 2 ? 'player1Id' : 'player2Id';
-            const createInfo = {};
+            const createInfo = { tourneyUuid: this.state.tourneyInfo.id };
             this.state.matchNumbersInfo.map((round, i) => {
                 if (round.includes(playerInfo.matchNum)) {
-                    currentMatchIndex = this.state.matchNumbersInfo[i].indexOf(playerInfo.matchNum);
-                    createInfo['matchNum'] = this.state.matchNumbersInfo[i + 1][Math.floor(currentMatchIndex / 2)];
-                    if (this.state.matchNumbersInfo[i + 2]) {
-                        createInfo['nextMatch'] = this.state.matchNumbersInfo[i + 2][Math.floor(currentMatchIndex / 4)];
-                    } else {
-                        createInfo.nextMatch = null;
+                        currentMatchIndex = this.state.matchNumbersInfo[i].indexOf(playerInfo.matchNum);
+                        if(this.state.matchNumbersInfo[i + 1]) {
+                            createInfo['matchNum'] = this.state.matchNumbersInfo[i + 1][Math.floor(currentMatchIndex / 2)];
+                            if (this.state.matchNumbersInfo[i + 2]) {
+                                createInfo['nextMatch'] = this.state.matchNumbersInfo[i + 2][Math.floor(currentMatchIndex / 4)];
+                                console.log(this.state.matchNumbersInfo, 'STATE MATCH NUMBERS')
+                                console.log(currentMatchIndex, i, 'CURRENT <MATCH INDEX ')
+                            } else {
+                                createInfo.nextMatch = null;
+                            }
                     }
                 }
             })
-
-            createInfo.tourneyUuid = this.state.tourneyInfo.id
-            createInfo[playerNum] = playerInfo.playerId;
+            const updateWinner = {
+                winner: playerInfo.playerId,
+                matchNum: playerInfo.matchNum,
+                nextMatch: playerInfo.nextMatch,
+                tourneyUuid: this.state.tourneyInfo.id
+            }
             console.log(createInfo, 'CREATE INFO')
+            // console.log(updateWinner, 'UPDATE WINNER')
+
+            createInfo[playerNum] = playerInfo.playerId;
+
+            API.create_next_match({ match: createInfo, winner: updateWinner }).then(result => {
+                const { match, winner } = result.data;
+                console.log(match, winner)
+                this.get_users();
+            });
         }
 
-
-
-        // re-get info from db, re-render page
     }
 
     render () {
@@ -338,17 +355,18 @@ class TourneyDisplay extends React.Component {
                     loggedIn={this.props.loggedIn}
                     username={this.props.username}
                 />
-                <Container>
+                <Container fluid>
 
-
-
-                    <Tournament allMatches={this.state.allMatches} admin={this.state.admin} handle_win={event => { this.handle_win(event) }} />
+                    <Tournament
+                        allMatches={this.state.allMatches}
+                        admin={this.state.admin}
+                        handle_win={event => this.handle_win(event)} />
 
                 </Container>
             </>
         )
-
     }
 }
+
 
 export default TourneyDisplay;

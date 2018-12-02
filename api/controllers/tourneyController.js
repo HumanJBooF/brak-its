@@ -5,7 +5,6 @@ const tourneyController = {
     find_one: (req, res) => {
         const id = req.params.id;
         const owner = req.params.owner;
-        console.log(id, 'find_one')
         db.tourneys.findOne({
             where: {
                 uuid: id,
@@ -21,7 +20,7 @@ const tourneyController = {
 
     find_all_recent: (req, res) => {
         db.tourneys.findAll({
-            limit: 5,
+            limit: 10,
             order: [['createdAt', 'DESC']]
         }).then(dbTourneys => {
             res.json({ tournament: dbTourneys });
@@ -38,7 +37,8 @@ const tourneyController = {
     },
 
     create: (req, res) => {
-        db.tourneys.create(req.body)
+        const tourney = req.body;
+        db.tourneys.create(tourney)
             .then(dbTourney => res.json({ tournament: dbTourney }))
             .catch(err => res.json({ error: err }));
     },
@@ -46,7 +46,6 @@ const tourneyController = {
     join_tourney: (req, res) => {
         const tourneyId = req.body.tourneyId;
         const username = req.body.username;
-        console.log('HESAIEH:SAIEH:ISAEHISAEHISA:LEHI:LSAELSAEH:LIAS')
         db.users.findOne({
             where: {
                 username: username
@@ -58,7 +57,7 @@ const tourneyController = {
                     uuid: tourneyId
                 }
             }).then(tourney => {
-                tourney.update({ actualSize: db.sequelize.literal('actualSize + 1') })
+                tourney.update({ actualSize: db.Sequelize.literal('actualSize + 1') })
                 tourney.addUsers(userId).then(() => res.json({ user: user }))
                     .catch(err => res.json({ err: err }));
             }).catch(err => res.json({ err: err }));
@@ -73,7 +72,7 @@ const tourneyController = {
             }
         }).then(tourney => {
             tourney.getUsers({
-                order: [['createdAt', 'ASC']]
+                order: [[db.Sequelize.literal(`signUp.createdAt`), 'ASC']]
             }).then(usersTourney => {
                 res.json({ users: usersTourney });
             }).catch(err => res.json({ err: err }));
@@ -84,13 +83,10 @@ const tourneyController = {
         const matches = req.body.matches;
         const tourneyId = req.body.matches[0].tourneyUuid
         db.match.bulkCreate(matches, {
-            include: [{
-                model: db.signUp, as: 'player1'
-            }, {
-                model: db.signUp, as: 'player2'
-            }, {
-                model: db.tourneys, as: 'tourneys'
-            }]
+            include:
+                [{ model: db.signUp, as: 'player1' },
+                { model: db.signUp, as: 'player2' },
+                { model: db.tourneys, as: 'tourneys' }]
         }).then(match => {
             res.json({ match: match })
             db.tourneys.update({ isActive: true }, { where: { uuid: tourneyId } })
@@ -119,17 +115,71 @@ const tourneyController = {
         })
     },
 
-    //search bar query
-    find_search: (req, res) => {     
+    create_next_match: (req, res) => {
+        console.log(req.body)
+        const match = req.body.match;
+        const winner = req.body.winner.winner;
+        const matchNum = req.body.winner.matchNum;
+        const id = req.body.winner.tourneyUuid;
+        const nextMatch = req.body.winner.nextMatch;
+        db.match.create(match)
+            .then(match => {
+                db.match.update({ winner: winner }, {
+                    where: {
+                        winner: null,
+                        tourneyUuid: id,
+                        matchNum: matchNum,
+                        nextMatch: nextMatch
+                    }
+                }).then(winner => {
+                    res.json({ match: match, winner: winner })
+                    // db.match.findAll({ where: { tourneyUuid: id } })
+                    //     .then(matches => res.json({ matches: matches }))
+                    //     .catch(err => res.json({ err: err }))
+                })
+                    .catch(err => res.json({ err: err }))
+            }).catch(err => res.json({ err: err }))
+    },
+
+    update_match: (req, res) => {
+        console.log(req.body.info.next)
+        const id = req.body.info.next.tourneyUuid;
+        const matchNum = req.body.info.next.matchNum;
+        const player = req.body.info.next.player;
+        const winner = req.body.info.winner.winner;
+        const matchWinNum = req.body.info.winner.matchNum;
+        const nextMatchWin = req.body.info.winner.nextMatch;
+        db.match.update(player, {
+            where: {
+                tourneyUuid: id,
+                matchNum: matchNum
+            }
+        }).then(match => {
+            db.match.update({ winner: winner }, {
+                where: {
+                    winner: null,
+                    tourneyUuid: id,
+                    matchNum: matchWinNum,
+                    nextMatch: nextMatchWin
+                }
+            }).then(winner => {
+                res.json({ match: match, winner: winner })
+                // db.match.findAll({ where: { tourneyUuid: id } })
+                //     .then(matches => res.json({ matches: matches }))
+                //     .catch(err => res.json({ err: err }))
+            }).catch(err => res.json({ err: err }))
+        }).catch(err => res.json({ err: err }))
+    },
+
+    find_search: (req, res) => {
         const searchTerm = req.params.search;
         console.log(searchTerm)
         db.tourneys.findAll({
             where: {
-                gameType: searchTerm,
-                isActive: false
+                gameType: searchTerm
             }
-        }).then( tourneys => res.json({ tourneys: tourneys }))
-            .catch( error => res.json({ error }))
+        }).then(tourneys => res.json({ tourneys: tourneys }))
+            .catch(error => res.json({ error }))
     },
 }
 

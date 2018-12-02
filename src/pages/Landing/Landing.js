@@ -32,12 +32,12 @@ class LandingPage extends React.Component {
         console.log(queryResults)
     }
 
-    handle_click = (event, queryResults)=> {
+    handle_click = (event, queryResults) => {
         event.preventDefault();
-        const queryResult= this.state.queryResults
+        const queryResult = this.state.queryResults
         console.log(queryResult)
 
-        this.setState({ redirectTo: `/search/${queryResult}`})
+        this.setState({ redirectTo: `/search/${queryResult}` })
     }
 
     get_recent = () => {
@@ -49,6 +49,7 @@ class LandingPage extends React.Component {
                         name: tourneyElems.tourneyName,
                         id: tourneyElems.uuid,
                         description: tourneyElems.description,
+                        actualSize: tourneyElems.actualSize,
                         sizeLimit: tourneyElems.sizeLimit,
                         date: tourneyElems.date,
                         format: tourneyElems.format,
@@ -66,7 +67,7 @@ class LandingPage extends React.Component {
             });
     }
 
-    render() {
+    render () {
         if (this.state.redirectTo) {
             return <Redirect to={{ pathname: this.state.redirectTo }} />
         } else {
@@ -80,9 +81,9 @@ class LandingPage extends React.Component {
 
                     <Container>
                         <div className="row">
-                        {this.props.loggedIn
-                            ? <Create />
-                            : null}
+                            {this.props.loggedIn
+                                ? <Create />
+                                : null}
 
                             <Router>
                                 <Search
