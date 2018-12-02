@@ -1,7 +1,7 @@
 const styles = {
     borderRadius: "15px",
     marginTop: "15vh",
-    backgroundColor: "#DEE7E7"
+    backgroundColor: ""
 }
 
 export default styles;

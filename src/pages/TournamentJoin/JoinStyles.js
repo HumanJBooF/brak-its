@@ -6,9 +6,6 @@ const styles = {
     collect: {
         backgroundColor: "darkslategray !important",
     }, 
-    card: {
-        boxShadow: "5px"
-    },
     subBtn: {
         backgroundColor: "#009100",
 

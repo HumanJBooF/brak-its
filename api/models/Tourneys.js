@@ -8,13 +8,14 @@ module.exports = (sequelize, DataTypes) => {
         },
         tourneyName: { type: DataTypes.STRING },
         description: { type: DataTypes.STRING, allowNull: true },
-        date: { type: DataTypes.STRING },
+        date: { type: DataTypes.DATE },
         actualSize: { type: DataTypes.INTEGER, defaultValue: 0 },
         sizeLimit: { type: DataTypes.INTEGER },
         format: { type: DataTypes.STRING, defaultValue: 'Single-elim' },
         gameType: { type: DataTypes.STRING },
         owner: { type: DataTypes.STRING },
-        isActive: { type: DataTypes.BOOLEAN, defaultValue: false }
+        isActive: { type: DataTypes.BOOLEAN, defaultValue: false },
+        time: { type: DataTypes.STRING }
     },
         { paranoid: true }
     );

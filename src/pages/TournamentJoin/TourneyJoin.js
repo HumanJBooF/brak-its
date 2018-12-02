@@ -5,6 +5,7 @@ import Navbar from '../../components/Navbar'
 import styles from './JoinStyles';
 import API from '../../utils/API';
 import { Redirect } from 'react-router-dom';
+import './JoinStyles.css';
 
 class TourneyJoin extends React.Component {
 
@@ -16,7 +17,8 @@ class TourneyJoin extends React.Component {
         players: [],
         date: '',
         time: null,
-        redirectTo: null
+        redirectTo: null,
+        owner: ''
     }
 
     componentDidMount = () => {
@@ -65,14 +67,14 @@ class TourneyJoin extends React.Component {
             const tournament = recent.data.tournament
             const users = recent.data.users
             const userArr = [];
-  
+
             const tourney = {
                 name: tournament.tourneyName,
                 id: tournament.uuid,
                 description: tournament.description,
                 sizeLimit: tournament.sizeLimit,
-                date: tournament.date,
-                time: tournament.time,
+                // date: tournament.date,
+                // time: tournament.time,
                 format: tournament.format,
                 gameType: tournament.gameType,
                 owner: tournament.owner,
@@ -89,7 +91,7 @@ class TourneyJoin extends React.Component {
             this.setState({
                 tournament: tourney,
                 players: [...this.state.players, ...userArr],
-               date: tournament.date.slice(0, tournament.date.indexOf("T"))
+                // date: tournament.date.slice(0, tournament.date.indexOf("T"))
             })
         })
     }
@@ -192,8 +194,7 @@ class TourneyJoin extends React.Component {
 
         if (Math.log2(tourneyplayers) % 1 === 0) {
             players = tourneyplayers
-        }
-        else {
+        } else {
             players = Math.pow(2, Math.ceil(Math.log2(tourneyplayers)))
         }
 
@@ -233,7 +234,7 @@ class TourneyJoin extends React.Component {
         });
     }
 
-    render () {
+    render() {
         if (this.state.redirectTo) {
             return <Redirect to={{ pathname: this.state.redirectTo }} />
         } else {
@@ -244,52 +245,62 @@ class TourneyJoin extends React.Component {
                         username={this.props.username}
                         loggedIn={this.props.loggedIn} />
                     <Container>
-                        <div className="row" style={styles.cardCol} >
+                        <div className="row" >
                             <div className="col s12 m9" >
-                                <div className="card blue-grey darken-1" style={styles.card} >
-                                    <div className="card-content white-text">
-                                        <span className="card-title center-align truncate">Tournament Info</span>
-                                  <p>Name: {this.state.tournament.name} </p>
-                                    <p>Type: {this.state.tournament.gameType} </p>
-                                    <p>Date: {this.state.date} </p>
-                                    <p>Time: {this.state.tournament.time} </p>
+                                <div className="card">
+                                    <div className="card-content" id="card">
+                                        <span className="card-title center-align truncate" id="header">Tournament Info</span>
+                                        <div className="row">
+                                            <div className="col s6">
+                                                <h4 className="cardbod">Name: {this.state.tournament.name}</h4>
+                                                <h4 className="descript">Description: {this.state.tournament.description} </h4>
+                                            </div>
+                                            {/* <h4>Date: {this.state.date} </h4> */}
+                                            <div className="col s6">
+                                                <h4 className="cardbod">Type: {this.state.tournament.gameType} </h4>
+                                            </div>
+                                        </div>
                                     </div>
+
                                 </div>
                             </div>
                             <div className="col s12 m3" >
-                                <ul className="collection with-header" style={styles.collect}>
-                                    <li className="center-align collection-header">
+                                <ul className="collection with-header" id="coll">
+                                    <li className="center-align collection-header" id="collHead">
                                         Player List {this.state.players.length}/{this.state.tournament.sizeLimit}
                                     </li>
                                     {this.state.players.map((user, i) => {
                                         return <li key={i}
-                                            className="collection-item center-align">{user.username}
+                                            className="collection-item center-align" id="collItems">{user.username}
                                         </li>
                                     })
                                     }
                                 </ul>
                             </div>
+
+                            {!this.props.loggedIn || this.state.players.length === this.state.tournament.sizeLimit
+                                ?
+                                <>
+                                </>
+                                :
+                                <div className="col s12 truncate">
+                                    <button
+                                        // style={styles.subBtn}
+                                        onClick={this.handle_click}
+                                        className="joinbtn col m9 btn btn-large light-blue"
+                                    > {this.state.btn}</button>
+                                </div>
+                            }
                         </div>
-                        {!this.props.loggedIn || this.state.players.length === this.state.tournament.sizeLimit
-                            ?
-                            <>
-                            </>
-                            :
-                            <div className="center-align col s12 truncate">
-                                <Button
-                                    btn={this.state.btn}
-                                    style={styles.subBtn}
-                                    onClick={this.handle_click}
-                                />
-                            </div>
-                        }
-                        {this.props.username === this.state.tournament.owner && this.state.players.length >= 2 &&
-                            <div className="center-align col s12 truncate">
-                                <Button
-                                    owner={this.state.tournament.sizeLimit === this.state.players.length ? this.state.full : this.state.early}
-                                    style={styles.subBtn}
-                                    onClick={this.get_users}
-                                />
+                        {this.props.username === this.state.tournament.owner && this.state.players.length >= 3 &&
+                            <div className="row">
+                                <div className="col s12 offset-s3">
+                                    <button
+                                        style={styles.subBtn}
+                                        onClick={this.get_users}
+                                        className="startBtn "
+                                    > {this.state.tournament.sizeLimit === this.state.players.length ? this.state.full : this.state.early}</button>
+                                </div>
                             </div>}
                     </Container>
                 </>

@@ -6,7 +6,7 @@ const styles = {
         backgroundColor: ""
     },
     createbtn: {
-        marginTop: "50px",
+        marginTop: "35px",
         backgroundColor: "black",
         marginBottom: "-50px"
     },
@@ -16,6 +16,7 @@ const styles = {
         border: 0,
         height: "25px",
         padding: "8px 8px 8px 60px",
+        marginBottom: "10px",
         // width: "200px",
         background: "#f7f7f7",
         transition: "background 0.2s, width .2s"
@@ -27,7 +28,7 @@ const styles = {
         height: "55px",
         padding: "8px 8px 8px 60px",
         marginLeft: "23px",
-        background: "#f7f7f7",
+        backgroundColor: "#f7f7f7",
         transition: "background 0.2s, width .2s"
     },
     drop: {
@@ -35,6 +36,9 @@ const styles = {
     },
     wrap: {
         marginTop: "15vh"
+    }, 
+    cardArea: {
+        marginTop: "5vh"
     }
 }
 
