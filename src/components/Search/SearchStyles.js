@@ -9,7 +9,7 @@ const styles = {
         // fontWeight: "Bold",
         // width: "100%",
         // font-weight: 500;
-        marginTop: "5.8vh",
+        marginTop: "6vh",
         color: "rgba(0, 0, 0, 0.54)",
         borderRadius: "2px",
         border: 0,
@@ -29,10 +29,10 @@ const styles = {
     },
     searchIcon: {
         padding: "0.5rem",
-        marginTop: '5.9vh',
+        marginTop: '6vh',
         position: "absolute",
         padding: "0px, 200px",
-        marginLeft: "22vw"
+        marginLeft: "21.8vw"
     },
     // searchBox: {
     //     border: "0",

@@ -5,7 +5,7 @@ const Footer = () => (
         <div className="row">
             <div className="col s12">
                 <div className="footer-copyright">
-                ©Copyright  [Brakits]
+                    ©Copyright  [Brakits]
                 </div>
             </div>
         </div>

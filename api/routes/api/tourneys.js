@@ -9,6 +9,7 @@ router.route('/search/:search').post(tourneyController.find_search);
 router.route('/getusers').post(tourneyController.get_all_users_tourney);
 router.route('/setmatches').post(tourneyController.send_users_to_matches);
 router.route('/matches/:id').post(tourneyController.get_players);
-
+router.route('/nextmatch').post(tourneyController.create_next_match);
+router.route('/update_match').post(tourneyController.update_match);
 
 module.exports = router;
