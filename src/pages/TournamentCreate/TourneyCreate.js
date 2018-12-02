@@ -6,10 +6,11 @@ import Container from '../../components/Container';
 import Card from '../../components/Card';
 import styles from './TourneyStyles';
 import API from '../../utils/API';
-import DatePicker from 'react-datepicker';
+
 import "react-datepicker/dist/react-datepicker.css";
 import M from 'materialize-css/dist/js/materialize.min.js';
-
+// import Flatpickr from "react-flatpickr";
+// import 'flatpickr/dist/themes/dark.css'
 class TournCreate extends React.Component {
     state = {
         tourneyName: '',
@@ -26,7 +27,7 @@ class TournCreate extends React.Component {
         redirectTo: null
     }
 
-    componentDidMount () {
+    componentDidMount() {
         M.AutoInit()
     }
 
@@ -55,11 +56,11 @@ class TournCreate extends React.Component {
         })
     }
 
-    handle_submit = (event, date) => {
+    handle_submit = (event) => {
         event.preventDefault();
-        this.setState({ startDate: date }, () => {
-            console.log(this.state.startDate)
-        });
+
+        console.log(this.state.startDate)
+
 
         this.handle_validity({
             tourneyName: this.state.tourneyName,
@@ -111,12 +112,13 @@ class TournCreate extends React.Component {
         }
     }
 
-    //I bless the rains down in africa
+    //I bless the rains down in africa 
 
-    render () {
+    render() {
         if (this.state.redirectTo) {
             return <Redirect to={{ pathname: this.state.redirectTo }} />
         } else {
+            const { startDate } = this.state;
             return (
                 <>
                     <Navbar
@@ -126,101 +128,104 @@ class TournCreate extends React.Component {
                     />
                     <Container>
 
-                        {/* <div className="row"> */}
-                        <div className="wrap" style={styles.wrap}>
-                            <form onSubmit={this.handle_submit} noValidate>
-                                <Container>
-                                    <div className="row">
-                                        <p>Enter your name</p>
-                                        <input
-                                            type="text"
-                                            name="tourneyName"
-                                            id="tName"
-                                            maxLength="50"
-                                            onChange={this.handle_change}
-                                            className="col s12"
-                                            style={styles.inputs}
-                                        />
-                                        <label htmlFor="tName">{this.state.nameError}</label>
-                                        <p>Enter the game type</p>
-                                        <input
-                                            type="text"
-                                            name="gameType"
-                                            id="tType"
-                                            maxLength="35"
-                                            onChange={this.handle_change}
-                                            className="col s12"
-                                            style={styles.inputs}
-                                        />
-                                        <label htmlFor="tType">{this.state.typeError}</label>
-                                        <div className="row">
-                                            <h6 className="center-align">Enter game description</h6>
-                                            <textarea
-                                                type="text"
-                                                name="description"
-                                                id="textarea"
-                                                maxLength="250"
-                                                onChange={this.handle_change}
-                                                className="white col s12"
-                                                style={styles.textArea}
-
-                                            />
-                                            <label htmlFor="textarea">{this.state.descriptError}</label>
-                                        </div>
-                                    </div>
-                                </Container>
-                                <div className="row">
+                        <div className="section grey lighten-2" style={styles.cardArea}>
+                            <h4 className="center-align"> Create Tournament </h4>
+                            <div className="wrap" style={styles.wrap}>
+                                <form onSubmit={this.handle_submit} noValidate>
                                     <Container>
-                                        <DatePicker
-                                            selected={this.state.startDate}
-                                            showTimeSelect
-                                            timeFormat="h:mm a"
-                                            timeIntervals={60}
-                                            dateFormat="MMMM d, yyyy h:mm a"
-                                            timeCaption="Time"
-                                            className=""
-                                        />
-
-                                        <a className='dropdown-trigger btn left light-blue col s5' data-target='dropdown1' style={styles.posDrop}>{this.state.showSize}</a>
-                                        <ul id='dropdown1' className='dropdown-content'>
-                                            <li>
-                                                <h4
-                                                    className="center-align"
-                                                    onClick={this.handle_click.bind(this)}
-                                                    data-id="4"> 4
-                                                </h4>
-                                            </li>
-                                            <li>
-                                                <h4
-                                                    className="center-align"
-                                                    onClick={this.handle_click.bind(this)}
-                                                    data-id="8"> 8
-                                                </h4>
-                                            </li>
-                                            <li>
-                                                <h4
-                                                    className="center-align"
-                                                    onClick={this.handle_click.bind(this)}
-                                                    data-id="16"> 16
-                                                </h4>
-                                            </li>
-                                            <li>
-                                                <h4 className="center-align"
-                                                    onClick={this.handle_click.bind(this)}
-                                                    data-id="32"> 32
-                                                 </h4>
-                                            </li>
-                                        </ul>
+                                        <div className="row">
+                                            <p>Enter your name</p>
+                                            <input
+                                                type="text"
+                                                name="tourneyName"
+                                                id="tName"
+                                                maxLength="50"
+                                                onChange={this.handle_change}
+                                                className="col s12"
+                                                style={styles.inputs}
+                                            />
+                                            <label htmlFor="tName">{this.state.nameError}</label>
+                                            <p>Enter the game type</p>
+                                            <input
+                                                type="text"
+                                                name="gameType"
+                                                id="tType"
+                                                maxLength="35"
+                                                onChange={this.handle_change}
+                                                className="col s12"
+                                                style={styles.inputs}
+                                            />
+                                            <label htmlFor="tType">{this.state.typeError}</label>
+                                            <div className="row">
+                                                <h6 className="center-align">Enter game description</h6>
+                                                <textarea
+                                                    type="text"
+                                                    name="description"
+                                                    id="textarea"
+                                                    maxLength="250"
+                                                    onChange={this.handle_change}
+                                                    className="col s12"
+                                                    style={styles.textArea}
+                                                    placeholder="PLEASE ADD THE TIME & DATE OF YOUR TOURNAMENT:D"
+                                                />
+                                                <label htmlFor="textarea">{this.state.descriptError}</label>
+                                            </div>
+                                        </div>
                                     </Container>
-                                    <button
-                                        style={styles.createbtn}
-                                        className="btn left light-blue col s12"
-                                        type="submit"
-                                    >
-                                        Create Tournament!
+                                    <div className="row">
+                                        <Container>
+                                            <a className='dropdown-trigger btn left light-blue col s5 offset-s6' data-target='dropdown1' style={styles.posDrop}>{this.state.showSize}</a>
+                                            <ul id='dropdown1' className='dropdown-content'>
+                                                <li>
+                                                    <h4
+                                                        className="center-align"
+                                                        onClick={this.handle_click.bind(this)}
+                                                        data-id="4"> 4
+                                                </h4>
+                                                </li>
+                                                <li>
+                                                    <h4
+                                                        className="center-align"
+                                                        onClick={this.handle_click.bind(this)}
+                                                        data-id="8"> 8
+                                                </h4>
+                                                </li>
+                                                <li>
+                                                    <h4
+                                                        className="center-align"
+                                                        onClick={this.handle_click.bind(this)}
+                                                        data-id="16"> 16
+                                                </h4>
+                                                </li>
+                                                <li>
+                                                    <h4 className="center-align"
+                                                        onClick={this.handle_click.bind(this)}
+                                                        data-id="32"> 32
+                                                 </h4>
+                                                </li>
+                                                <li>
+                                                    <h4 className="center-align"
+                                                        onClick={this.handle_click.bind(this)}
+                                                        data-id="64"> 64
+                                                 </h4>
+                                                </li>
+                                                <li>
+                                                    <h4 className="center-align"
+                                                        onClick={this.handle_click.bind(this)}
+                                                        data-id="128"> 128
+                                                 </h4>
+                                                </li>
+                                            </ul>
+                                        </Container>
+                                        <button
+                                            style={styles.createbtn}
+                                            className="btn left light-blue col s12"
+                                            type="submit"
+                                        > Create Tournament!
                                     </button>
-                                </div>
-                            </form>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </Container>
                 </>

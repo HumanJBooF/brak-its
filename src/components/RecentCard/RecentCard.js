@@ -19,7 +19,6 @@ const RecentCard = props => (
                                 <th>Size</th>
                                 <th className="hide-on-med-and-down">Format</th>
                                 <th>Date</th>
-                                <th>Time</th>
                                 <th className="hide-on-med-and-down">Active</th>
                             </tr>
                         </thead>
@@ -36,8 +35,7 @@ const RecentCard = props => (
                                     <td className="hide-on-med-and-down"><h6>{name.owner}</h6></td>
                                     <td><h6>{name.actualSize}/{name.sizeLimit}</h6></td>
                                     <td className="hide-on-med-and-down"><h6>{name.format}</h6></td>
-                                    <td><h6>{name.date.slice(0, name.date.indexOf("T"))}</h6></td>
-                                    <td><h6>{name.date.slice(name.date.indexOf("T") + 1, name.date.indexOf("."))}</h6></td>
+                                    <td><h6>{name.date}</h6></td>
                                     <td className="hide-on-med-and-down" ><h6>
                                         {`${name.isActive.toString().charAt(0).toUpperCase()}${name.isActive.toString().slice(1)}`}
                                     </h6></td>

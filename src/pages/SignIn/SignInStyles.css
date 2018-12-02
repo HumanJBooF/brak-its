@@ -1,18 +1,17 @@
 #formStyles {
-    
     color: rgba(0, 0, 0, 0.54);
     border-radius: 24px;
     border: 2px solid #D3D3D3;
     height: 25px;
-    padding: 8px 1px 12px 20px;
+    padding: 12px 1px 12px 20px;
     width: 70%;
-    background-color: #f7f7f7;
+    background-color: #f7f7f7 !important;
     transition: background 0.2s, width .2s;
-    margin-top: 20px;
-    
+    margin-top: 30px;
+    font-size: 25px;
 }
 
 #formStyles:focus {
-    border: 2px solid rgb(62, 136, 211);
+    border: 2px solid rgb(106, 178, 250);
     border-radius: 25px;
 }

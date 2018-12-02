@@ -8,6 +8,8 @@ import Button from '../../components/Button';
 import formStyle from './SignInStyle.js';
 import API from '../../utils/API';
 import swal from 'sweetalert2'
+import './SignInStyles.css';
+
 class SignIn extends React.Component {
 
     state = {
@@ -65,7 +67,11 @@ class SignIn extends React.Component {
                 }
             }).catch(error => console.log(error))
             // todo add a couldn't send
-            : console.log(`invalid, will not send`)
+            : swal({
+                type: 'error',
+                title: 'Oh No!',
+                text: 'It seems we can\'t find matching login credentials try again!',
+              });
 
 
 
@@ -87,13 +93,13 @@ class SignIn extends React.Component {
                                 <form
                                     onSubmit={this.handle_submit}
                                     className="col s12"
-                                    style={formStyle.form}
+                                    // style={formStyle.form}
                                     noValidate>
                                     <div className="row">
                                         <div className="input field col s12 center-align username">
                                             <input
-                                            style={formStyle.inputfields}
-                                                id="username"
+                                            // style={formStyle.inputfields}
+                                                id="formStyles"
                                                 type="text"
                                                 name="username"
                                                 className="validate"
@@ -106,11 +112,11 @@ class SignIn extends React.Component {
                                         <div className="center-align input field col s12">
                                             <input
                                                 name="password"
-                                                id="password"
+                                                id="formStyles"
                                                 type="password"
                                                 className="validate"
                                                 onChange={this.handle_change}
-                                                style={formStyle.inputfields}
+                                                // style={formStyle.inputfields}
                                             />
                                             <h5 htmlFor="password">Password</h5>
 
