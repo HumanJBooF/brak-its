@@ -44,16 +44,10 @@ class TourneyDisplay extends React.Component {
                 matches.filter(match => {
                     if (obj.id === match.player1Id) match["player1Name"] = obj.username;
                     if (obj.id === match.player2Id) match['player2Name'] = obj.username;
-                })
-            })
-            const size = Math.pow(2, Math.ceil(Math.log2(users.length)))
-            console.log(matches)
-            return this.get_tourney(matches, size)
-            // this.setState({
-            //     matches: matches,
-            //     size: size
-            // })
-
+                });
+            });
+            const size = Math.pow(2, Math.ceil(Math.log2(users.length)));
+            return this.get_tourney(matches, size);
         })
     }
 
@@ -74,7 +68,6 @@ class TourneyDisplay extends React.Component {
                 owner: tournament.owner,
                 isActive: tournament.isActive
             };
-
 
             return this.tournament_set_up(tourney, matches, size)
         })
@@ -111,7 +104,6 @@ class TourneyDisplay extends React.Component {
             })
 
             index += roundSize;
-
         }
 
         if (matches[index - 1]) {
@@ -275,23 +267,12 @@ class TourneyDisplay extends React.Component {
     handle_win = event => {
         event.preventDefault()
         const playerInfo = { ...event._targetInst.memoizedProps.playerinfo };
-        // playerInfo = {
-        //     boxOrder
-        //     isActive
-        //     match_num
-        //     next_match
-        //     player
-        //     score
-        //     winner
-        // }
 
-        // const size = this.state.size
-        const playerNum = playerInfo.matchNum % 2 ? 'player1' : 'player2'
+        const playerNum = playerInfo.matchNum % 2 ? 'player1Id' : 'player2Id'
 
         // Ask if manager wants to make player win, sweetmodal if true continue, if not boot
 
         // update current to reflect scores/win
-        console.log(this.state.matchesUsed, playerInfo.nextMatch)
 
         if (this.state.matchesUsed.includes(playerInfo.nextMatch)) {
             console.log('should be update')
@@ -301,10 +282,15 @@ class TourneyDisplay extends React.Component {
                 winner: playerInfo.player
             };
 
-            updateNextInfo[playerNum] = playerInfo.player;
+            const player = {};
+            player[playerNum] = playerInfo.playerId;
+            updateNextInfo.matchNum = playerInfo.nextMatch;
+            updateNextInfo.tourneyUuid = this.state.tourneyInfo.id;
+            updateNextInfo.player = player;
 
-            console.log(updateNextInfo);
-            console.log(updateCurrentInfo);
+            API.update_match({ match: updateNextInfo }).then(result => {
+
+            })
         } else {
             let currentMatchIndex;
             const playerNum = playerInfo.matchNum % 2 ? 'player1Id' : 'player2Id';
@@ -324,10 +310,11 @@ class TourneyDisplay extends React.Component {
             createInfo.tourneyUuid = this.state.tourneyInfo.id
             createInfo[playerNum] = playerInfo.playerId;
             console.log(createInfo, 'CREATE INFO')
+            API.create_next_match({ match: createInfo }).then(result => {
+
+            });
         }
 
-
-        // re-get info from db, re-render page
     }
 
     render () {
@@ -341,15 +328,13 @@ class TourneyDisplay extends React.Component {
                 />
                 <Container>
 
-
-
                     <Tournament allMatches={this.state.allMatches} admin={this.state.admin} handle_win={event => { this.handle_win(event) }} />
 
                 </Container>
             </>
         )
-
     }
 }
+
 
 export default TourneyDisplay;

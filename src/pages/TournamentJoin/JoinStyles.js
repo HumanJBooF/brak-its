@@ -5,7 +5,8 @@ const styles = {
     },
     collect: {
         backgroundColor: "darkslategray !important",
-    }, 
+        overflow: 'auto'
+    },
     card: {
         boxShadow: "5px"
     },
