@@ -313,14 +313,16 @@ class TourneyDisplay extends React.Component {
             const createInfo = { tourneyUuid: this.state.tourneyInfo.id };
             this.state.matchNumbersInfo.map((round, i) => {
                 if (round.includes(playerInfo.matchNum)) {
-                    currentMatchIndex = this.state.matchNumbersInfo[i].indexOf(playerInfo.matchNum);
-                    createInfo['matchNum'] = this.state.matchNumbersInfo[i + 1][Math.floor(currentMatchIndex / 2)];
-                    if (this.state.matchNumbersInfo[i + 2]) {
-                        createInfo['nextMatch'] = this.state.matchNumbersInfo[i + 2][Math.floor(currentMatchIndex / 4)];
-                        console.log(this.state.matchNumbersInfo, 'STATE MATCH NUMBERS')
-                        console.log(currentMatchIndex, i, 'CURRENT <MATCH INDEX ')
-                    } else {
-                        createInfo.nextMatch = null;
+                        currentMatchIndex = this.state.matchNumbersInfo[i].indexOf(playerInfo.matchNum);
+                        if(this.state.matchNumbersInfo[i + 1]) {
+                            createInfo['matchNum'] = this.state.matchNumbersInfo[i + 1][Math.floor(currentMatchIndex / 2)];
+                            if (this.state.matchNumbersInfo[i + 2]) {
+                                createInfo['nextMatch'] = this.state.matchNumbersInfo[i + 2][Math.floor(currentMatchIndex / 4)];
+                                console.log(this.state.matchNumbersInfo, 'STATE MATCH NUMBERS')
+                                console.log(currentMatchIndex, i, 'CURRENT <MATCH INDEX ')
+                            } else {
+                                createInfo.nextMatch = null;
+                            }
                     }
                 }
             })
