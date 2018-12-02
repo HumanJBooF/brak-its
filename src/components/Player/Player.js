@@ -10,22 +10,14 @@ const Player = props => (
                     : props.player.player
             }</button>
             : <div className="player">{
-                props.player.player === null
-                    ? ""
-                    : props.player.player
+                (props.player.player === undefined && props.player.roundNum === 1)
+                    ? "Bye"
+                    : props.player.player === null
+                        ? ""
+                        : props.player.player
             }</div>
         }
     </>
 )
-
-    // < div key = { i } className = "playerContainer" >
-    //     <button className="player" onClick={props.handle_win}>{
-    //         player.player === false
-    //             ? ""
-    //             : player.player === null
-    //                 ? "BYE"
-    //                 : player.player
-    //     }</button>
-    // </div >
 
 export default Player;
