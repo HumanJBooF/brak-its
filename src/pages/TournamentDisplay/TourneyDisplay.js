@@ -347,7 +347,7 @@ class TourneyDisplay extends React.Component {
                     loggedIn={this.props.loggedIn}
                     username={this.props.username}
                 />
-                <Container>
+                <Container fluid>
 
 
 
