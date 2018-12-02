@@ -9,7 +9,11 @@ const apiController = {
     show_recent: () => { return axios.get('/api/tournament/recent'); },
     show_one: (owner, id) => { return axios.post(`/api/tournament/join/${owner}/${id}`) },
     join_tournament: userTourney => { return axios.post('/api/tournament/join_tournament', userTourney) },
+<<<<<<< HEAD
     find_search: (search) => { return axios.post(`/api/tournament/search/${search}`); },
+=======
+    find_search: search => { return axios.post(`/api/tournament/search/${search}`); },
+>>>>>>> 83521bb42f296379af647546bb2b246065e74d9b
     get_users_tournament: id => { return axios.post('/api/tournament/getusers', id) },
     send_users_to_matches: userArr => { return axios.post('/api/tournament/setmatches', userArr) },
     get_users_for_matches: id => { return axios.post(`/api/tournament/matches/${id}`) }
