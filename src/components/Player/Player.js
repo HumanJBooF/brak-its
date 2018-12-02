@@ -9,10 +9,12 @@ const Player = props => (
                     ? ""
                     : props.player.player
             }</button>
-            : <div className="player">{
-                props.player.player === null
-                    ? ""
-                    : props.player.player
+            : <div className={props.player.player === undefined && props.player.roundNum === 1 ? "player bye" : "player"}>{
+                (props.player.player === undefined && props.player.roundNum === 1)
+                    ? "Bye"
+                    : props.player.player === null
+                        ? ""
+                        : props.player.player
             }</div>
         }
     </>

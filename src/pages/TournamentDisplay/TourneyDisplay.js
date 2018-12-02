@@ -87,7 +87,7 @@ class TourneyDisplay extends React.Component {
         for (let currentRound = 0; currentRound < roundsToRun; currentRound++) {
             const roundSize = size / Math.pow(2, currentRound + 1);
 
-            this.sort_rounds(roundSize, index, matches).map((arr, i) => {
+            this.sort_rounds(roundSize, index, matches, currentRound).map((arr, i) => {
                 switch (i) {
                     case 0:
                         info.roundInfo.push(arr)
@@ -116,7 +116,8 @@ class TourneyDisplay extends React.Component {
                         nextMatch: null,
                         winner: null,
                         boxOrder: (index * 2) + 1,
-                        isActvie: false
+                        isActvie: false,
+                        roundNum: roundsToRun + 1
                     }]);
                     break;
                 case matches[index - 1].player1Id:
@@ -128,7 +129,8 @@ class TourneyDisplay extends React.Component {
                         nextMatch: null,
                         winner: null,
                         boxOrder: (index * 2) + 1,
-                        isActvie: false
+                        isActvie: false,
+                        roundNum: roundsToRun + 1
                     }]);
                     break;
                 case matches[index - 1].player2Id:
@@ -140,7 +142,8 @@ class TourneyDisplay extends React.Component {
                         nextMatch: null,
                         winner: null,
                         boxOrder: (index * 2) + 1,
-                        isActvie: false
+                        isActvie: false,
+                        roundNum: roundsToRun + 1
                     }]);
                     break;
                 default:
@@ -156,7 +159,8 @@ class TourneyDisplay extends React.Component {
                 nextMatch: null,
                 winner: null,
                 boxOrder: (index * 2) + 1,
-                isActvie: false
+                isActvie: false,
+                roundNum: roundsToRun + 1
             }]);
         }
         console.log(matches, 'matches')
@@ -190,7 +194,7 @@ class TourneyDisplay extends React.Component {
         return (matchNumbersInfo)
     }
 
-    sort_rounds = (roundSize, index, matches) => {
+    sort_rounds = (roundSize, index, matches, currentRound) => {
         const roundInfo = [];
         const matchesUsed = [];
 
@@ -212,23 +216,25 @@ class TourneyDisplay extends React.Component {
             switch (currentMatch) {
                 case undefined:
                     roundInfo.push({
-                        player: null,
+                        player: undefined,
                         playerId: null,
                         score: null,
                         matchNum: null,
                         nextMatch: null,
                         winner: null,
                         boxOrder: (currentIndex * 2) + 1,
-                        isActive: isActiveValue
+                        isActive: isActiveValue,
+                        roundNum: currentRound + 1
                     }, {
-                            player: null,
+                            player: undefined,
                             playerId: null,
                             score: null,
                             matchNum: null,
                             nextMatch: null,
                             winner: null,
                             boxOrder: (currentIndex * 2) + 2,
-                            isActive: isActiveValue
+                            isActive: isActiveValue,
+                            roundNum: currentRound + 1
                         })
                     break;
                 default:
@@ -239,7 +245,8 @@ class TourneyDisplay extends React.Component {
                         nextMatch: currentMatch.nextMatch,
                         winner: currentMatch.winner,
                         boxOrder: (currentMatch.matchNum * 2) - 1,
-                        isActive: isActiveValue
+                        isActive: isActiveValue,
+                        roundNum: currentRound + 1
                     }, {
                             player: currentMatch.player2Name,
                             playerId: currentMatch.player2Id,
@@ -247,7 +254,8 @@ class TourneyDisplay extends React.Component {
                             nextMatch: currentMatch.nextMatch,
                             winner: currentMatch.winner,
                             boxOrder: currentMatch.matchNum * 2,
-                            isActive: isActiveValue
+                            isActive: isActiveValue,
+                            roundNum: currentRound + 1
                         });
 
                     matchesUsed.push(currentMatch.matchNum);
