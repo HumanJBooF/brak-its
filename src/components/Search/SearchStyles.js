@@ -18,7 +18,7 @@ const styles = {
         // width: "200px",
         background: "#f7f7f7",
         transition: "background 0.2s, width .2s",
-    }, 
+    },
     searchContainer: {
         display: "inline-flex",
         flex: "1 1 300px",
@@ -30,7 +30,7 @@ const styles = {
     searchIcon: {
         padding: "0.5rem",
         marginTop: '5.9vh',
-        position: "fixed",
+        position: "absolute",
         padding: "0px, 200px",
         marginLeft: "22vw"
     },
@@ -39,7 +39,7 @@ const styles = {
     //     padding: "0.5rem 0.5rem 0.5rem 0",
     //     flex: 1,
     //     marginTop: "4.8vh",
-        
+
     //     borderRadius: "2px",
     //     border: 0,
     //     height: "25px",
@@ -50,8 +50,8 @@ const styles = {
     //     transition: "background 0.2s, width .2s"
     //   }
 
-      
-      
+
+
 }
 
 export default styles;

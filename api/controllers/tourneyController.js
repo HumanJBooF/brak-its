@@ -46,7 +46,6 @@ const tourneyController = {
     join_tourney: (req, res) => {
         const tourneyId = req.body.tourneyId;
         const username = req.body.username;
-        console.log('HESAIEH:SAIEH:ISAEHISAEHISA:LEHI:LSAELSAEH:LIAS')
         db.users.findOne({
             where: {
                 username: username
@@ -58,7 +57,7 @@ const tourneyController = {
                     uuid: tourneyId
                 }
             }).then(tourney => {
-                tourney.update({ actualSize: db.sequelize.literal('actualSize + 1') })
+                tourney.update({ actualSize: db.Sequelize.literal('actualSize + 1') })
                 tourney.addUsers(userId).then(() => res.json({ user: user }))
                     .catch(err => res.json({ err: err }));
             }).catch(err => res.json({ err: err }));
@@ -73,7 +72,7 @@ const tourneyController = {
             }
         }).then(tourney => {
             tourney.getUsers({
-                order: [['createdAt', 'ASC']]
+                order: [[db.Sequelize.literal(`signUp.createdAt`), 'ASC']]
             }).then(usersTourney => {
                 res.json({ users: usersTourney });
             }).catch(err => res.json({ err: err }));
@@ -84,13 +83,10 @@ const tourneyController = {
         const matches = req.body.matches;
         const tourneyId = req.body.matches[0].tourneyUuid
         db.match.bulkCreate(matches, {
-            include: [{
-                model: db.signUp, as: 'player1'
-            }, {
-                model: db.signUp, as: 'player2'
-            }, {
-                model: db.tourneys, as: 'tourneys'
-            }]
+            include:
+                [{ model: db.signUp, as: 'player1' },
+                { model: db.signUp, as: 'player2' },
+                { model: db.tourneys, as: 'tourneys' }]
         }).then(match => {
             res.json({ match: match })
             db.tourneys.update({ isActive: true }, { where: { uuid: tourneyId } })
@@ -120,16 +116,15 @@ const tourneyController = {
     },
 
     //search bar query
-    find_search: (req, res) => {     
+    find_search: (req, res) => {
         const searchTerm = req.params.search;
         console.log(searchTerm)
         db.tourneys.findAll({
             where: {
-                gameType: searchTerm,
-                isActive: false
+                gameType: searchTerm
             }
-        }).then( tourneys => res.json({ tourneys: tourneys }))
-            .catch( error => res.json({ error }))
+        }).then(tourneys => res.json({ tourneys: tourneys }))
+            .catch(error => res.json({ error }))
     },
 }
 
