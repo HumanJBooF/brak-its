@@ -49,6 +49,7 @@ class LandingPage extends React.Component {
                         name: tourneyElems.tourneyName,
                         id: tourneyElems.uuid,
                         description: tourneyElems.description,
+                        actualSize: tourneyElems.actualSize,
                         sizeLimit: tourneyElems.sizeLimit,
                         date: tourneyElems.date,
                         format: tourneyElems.format,

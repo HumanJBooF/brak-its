@@ -277,7 +277,7 @@ class TourneyJoin extends React.Component {
                                 />
                             </div>
                         }
-                        {this.props.username === this.state.tournament.owner && this.state.players.length >= 2 &&
+                        {this.props.username === this.state.tournament.owner && this.state.players.length >= 3 &&
                             <div className="center-align col s12 truncate">
                                 <Button
                                     owner={this.state.tournament.sizeLimit === this.state.players.length ? this.state.full : this.state.early}
