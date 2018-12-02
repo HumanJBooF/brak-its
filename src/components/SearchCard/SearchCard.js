@@ -37,7 +37,7 @@ const SearchCard = props => (
                                     }
                                     <td><h6>{name.gameType}</h6></td>
                                     <td className="hide-on-med-and-down"><h6>{name.owner}</h6></td>
-                                    <td><h6>{name.sizeLimit}</h6></td>
+                                    <td><h6>{name.actualSize}/{name.sizeLimit}</h6></td>
                                     <td className="hide-on-med-and-down"><h6>{name.format}</h6></td>
                                     <td><h6>{name.date.slice(0, name.date.indexOf("T"))}</h6></td>
                                     <td><h6>{name.date.slice(name.date.indexOf("T") + 1, name.date.indexOf("."))}</h6></td>

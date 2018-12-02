@@ -17,7 +17,6 @@ class TourneyDisplay extends React.Component {
 
     componentDidMount = () => {
         this.get_users();
-        // this.get_tourney();
     }
 
     check_permission = () => {
@@ -267,7 +266,7 @@ class TourneyDisplay extends React.Component {
     handle_win = event => {
         event.preventDefault()
         const playerInfo = { ...event._targetInst.memoizedProps.playerinfo };
-
+        console.log(playerInfo, 'PLAYERINFO')
         const playerNum = playerInfo.matchNum % 2 ? 'player1Id' : 'player2Id'
 
         // Ask if manager wants to make player win, sweetmodal if true continue, if not boot
@@ -277,41 +276,61 @@ class TourneyDisplay extends React.Component {
         if (this.state.matchesUsed.includes(playerInfo.nextMatch)) {
             console.log('should be update')
             // Should only need the opposite player name, everything else is the same as create
-            const updateNextInfo = {};
-            const updateCurrentInfo = {
-                winner: playerInfo.player
-            };
 
             const player = {};
             player[playerNum] = playerInfo.playerId;
-            updateNextInfo.matchNum = playerInfo.nextMatch;
-            updateNextInfo.tourneyUuid = this.state.tourneyInfo.id;
-            updateNextInfo.player = player;
 
-            API.update_match({ match: updateNextInfo }).then(result => {
+            const info = {
+                next: {
+                    player: player,
+                    matchNum: playerInfo.nextMatch,
+                    tourneyUuid: this.state.tourneyInfo.id
+                },
+                winner: {
+                    winner: playerInfo.playerId,
+                    matchNum: playerInfo.matchNum,
+                    nextMatch: playerInfo.nextMatch,
+                }
+            }
+            console.log(info, 'NEXT')
 
+            API.update_match({ info }).then(result => {
+                const { match, winner } = result.data;
+                console.log(match, winner)
+                this.get_users();
             })
         } else {
             let currentMatchIndex;
             const playerNum = playerInfo.matchNum % 2 ? 'player1Id' : 'player2Id';
-            const createInfo = {};
+            const createInfo = { tourneyUuid: this.state.tourneyInfo.id };
             this.state.matchNumbersInfo.map((round, i) => {
                 if (round.includes(playerInfo.matchNum)) {
                     currentMatchIndex = this.state.matchNumbersInfo[i].indexOf(playerInfo.matchNum);
                     createInfo['matchNum'] = this.state.matchNumbersInfo[i + 1][Math.floor(currentMatchIndex / 2)];
                     if (this.state.matchNumbersInfo[i + 2]) {
                         createInfo['nextMatch'] = this.state.matchNumbersInfo[i + 2][Math.floor(currentMatchIndex / 4)];
+                        console.log(this.state.matchNumbersInfo, 'STATE MATCH NUMBERS')
+                        console.log(currentMatchIndex, i, 'CURRENT <MATCH INDEX ')
                     } else {
                         createInfo.nextMatch = null;
                     }
                 }
             })
-
-            createInfo.tourneyUuid = this.state.tourneyInfo.id
-            createInfo[playerNum] = playerInfo.playerId;
+            const updateWinner = {
+                winner: playerInfo.playerId,
+                matchNum: playerInfo.matchNum,
+                nextMatch: playerInfo.nextMatch,
+                tourneyUuid: this.state.tourneyInfo.id
+            }
             console.log(createInfo, 'CREATE INFO')
-            API.create_next_match({ match: createInfo }).then(result => {
+            // console.log(updateWinner, 'UPDATE WINNER')
 
+            createInfo[playerNum] = playerInfo.playerId;
+
+            API.create_next_match({ match: createInfo, winner: updateWinner }).then(result => {
+                const { match, winner } = result.data;
+                console.log(match, winner)
+                this.get_users();
             });
         }
 
@@ -326,9 +345,12 @@ class TourneyDisplay extends React.Component {
                     loggedIn={this.props.loggedIn}
                     username={this.props.username}
                 />
-                <Container>
+                <Container fluid>
 
-                    <Tournament allMatches={this.state.allMatches} admin={this.state.admin} handle_win={event => { this.handle_win(event) }} />
+                    <Tournament
+                        allMatches={this.state.allMatches}
+                        admin={this.state.admin}
+                        handle_win={event => this.handle_win(event)} />
 
                 </Container>
             </>
