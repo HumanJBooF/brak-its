@@ -13,9 +13,22 @@ const styles = {
         paddingTop: "9px"
     },
     userFont: {
-        fontSize: "24px",
-        fontFamily: `monospace`,
+        fontSize: "32px",
+        fontFamily: `'Puritan', sans-serif`,
+        color: '#246EB9',
+        paddingTop: "5px"
+    },
+
+    userLog: {
+        fontSize: "20px",
+        fontFamily: `'Puritan', sans-serif`,
         paddingTop: "8px"
+    },
+
+    userSigns: {
+        fontSize: "24px",
+        fontFamily: `'Puritan', sans-serif`,
+        paddingTop: "10px"
     },
     wrap: {
         paddingBottom: "20px"

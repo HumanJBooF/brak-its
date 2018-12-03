@@ -17,18 +17,18 @@ const logout = props => {
 const Navbar = props => (
     <nav className="" style={styles.nav}>
         <div className="nav-wrapper" style={styles.wrap}>
-            <div className="brand-logo" style={styles.logoFont}><Link to="/">[ Brak-its ]</Link></div>
+            <div className="brand-logo fixed" style={styles.logoFont}><Link to="/">[ Brakits ]</Link></div>
             {!props.loggedIn
                 ? (
                     <ul className="right" >
-                        <li><Link to="/signup" style={styles.userFont}>Sign Up</Link></li>
-                        <li><Link to="/signin" style={styles.userFont}>Sign In</Link></li>
+                        <li><Link to="/signup" style={styles.userSigns}>Sign Up</Link></li>
+                        <li><Link to="/signin" style={styles.userSigns}>Sign In</Link></li>
                     </ul>
                 )
                 : (
                     <ul className="right">
                         <li><Link to='#!' style={styles.userFont} username={props.username}>{props.username}</Link></li>
-                        <li><Link to='#!' style={styles.userFont} onClick={() => logout(props)}>Logout</Link></li>
+                        <li><Link to='#!' style={styles.userLog} onClick={() => logout(props)}>Logout</Link></li>
                     </ul>
                 )}
         </div>

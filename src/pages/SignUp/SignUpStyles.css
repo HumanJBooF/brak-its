@@ -16,12 +16,12 @@
 }
 
 .header {
-    font-family: 'Patua One', cursive;
+    font-family: 'Asap', sans-serif;
     font-size: 40px;
 }
 
 .tags {
-    font-family: 'Ubuntu Condensed', sans-serif;
+    font-family: 'Anaheim', sans-serif !important;
     font-size: 25px;
     color: black;
 }

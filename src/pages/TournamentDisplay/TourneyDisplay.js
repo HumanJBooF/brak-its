@@ -14,6 +14,7 @@ class TourneyDisplay extends React.Component {
         matches: [],
         size: null,
         matchNumbersInfo: [],
+        activeRounds: [],
         admin: false
     }
 
@@ -26,7 +27,7 @@ class TourneyDisplay extends React.Component {
     check_permission = () => {
         if (this.props.loggedIn) {
             if (this.state.tourneyInfo.owner === this.props.username) {
-                this.setState({ admin: true })
+                this.setState({ admin: true });
             }
         }
     }
@@ -40,15 +41,18 @@ class TourneyDisplay extends React.Component {
                 return {
                     username: user.username,
                     id: user.signUp.id
-                }
-            })
+                };
+            });
+
             user.filter(obj => {
                 matches.filter(match => {
                     if (obj.id === match.player1Id) match["player1Name"] = obj.username;
                     if (obj.id === match.player2Id) match['player2Name'] = obj.username;
                 });
             });
+
             const size = Math.pow(2, Math.ceil(Math.log2(users.length)));
+
             return this.get_tourney(matches, size);
         })
     }
@@ -71,7 +75,7 @@ class TourneyDisplay extends React.Component {
                 isActive: tournament.isActive
             };
 
-            return this.tournament_set_up(tourney, matches, size)
+            return this.tournament_set_up(tourney, matches, size);
         })
     }
 
@@ -79,7 +83,8 @@ class TourneyDisplay extends React.Component {
         const info = {
             roundInfo: [],
             matchNumbersInfo: [],
-            matchesUsed: []
+            matchesUsed: [],
+            activeRounds: []
         };
 
         const roundsToRun = Math.ceil(Math.log2(size));
@@ -90,23 +95,25 @@ class TourneyDisplay extends React.Component {
         for (let currentRound = 0; currentRound < roundsToRun; currentRound++) {
             const roundSize = size / Math.pow(2, currentRound + 1);
 
+            console.log("index: ", index, "current round: ", currentRound, "round size", roundSize);
+
             this.sort_rounds(roundSize, index, matches, currentRound).map((arr, i) => {
                 switch (i) {
                     case 0:
-                        info.roundInfo.push(arr)
+                        info.roundInfo.push(arr);
                         break;
                     default:
                         if (arr[0]) {
-                            info.matchesUsed = [...info.matchesUsed, ...arr]
-                        }
+                            info.matchesUsed = [...info.matchesUsed, ...arr];
+                        };
                         break;
-                }
+                };
 
                 return;
-            })
+            });
 
             index += roundSize;
-        }
+        };
 
         if (matches[index - 1]) {
             switch (matches[index - 1].winner) {
@@ -165,19 +172,37 @@ class TourneyDisplay extends React.Component {
                 isActvie: false,
                 roundNum: roundsToRun + 1
             }]);
-        }
-        console.log(matches, 'matches')
+        };
+
+        info.roundInfo.map((round, roundNum) => {
+
+            let roundState = true
+            round.map(subPlayer => {
+                switch (roundNum) {
+                    case 0:
+                        break;
+                    default:
+                        if (subPlayer.player === null || subPlayer.player === undefined) {
+                            roundState = false
+                        }
+                }
+            })
+            info.activeRounds.push(roundState)
+        })
+        console.log(info.activeRounds)
+
         this.setState({
             tourneyInfo: tourney,
             allMatches: info.roundInfo,
             matchNumbersInfo: info.matchNumbersInfo,
             matchesUsed: info.matchesUsed,
             matches: matches,
+            activeRounds: info.activeRounds,
             size: size
         }, () => this.check_permission());
-    }
+    };
 
-    generate_matchNumbers = roundsToRun => {
+    generate_matchNumbers = (roundsToRun) => {
         let indexTracker = 0;
         const matchNumbersInfo = [];
 
@@ -194,7 +219,7 @@ class TourneyDisplay extends React.Component {
 
             indexTracker += roundSize;
         }
-        return (matchNumbersInfo)
+        return (matchNumbersInfo);
     }
 
     sort_rounds = (roundSize, index, matches, currentRound) => {
@@ -207,10 +232,10 @@ class TourneyDisplay extends React.Component {
             let isActiveValue;
 
             if (currentMatch === undefined) {
-                isActiveValue = false
+                isActiveValue = false;
             } else {
                 if (currentMatch.player1Id === null || currentMatch.player2Id === null || currentMatch.player1Id === undefined || currentMatch.player2Id === undefined || currentMatch.winner !== null) {
-                    isActiveValue = false
+                    isActiveValue = false;
                 } else {
                     isActiveValue = true;
                 }
@@ -395,13 +420,14 @@ class TourneyDisplay extends React.Component {
                     <Tournament
                         allMatches={this.state.allMatches}
                         admin={this.state.admin}
+                        activeRounds={this.state.activeRounds}
                         handle_win={event => this.handle_win(event)} />
                     <Footer />
                 </Container>
             </>
-        )
-    }
-}
+        );
+    };
+};
 
 
 export default TourneyDisplay;

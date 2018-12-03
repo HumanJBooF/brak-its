@@ -99,9 +99,9 @@ class TournCreate extends React.Component {
                     : this.setState({ typeError: "You sure that's a real game?" })
                 break;
             case 'description':
-                value.length <= 250 & value.length > 10
+                value.length > 10
                     ? this.setState({ descriptError: "Very Descriptive" })
-                    : this.setState({ descriptError: "Brevity is a virtue!" })
+                    : this.setState({ descriptError: "More description please!" })
                 break;
             default:
 
@@ -122,54 +122,29 @@ class TournCreate extends React.Component {
                         loggedIn={this.props.loggedIn}
                     />
                     <Container>
-
-                        <div className="section grey lighten-2" style={styles.cardArea}>
-                            <h4 className="center-align"> Create Tournament </h4>
+                        <div className="card" style={styles.cardArea}>
+                            <h4 className="center-align" style={styles.head}> Create Tournament </h4>
                             <div className="wrap" style={styles.wrap}>
                                 <form onSubmit={this.handle_submit} noValidate>
                                     <Container>
                                         <div className="row">
-                                            <p>Enter your name</p>
+                                            <p style={styles.ptag}>Enter your name</p>
                                             <input
                                                 type="text"
                                                 name="tourneyName"
                                                 id="tName"
                                                 maxLength="50"
                                                 onChange={this.handle_change}
-                                                className="col s12"
+                                                className="col s6"
                                                 style={styles.inputs}
                                             />
-                                            <label htmlFor="tName">{this.state.nameError}</label>
-                                            <p>Enter the game type</p>
-                                            <input
-                                                type="text"
-                                                name="gameType"
-                                                id="tType"
-                                                maxLength="35"
-                                                onChange={this.handle_change}
-                                                className="col s12"
-                                                style={styles.inputs}
-                                            />
-                                            <label htmlFor="tType">{this.state.typeError}</label>
-                                            <div className="row">
-                                                <h6 className="center-align">Enter game description</h6>
-                                                <textarea
-                                                    type="text"
-                                                    name="description"
-                                                    id="textarea"
-                                                    maxLength="250"
-                                                    onChange={this.handle_change}
-                                                    className="col s12"
-                                                    style={styles.textArea}
-                                                    placeholder="PLEASE ADD THE TIME & DATE OF YOUR TOURNAMENT:D"
-                                                />
-                                                <label htmlFor="textarea">{this.state.descriptError}</label>
-                                            </div>
-                                        </div>
-                                    </Container>
-                                    <div className="row">
-                                        <Container>
-                                            <a className='dropdown-trigger btn left light-blue col s5 offset-s6' data-target='dropdown1' style={styles.posDrop}>{this.state.showSize}</a>
+                                            <label style={styles.labels} htmlFor="tName">{this.state.nameError}</label>
+
+                                              <a 
+                                                className='dropdown-trigger btn-large left  col s5 right z-depth-3' 
+                                                data-target='dropdown1' 
+                                                style={styles.posDrop}>{this.state.showSize}
+                                            </a>
                                             <ul id='dropdown1' className='dropdown-content'>
                                                 <li>
                                                     <h4
@@ -192,7 +167,7 @@ class TournCreate extends React.Component {
                                                         data-id="16"> 16
                                                 </h4>
                                                 </li>
-                                                <li>
+                                                {/* <li>
                                                     <h4 className="center-align"
                                                         onClick={this.handle_click.bind(this)}
                                                         data-id="32"> 32
@@ -209,14 +184,50 @@ class TournCreate extends React.Component {
                                                         onClick={this.handle_click.bind(this)}
                                                         data-id="128"> 128
                                                  </h4>
-                                                </li>
+                                                </li> */}
                                             </ul>
-                                        </Container>
+                                        </div>
+                                        <div className="row"> 
+                                            <i className="fas fa-gamepad fa-9x right"></i>
+                                            <p style={styles.ptag}>Enter the game type</p>
+                                            <input
+                                                type="text"
+                                                name="gameType"
+                                                id="tType"
+                                                maxLength="35"
+                                                onChange={this.handle_change}
+                                                className="col s6"
+                                                style={styles.inputs}
+                                            />
+                                           
+                                            <label htmlFor="tType"><h5>{this.state.typeError}</h5></label>
+                                        </div>
+                                        <div className="row">
+                                            <h6 className="center-align" style={styles.ptag}>Enter game description</h6>
+                                            <textarea
+                                                type="text"
+                                                name="description"
+                                                id="textarea"
+                                                maxLength="250"
+                                                onChange={this.handle_change}
+                                                className="col s12 tooltipped" 
+                                                data-position="bottom" 
+                                                data-tooltip="Please Don't forget to add the date and time! of your event!z"
+                                                style={styles.textArea}
+                                                placeholder=""
+                                                
+                                            />
+                                            {/* <label placeholder="PLEASE ADD THE TIME & DATE OF YOUR TOURNAMENT:D" htmlFor="textarea"></label> */}
+                                            <label htmlFor="textarea"><h5>{this.state.descriptError}</h5></label>
+                                        </div>
+                                        {/* </div> */}
+                                    </Container>
+                                    <div className="row">
                                         <button
                                             style={styles.createbtn}
-                                            className="btn left light-blue col s12"
+                                            className="btn left light-blue waves-effect hoverable col s12"
                                             type="submit"
-                                        > Create Tournament!
+                                    > <h6>Create Tournament!</h6>
                                     </button>
                                     </div>
                                 </form>
