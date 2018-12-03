@@ -14,7 +14,7 @@ const styles = {
         borderRadius: "2px",
         border: 0,
         height: "25px",
-        padding: "8px 3px 8px 10px",
+        padding: "0px 0px 20px 0px",
         // width: "200px",
         background: "#f7f7f7",
         transition: "background 0.2s, width .2s",
@@ -29,26 +29,11 @@ const styles = {
     },
     searchIcon: {
         padding: "0.5rem",
-        marginTop: '5.9vh',
-        position: "fixed",
+   
+
         padding: "0px, 200px",
-        marginLeft: "22vw"
-    },
-    // searchBox: {
-    //     border: "0",
-    //     padding: "0.5rem 0.5rem 0.5rem 0",
-    //     flex: 1,
-    //     marginTop: "4.8vh",
-        
-    //     borderRadius: "2px",
-    //     border: 0,
-    //     height: "25px",
-    //     width: "500px",
-    //     padding: "8px 8px 8px 60px",
-    //     // width: "200px",
-    //     backgroundColor: "#f7f7f7",
-    //     transition: "background 0.2s, width .2s"
-    //   }
+
+    }
 
       
       

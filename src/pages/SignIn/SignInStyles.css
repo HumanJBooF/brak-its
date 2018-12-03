@@ -8,10 +8,20 @@
     background-color: #f7f7f7 !important;
     transition: background 0.2s, width .2s;
     margin-top: 30px;
-    font-size: 25px;
+    font-size: 20px;
 }
 
 #formStyles:focus {
     border: 2px solid rgb(106, 178, 250);
     border-radius: 25px;
+}
+
+.header{ 
+    font-family: 'Asap', sans-serif;
+    font-size: 40px;
+}
+.tags {
+    font-family: 'Anaheim', sans-serif !important;
+    font-size: 25px;
+    color: black;
 }

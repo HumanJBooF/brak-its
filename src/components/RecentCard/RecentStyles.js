@@ -1,6 +1,6 @@
 const styles = {
     card: {
-        backgroundColor: "#cdc9c9",
+        backgroundColor: "#DBE4EE",
         fontFamily: `'Libre Franklin', sans-serif`
     }
 }
