@@ -1,11 +1,10 @@
 import React from 'react';
+import styles from './SearchStyles';
 import { Link } from 'react-router-dom';
-
-
 
 const SearchCard = props => (
     <div className="row">
-        <div className="card large grey lighten-4">
+        <div className="card large" style={styles.card}>
             <div className="card-content">
                 <h3 className="col s12 center">
                     <strong> {props.title}</strong>
