@@ -28,7 +28,7 @@ const Navbar = props => (
                 : (
                     <ul className="right">
                         <li><Link to='#!' style={styles.userFont} username={props.username}>{props.username}</Link></li>
-                        <li><Link to='#!' style={styles.userLog} onClick={() => logout(props)}>Logout</Link></li>
+                        <li><Link to='/' style={styles.userLog} onClick={() => logout(props)}>Logout</Link></li>
                     </ul>
                 )}
         </div>
