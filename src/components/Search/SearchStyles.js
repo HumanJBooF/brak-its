@@ -5,7 +5,7 @@ const styles = {
         borderRadius: "2px",
         border: 0,
         height: "25px",
-        padding: "0px 0px 20px 0px",
+        padding: "8px 3px 8px 10px",
         background: "#f7f7f7",
         transition: "background 0.2s, width .2s",
     },
@@ -14,7 +14,7 @@ const styles = {
         position: "absolute",
         padding: "0px, 200px",
         marginLeft: "21.8vw"
-    },
+    }
 }
 
 export default styles;

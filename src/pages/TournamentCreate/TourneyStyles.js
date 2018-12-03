@@ -1,19 +1,17 @@
 const styles = {
-    
+
     posDrop: {
         margin: "10px 20px 15px 20px",
         width: "150px",
         backgroundColor: "#FF0000"
     },
-    
+
     createbtn: {
         padding: "8px 0px 10px 0px",
         height: "50px",
-  
         border: "2px solid black"
     },
-
-    inputs: { 
+    inputs: {
         color: "rgba(0, 0, 0, 0.54)",
         backgroundColor: "#000",
         borderRadius: "2px",
@@ -38,13 +36,12 @@ const styles = {
     },
     wrap: {
         marginTop: "3vh"
-    }, 
+    },
     cardArea: {
         marginTop: "5vh",
         backgroundColor: "#DCDCDC",
-        // paddingBottom: "0.1%"
     },
-    ptag:{ 
+    ptag: {
         fontFamily: `Asap', sans-serif`,
         fontSize: "25px"
     },
@@ -54,7 +51,7 @@ const styles = {
         paddingTop: '15px'
     },
 
-    labels:{
+    labels: {
         height: "40px"
     }
 }

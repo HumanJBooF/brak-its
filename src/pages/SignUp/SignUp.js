@@ -6,6 +6,7 @@ import Button from "../../components/Button"
 import API from '../../utils/API';
 import { Redirect } from 'react-router-dom';
 import swal from 'sweetalert2'
+import Footer from '../../components/Footer'
 import './SignUpStyles.css';
 
 
@@ -57,11 +58,11 @@ class SignUp extends React.Component {
                                 loggedIn: true,
                                 username: user.data.username
                             });
-                            
+
                             swal(`Welcome to [Brakits] \n ${this.state.username}`, "Game On!", "success")
-                            .then(( onClick =>{
-                               this.setState({ redirectTo: '/' });  
-                            }));
+                                .then((onClick => {
+                                    this.setState({ redirectTo: '/' });
+                                }));
                         }
                     })
 
@@ -73,7 +74,7 @@ class SignUp extends React.Component {
                 type: 'error',
                 title: 'Oops...Something went wrong!',
                 text: 'Double check the forms validation messages!',
-              });
+            });
 
         console.log(this.state.username)
     }
@@ -202,6 +203,7 @@ class SignUp extends React.Component {
                                 </form>
                             </div>
                         </Card>
+                        <Footer />
                     </Container>
                 </>
             )

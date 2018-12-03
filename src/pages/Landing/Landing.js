@@ -5,10 +5,7 @@ import Container from '../../components/Container';
 import Search from '../../components/Search';
 import API from './../../utils/API';
 import { Redirect } from 'react-router-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { createHistory } from 'history';
-// import { Link } from 'react-router-dom'
-// // import Footer from '../../components/Footer';
+import Footer from '../../components/Footer';
 import Create from '../../components/Create';
 
 class LandingPage extends React.Component {
@@ -78,29 +75,22 @@ class LandingPage extends React.Component {
                         loggedIn={this.props.loggedIn}
                         username={this.props.username}
                     />
-
                     <Container>
-                        <div className="row">
-                            {this.props.loggedIn
-                                ? <Create />
-                                : null}
-
-                            <Router>
-                                <Search
-                                    loggedIn={this.props.loggedIn}
-                                    on_change={event => { this.handle_change(event) }}
-                                    onClick={this.handle_click}
-                                />
-                            </Router>
-                            <h4 className="white-text center-align">Face your Challongers </h4>
-                        </div>
+                        {this.props.loggedIn
+                            ? <Create />
+                            : null}
+                        <Search
+                            loggedIn={this.props.loggedIn}
+                            on_change={event => { this.handle_change(event) }}
+                            onClick={this.handle_click}
+                        />
+                        {/* <h4 className="white-text center-align">Face your Challongers </h4> */}
                         <RecentCard
                             recentarr={this.state.recentArr}
                             title={this.state.title}
                         />
-
                     </Container>
-                    {/* <Footer /> */}
+                    <Footer />
                 </>
             )
         }

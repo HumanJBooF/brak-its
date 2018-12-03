@@ -1,10 +1,9 @@
 import React from 'react';
-import Button from '../../components/Button';
 import Container from '../../components/Container';
 import Navbar from '../../components/Navbar'
-import styles from './JoinStyles';
 import API from '../../utils/API';
 import { Redirect } from 'react-router-dom';
+import Footer from '../../components/Footer'
 import './JoinStyles.css';
 
 class TourneyJoin extends React.Component {
@@ -228,7 +227,7 @@ class TourneyJoin extends React.Component {
         });
     }
 
-    render() {
+    render () {
         if (this.state.redirectTo) {
             return <Redirect to={{ pathname: this.state.redirectTo }} />
         } else {
@@ -246,12 +245,14 @@ class TourneyJoin extends React.Component {
                                         <span className="card-title center-align truncate" id="header">Tournament Info</span>
                                         <div className="row">
                                             <div className="col s6">
-                                                <h4 className="cardbod">Name: {this.state.tournament.name}</h4>
-                                                <h4 className="descript">Description: {this.state.tournament.description} </h4>
+                                                <h4 className="cardbod">Name:{this.state.tournament.name}</h4>
                                             </div>
                                             {/* <h4>Date: {this.state.date} </h4> */}
                                             <div className="col s6">
                                                 <h4 className="cardbod">Type: {this.state.tournament.gameType} </h4>
+                                            </div>
+                                            <div className="col s12">
+                                                <h4 className="descript">Description: {this.state.tournament.description} </h4>
                                             </div>
                                         </div>
                                     </div>
@@ -278,7 +279,6 @@ class TourneyJoin extends React.Component {
                                 :
                                 <div className="col s12 truncate">
                                     <button
-                                        // style={styles.subBtn}
                                         onClick={this.handle_click}
                                         className="joinbtn col m9 btn btn-large light-blue"
                                     > {this.state.btn}</button>
@@ -289,12 +289,12 @@ class TourneyJoin extends React.Component {
                             <div className="row">
                                 <div className="col s12 offset-s3">
                                     <button
-                                        style={styles.subBtn}
                                         onClick={this.get_users}
                                         className="startBtn "
                                     > {this.state.tournament.sizeLimit === this.state.players.length ? this.state.full : this.state.early}</button>
                                 </div>
                             </div>}
+                        <Footer />
                     </Container>
                 </>
             )

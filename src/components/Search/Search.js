@@ -1,9 +1,7 @@
 import React from 'react';
-import Container from '../Container';
 import styles from './SearchStyles';
 
 const SearchBar = props => (
-    // <Container>
     <div className="row">
         <form className={props.loggedIn ? "col s4" : "col s4 center-align"}>
             <div className="">
@@ -23,7 +21,6 @@ const SearchBar = props => (
             </div>
         </form>
     </div>
-    // </Container>
 )
 
 export default SearchBar;
