@@ -1,7 +1,7 @@
 
 const styles = {
     nav: {
-        backgroundColor: "#040403", //"#70A0AF",
+        backgroundColor: "#2A2D34", //"#70A0AF",
         fontFamily: `monospace`,
         padding: "20px, 0px, 100px, 0px",
         height: "80px"
@@ -13,9 +13,22 @@ const styles = {
         paddingTop: "9px"
     },
     userFont: {
-        fontSize: "24px",
-        fontFamily: `monospace`,
+        fontSize: "32px",
+        fontFamily: `'Puritan', sans-serif`,
+        color: '#246EB9',
+        paddingTop: "5px"
+    },
+
+    userLog: {
+        fontSize: "20px",
+        fontFamily: `'Puritan', sans-serif`,
         paddingTop: "8px"
+    },
+
+    userSigns: {
+        fontSize: "24px",
+        fontFamily: `'Puritan', sans-serif`,
+        paddingTop: "10px"
     },
     wrap: {
         paddingBottom: "20px"

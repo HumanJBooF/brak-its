@@ -87,28 +87,30 @@ class SignIn extends React.Component {
                     <Container>
                         <Card>
                             <header className="center-align s12">
-                                <h4>Sign In!</h4>
+                                <h4 className="header">Sign In!</h4>
                             </header>
                             <div className="row">
                                 <form
                                     onSubmit={this.handle_submit}
                                     className="col s12"
-                                    // style={formStyle.form}
                                     noValidate>
                                     <div className="row">
                                         <div className="input field col s12 center-align username">
+                                            
                                             <input
-                                            // style={formStyle.inputfields}
                                                 id="formStyles"
                                                 type="text"
                                                 name="username"
                                                 className="validate"
                                                 onChange={this.handle_change}
                                             />
-                                            <h5 htmlFor="username">UserName</h5>
+                                            <label htmlFor="username" className="">
+                                                <p className="tags">Username</p>
+                                            </label>
                                         </div>
                                     </div>
-                                    <div className="row">
+                                    <div className="row"> 
+                                    
                                         <div className="center-align input field col s12">
                                             <input
                                                 name="password"
@@ -116,9 +118,10 @@ class SignIn extends React.Component {
                                                 type="password"
                                                 className="validate"
                                                 onChange={this.handle_change}
-                                                // style={formStyle.inputfields}
                                             />
-                                            <h5 htmlFor="password">Password</h5>
+                                           <label htmlFor="password" className="center-align">
+                                                <p className="tags">Password</p>
+                                            </label>
 
                                         </div>
                                     </div>

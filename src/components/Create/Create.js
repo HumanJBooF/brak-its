@@ -17,7 +17,7 @@ const CreateButton = () => (
             className=" right btn-large waves-effect light-blue white-text"
             style={styles.btn}
         >
-           <strong>Create Tournament</strong>
+         Create Tournament
         </button>
     </Link>
 
