@@ -32,7 +32,6 @@ class LandingPage extends React.Component {
     handle_click = (event, queryResults) => {
         event.preventDefault();
         const queryResult = this.state.queryResults
-        console.log(queryResult)
 
         this.setState({ redirectTo: `/search/${queryResult}` })
     }
@@ -56,7 +55,6 @@ class LandingPage extends React.Component {
                     }
                     getTourneys.push(tourneyObj);
 
-                    console.log('in loop', getTourneys);
                 });
                 this.setState({
                     recentArr: [...this.state.recentArr, ...getTourneys]
