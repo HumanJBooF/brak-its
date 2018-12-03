@@ -212,7 +212,7 @@ class TournCreate extends React.Component {
                                                 onChange={this.handle_change}
                                                 className="col s12 tooltipped" 
                                                 data-position="bottom" 
-                                                data-tooltip="Please Don't forget to add the date and time! of your event!z"
+                                                data-tooltip="Please Don't forget to add the date and time! of your event!"
                                                 style={styles.textArea}
                                                 placeholder=""
                                                 
