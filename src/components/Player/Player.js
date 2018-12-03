@@ -3,7 +3,7 @@ import './Player.css';
 
 const Player = props => (
     <>
-        {(props.admin && props.player.isActive)
+        {(props.admin && props.player.isActive && props.roundState)
             ? <button className="player playerButton" playerinfo={props.player} onClick={event => { props.handle_win(event) }}>{
                 props.player.player === null
                     ? ""
@@ -19,15 +19,5 @@ const Player = props => (
         }
     </>
 )
-
-// < div key = { i } className = "playerContainer" >
-//     <button className="player" onClick={props.handle_win}>{
-//         player.player === false
-//             ? ""
-//             : player.player === null
-//                 ? "BYE"
-//                 : player.player
-//     }</button>
-// </div >
 
 export default Player;
