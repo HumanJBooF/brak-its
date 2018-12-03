@@ -1,5 +1,5 @@
 const styles = {
-    
+
     posDrop: {
         margin: "10px 20px 15px 20px",
         width: "150px",
@@ -10,7 +10,7 @@ const styles = {
         backgroundColor: "black",
         marginBottom: "-50px"
     },
-    inputs: { 
+    inputs: {
         color: "rgba(0, 0, 0, 0.54)",
         borderRadius: "2px",
         border: 0,
@@ -36,7 +36,7 @@ const styles = {
     },
     wrap: {
         marginTop: "15vh"
-    }, 
+    },
     cardArea: {
         marginTop: "5vh"
     }

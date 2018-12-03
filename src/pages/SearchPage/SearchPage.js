@@ -3,6 +3,7 @@ import Navbar from '../../components/Navbar';
 import SearchCard from '../../components/SearchCard';
 import API from '../../utils/API';
 import Container from '../../components/Container';
+import Footer from '../../components/Footer'
 
 class SearchResults extends React.Component {
     state = {
@@ -55,6 +56,7 @@ class SearchResults extends React.Component {
                         title={this.state.title + this.props.match.params.search}
                     />
                 </Container>
+                <Footer />
             </>
         )
     }

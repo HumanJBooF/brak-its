@@ -1,13 +1,12 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-
 import Navbar from '../../components/Navbar';
 import Container from '../../components/Container';
 import Card from '../../components/Card';
 import Button from '../../components/Button';
-import formStyle from './SignInStyle.js';
 import API from '../../utils/API';
 import swal from 'sweetalert2'
+import Footer from '../../components/Footer';
 import './SignInStyles.css';
 
 class SignIn extends React.Component {
@@ -59,7 +58,7 @@ class SignIn extends React.Component {
                         position: 'top-end',
                         showConfirmButton: false,
                         timer: 3000,
-                      });
+                    });
                     toast({
                         type: 'success',
                         title: 'Signed in successfully'
@@ -71,7 +70,7 @@ class SignIn extends React.Component {
                 type: 'error',
                 title: 'Oh No!',
                 text: 'It seems we can\'t find matching login credentials try again!',
-              });
+            });
 
 
 
@@ -98,7 +97,7 @@ class SignIn extends React.Component {
                                     <div className="row">
                                         <div className="input field col s12 center-align username">
                                             <input
-                                            // style={formStyle.inputfields}
+                                                // style={formStyle.inputfields}
                                                 id="formStyles"
                                                 type="text"
                                                 name="username"
@@ -116,7 +115,7 @@ class SignIn extends React.Component {
                                                 type="password"
                                                 className="validate"
                                                 onChange={this.handle_change}
-                                                // style={formStyle.inputfields}
+                                            // style={formStyle.inputfields}
                                             />
                                             <h5 htmlFor="password">Password</h5>
 
@@ -131,6 +130,7 @@ class SignIn extends React.Component {
                             </div>
                         </Card>
                     </Container >
+                    <Footer />
                 </>
             )
         }

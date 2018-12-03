@@ -3,14 +3,12 @@ import { Redirect } from 'react-router-dom';
 import 'materialize-css/dist/css/materialize.min.css';
 import Navbar from '../../components/Navbar';
 import Container from '../../components/Container';
-import Card from '../../components/Card';
 import styles from './TourneyStyles';
 import API from '../../utils/API';
-
+import Footer from '../../components/Footer';
 import "react-datepicker/dist/react-datepicker.css";
 import M from 'materialize-css/dist/js/materialize.min.js';
-// import Flatpickr from "react-flatpickr";
-// import 'flatpickr/dist/themes/dark.css'
+
 class TournCreate extends React.Component {
     state = {
         tourneyName: '',
@@ -27,7 +25,7 @@ class TournCreate extends React.Component {
         redirectTo: null
     }
 
-    componentDidMount() {
+    componentDidMount () {
         M.AutoInit()
     }
 
@@ -106,19 +104,16 @@ class TournCreate extends React.Component {
                     : this.setState({ descriptError: "Brevity is a virtue!" })
                 break;
             default:
-                //append something below the "form" to say invalid form"
+
                 console.log('invalid form');
                 break;
         }
     }
-
     //I bless the rains down in africa 
-
-    render() {
+    render () {
         if (this.state.redirectTo) {
             return <Redirect to={{ pathname: this.state.redirectTo }} />
         } else {
-            const { startDate } = this.state;
             return (
                 <>
                     <Navbar
@@ -228,6 +223,7 @@ class TournCreate extends React.Component {
                             </div>
                         </div>
                     </Container>
+                    <Footer />
                 </>
             )
         }

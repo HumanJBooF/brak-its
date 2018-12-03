@@ -6,6 +6,7 @@ import Button from "../../components/Button"
 import API from '../../utils/API';
 import { Redirect } from 'react-router-dom';
 import swal from 'sweetalert2'
+import Footer from '../../components/Footer'
 import './SignUpStyles.css';
 
 
@@ -57,11 +58,11 @@ class SignUp extends React.Component {
                                 loggedIn: true,
                                 username: user.data.username
                             });
-                            
+
                             swal(`Welcome to [Brakits] \n ${this.state.username}`, "Game On!", "success")
-                            .then(( onClick =>{
-                               this.setState({ redirectTo: '/' });  
-                            }));
+                                .then((onClick => {
+                                    this.setState({ redirectTo: '/' });
+                                }));
                         }
                     })
 
@@ -73,7 +74,7 @@ class SignUp extends React.Component {
                 type: 'error',
                 title: 'Oops...Something went wrong!',
                 text: 'Double check the forms validation messages!',
-              });
+            });
 
         console.log(this.state.username)
     }
@@ -129,7 +130,9 @@ class SignUp extends React.Component {
                     <Navbar />
                     <Container>
                         <Card>
-                            <header className="center-align s12 hide-on-med-and-down"><h4>Enter your Credentials</h4></header>
+                            <header className="center-align s12 hide-on-med-and-down">
+                                <h4 className="header">Enter your Credentials</h4>
+                            </header>
                             <div className="row">
                                 <form onSubmit={this.handle_submit} className="col s12" noValidate>
                                     <div className="row">
@@ -142,7 +145,9 @@ class SignUp extends React.Component {
                                                     className="validate"
                                                     onChange={this.handle_change}
                                                 />
-                                                <h6 htmlFor="userName">{this.state.usernameDescription}</h6>
+                                                <label htmlFor="userName">\
+                                                    <p className="tags">{this.state.usernameDescription}</p>
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
@@ -155,7 +160,9 @@ class SignUp extends React.Component {
                                                 className="validate"
                                                 onChange={this.handle_change}
                                             />
-                                            <h6 htmlFor="Email">{this.state.emailDescription}</h6>
+                                            <label htmlFor="Email">
+                                                <p className="tags">{this.state.emailDescription}</p>
+                                            </label>
                                         </div>
 
                                     </div>
@@ -168,7 +175,9 @@ class SignUp extends React.Component {
                                                 noValidate
                                                 onChange={this.handle_change}
                                             />
-                                            <h6 htmlFor="passWord">{this.state.passwordDescription}</h6>
+                                            <label htmlFor="passWord">
+                                                <p className="tags">{this.state.passwordDescription}</p>
+                                            </label>
 
                                         </div>
                                     </div>
@@ -181,8 +190,9 @@ class SignUp extends React.Component {
                                                 noValidate
                                                 onChange={this.handle_change}
                                             />
-                                            <h6 htmlFor="passWord">{this.state.passwordConfirm}</h6>
-
+                                            <label htmlFor="password">
+                                                <p className="tags">{this.state.passwordConfirm}</p>
+                                            </label>
                                         </div>
                                     </div>
                                     <div className="row">
@@ -193,6 +203,7 @@ class SignUp extends React.Component {
                                 </form>
                             </div>
                         </Card>
+                        <Footer />
                     </Container>
                 </>
             )

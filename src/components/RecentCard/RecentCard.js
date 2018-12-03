@@ -1,10 +1,10 @@
 import React from 'react';
-import styles from './RecentStyles';
+import './RecentCard.css'
 import { Link } from 'react-router-dom';
 
 const RecentCard = props => (
     <div className="row">
-        <div className="card large" style={styles.card}>
+        <div className="card large" id="scroll">
             <div className="card-content">
                 <h1 className="col s12 center">
                     <strong>{props.title}</strong>
@@ -18,7 +18,6 @@ const RecentCard = props => (
                                 <th className="hide-on-med-and-down">Organizer</th>
                                 <th>Size</th>
                                 <th className="hide-on-med-and-down">Format</th>
-                                <th>Date</th>
                                 <th className="hide-on-med-and-down">Active</th>
                             </tr>
                         </thead>
@@ -35,7 +34,6 @@ const RecentCard = props => (
                                     <td className="hide-on-med-and-down"><h6>{name.owner}</h6></td>
                                     <td><h6>{name.actualSize}/{name.sizeLimit}</h6></td>
                                     <td className="hide-on-med-and-down"><h6>{name.format}</h6></td>
-                                    <td><h6>{name.date}</h6></td>
                                     <td className="hide-on-med-and-down" ><h6>
                                         {`${name.isActive.toString().charAt(0).toUpperCase()}${name.isActive.toString().slice(1)}`}
                                     </h6></td>

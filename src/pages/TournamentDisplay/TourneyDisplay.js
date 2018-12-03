@@ -2,7 +2,9 @@ import React from 'react';
 import Container from '../../components/Container';
 import Tournament from '../../components/Tournament';
 import Navbar from '../../components/Navbar'
+import Footer from '../../components/Footer'
 import API from '../../utils/API';
+import swal from 'sweetalert2';
 
 class TourneyDisplay extends React.Component {
     state = {
@@ -19,6 +21,8 @@ class TourneyDisplay extends React.Component {
         this.get_users();
     }
 
+
+
     check_permission = () => {
         if (this.props.loggedIn) {
             if (this.state.tourneyInfo.owner === this.props.username) {
@@ -29,7 +33,6 @@ class TourneyDisplay extends React.Component {
 
     get_users = () => {
         const { match: { params: { name, owner, id } } } = this.props;
-
         API.get_users_for_matches(id).then(results => {
             const { matches, users } = results.data;
 
@@ -271,79 +274,107 @@ class TourneyDisplay extends React.Component {
 
     }
 
-    handle_win = event => {
-        event.preventDefault()
-        const playerInfo = { ...event._targetInst.memoizedProps.playerinfo };
-        console.log(playerInfo, 'PLAYERINFO')
-        const playerNum = playerInfo.matchNum % 2 ? 'player1Id' : 'player2Id'
-
-        // Ask if manager wants to make player win, sweetmodal if true continue, if not boot
-
-        // update current to reflect scores/win
-
-        if (this.state.matchesUsed.includes(playerInfo.nextMatch)) {
-            console.log('should be update')
-            // Should only need the opposite player name, everything else is the same as create
-
-            const player = {};
-            player[playerNum] = playerInfo.playerId;
-
-            const info = {
-                next: {
-                    player: player,
-                    matchNum: playerInfo.nextMatch,
-                    tourneyUuid: this.state.tourneyInfo.id
-                },
-                winner: {
-                    winner: playerInfo.playerId,
-                    matchNum: playerInfo.matchNum,
-                    nextMatch: playerInfo.nextMatch,
-                }
-            }
-            console.log(info, 'NEXT')
-
-            API.update_match({ info }).then(result => {
-                const { match, winner } = result.data;
-                console.log(match, winner)
-                this.get_users();
+    check_winner = player => {
+        if (!player.nextMatch) {
+            swal({
+                title: `${player.player} is the winner!`,
+                text: `Go take a vacation, you have earned it!`,
+                width: 600,
+                padding: '3em',
+                background: '#fff',
+                backdrop: `rgba(0,0,123,0.4)
+                url("/assets/img/water.gif")
+                center
+                no-repeat`
             })
         } else {
-            let currentMatchIndex;
-            const playerNum = playerInfo.matchNum % 2 ? 'player1Id' : 'player2Id';
-            const createInfo = { tourneyUuid: this.state.tourneyInfo.id };
-            this.state.matchNumbersInfo.map((round, i) => {
-                if (round.includes(playerInfo.matchNum)) {
-                        currentMatchIndex = this.state.matchNumbersInfo[i].indexOf(playerInfo.matchNum);
-                        if(this.state.matchNumbersInfo[i + 1]) {
-                            createInfo['matchNum'] = this.state.matchNumbersInfo[i + 1][Math.floor(currentMatchIndex / 2)];
-                            if (this.state.matchNumbersInfo[i + 2]) {
-                                createInfo['nextMatch'] = this.state.matchNumbersInfo[i + 2][Math.floor(currentMatchIndex / 4)];
-                                console.log(this.state.matchNumbersInfo, 'STATE MATCH NUMBERS')
-                                console.log(currentMatchIndex, i, 'CURRENT <MATCH INDEX ')
-                            } else {
-                                createInfo.nextMatch = null;
-                            }
-                    }
-                }
-            })
-            const updateWinner = {
-                winner: playerInfo.playerId,
-                matchNum: playerInfo.matchNum,
-                nextMatch: playerInfo.nextMatch,
-                tourneyUuid: this.state.tourneyInfo.id
-            }
-            console.log(createInfo, 'CREATE INFO')
-            // console.log(updateWinner, 'UPDATE WINNER')
-
-            createInfo[playerNum] = playerInfo.playerId;
-
-            API.create_next_match({ match: createInfo, winner: updateWinner }).then(result => {
-                const { match, winner } = result.data;
-                console.log(match, winner)
-                this.get_users();
-            });
+            console.log('NOPE');
         }
+    }
 
+    handle_win = event => {
+        event.preventDefault()
+
+        const playerInfo = { ...event._targetInst.memoizedProps.playerinfo };
+
+        const playerNum = playerInfo.matchNum % 2 ? 'player1Id' : 'player2Id'
+
+        swal({
+            title: `${playerInfo.player}`,
+            text: "Would you like to send this player to the next round?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, send them!',
+            background: '#232C33'
+        }).then((result) => {
+            if (result.value) {
+
+                swal(`${playerInfo.player}`,
+                    'Has been sent to the next round',
+                    'success')
+
+                if (this.state.matchesUsed.includes(playerInfo.nextMatch)) {
+                    console.log('should be update')
+
+                    const player = {};
+                    player[playerNum] = playerInfo.playerId;
+
+                    const info = {
+                        next: {
+                            player: player,
+                            matchNum: playerInfo.nextMatch,
+                            tourneyUuid: this.state.tourneyInfo.id
+                        },
+                        winner: {
+                            winner: playerInfo.playerId,
+                            matchNum: playerInfo.matchNum,
+                            nextMatch: playerInfo.nextMatch,
+                        }
+                    }
+
+                    this.check_winner(playerInfo);
+                    API.update_match({ info }).then(() => {
+                        this.get_users();
+                    })
+                } else {
+                    let currentMatchIndex;
+                    const playerNum = playerInfo.matchNum % 2 ? 'player1Id' : 'player2Id';
+                    const createInfo = { tourneyUuid: this.state.tourneyInfo.id };
+                    this.state.matchNumbersInfo.map((round, i) => {
+                        if (round.includes(playerInfo.matchNum)) {
+                            currentMatchIndex = this.state.matchNumbersInfo[i].indexOf(playerInfo.matchNum);
+                            if (this.state.matchNumbersInfo[i + 1]) {
+                                createInfo['matchNum'] = this.state.matchNumbersInfo[i + 1][Math.floor(currentMatchIndex / 2)];
+                                if (this.state.matchNumbersInfo[i + 2]) {
+                                    createInfo['nextMatch'] = this.state.matchNumbersInfo[i + 2][Math.floor(currentMatchIndex / 4)];
+                                    console.log(this.state.matchNumbersInfo, 'STATE MATCH NUMBERS')
+                                    console.log(currentMatchIndex, i, 'CURRENT <MATCH INDEX ')
+                                } else {
+                                    createInfo.nextMatch = null;
+                                }
+                            }
+                        }
+                    })
+                    const updateWinner = {
+                        winner: playerInfo.playerId,
+                        matchNum: playerInfo.matchNum,
+                        nextMatch: playerInfo.nextMatch,
+                        tourneyUuid: this.state.tourneyInfo.id
+                    }
+                    console.log(createInfo, 'CREATE INFO')
+                    console.log(updateWinner, 'UPDATE WINNER')
+
+                    createInfo[playerNum] = playerInfo.playerId;
+
+                    this.check_winner(playerInfo);
+                    API.create_next_match({ match: createInfo, winner: updateWinner }).then(() => {
+                        this.get_users();
+                    });
+                }
+            }
+        })
     }
 
     render () {
@@ -356,12 +387,16 @@ class TourneyDisplay extends React.Component {
                     username={this.props.username}
                 />
                 <Container fluid>
+                    <div className="row">
+                        <div className="col s12">
 
+                        </div>
+                    </div>
                     <Tournament
                         allMatches={this.state.allMatches}
                         admin={this.state.admin}
                         handle_win={event => this.handle_win(event)} />
-
+                    <Footer />
                 </Container>
             </>
         )
