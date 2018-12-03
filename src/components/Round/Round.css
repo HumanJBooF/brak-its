@@ -12,20 +12,22 @@
     content: "";
     display: block;
     height: 30px;
-    border-left: 2px solid lightgreen;
+    border-left: 3px solid #111111;
+    border-radius: 0px 3px 3px 0px;
     position: absolute;
     left: -10px;
     top: 50%;
     margin-top: -15px;
-    margin-left: -2px;
+    margin-left: -3px;
 }
 
 .playerContainer:nth-child(odd)::after {
     content: "";
     display: block;
-    border: 2px solid transparent;
-    border-top-color: turquoise;
-    border-right-color: turquoise;
+    border: 3px solid transparent;
+    border-radius: 3px;
+    border-top-color: #111111;
+    border-right-color: #111111;
     height: 50%;
     position: absolute;
     right: -10px;
@@ -36,9 +38,10 @@
 .playerContainer:nth-child(even)::after {
     content: "";
     display: block;
-    border: 2px solid transparent;
-    border-bottom-color: yellow;
-    border-right-color: yellow;
+    border: 3px solid transparent;
+    border-radius: 3px;
+    border-bottom-color: #111111;
+    border-right-color: #111111;
     height: 50%;
     position: absolute;
     right: -10px;

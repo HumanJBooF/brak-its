@@ -9,10 +9,12 @@ const apiController = {
     show_recent: () => { return axios.get('/api/tournament/recent'); },
     show_one: (owner, id) => { return axios.post(`/api/tournament/join/${owner}/${id}`) },
     join_tournament: userTourney => { return axios.post('/api/tournament/join_tournament', userTourney) },
-    find_search: (search) => { return axios.post(`/api/tournament/search/${search}`); },
+    find_search: search => { return axios.post(`/api/tournament/search/${search}`); },
     get_users_tournament: id => { return axios.post('/api/tournament/getusers', id) },
     send_users_to_matches: userArr => { return axios.post('/api/tournament/setmatches', userArr) },
-    get_users_for_matches: id => { return axios.post(`/api/tournament/matches/${id}`) }
+    get_users_for_matches: id => { return axios.post(`/api/tournament/matches/${id}`) },
+    create_next_match: (match, winner) => { return axios.post(`/api/tournament/nextmatch`, match, winner) },
+    update_match: match => { return axios.post(`/api/tournament/update_match`, match) }
 };
 
 export default apiController;

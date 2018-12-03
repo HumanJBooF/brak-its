@@ -9,7 +9,7 @@ class SearchResults extends React.Component {
         queryResults: [],
         title: 'Results for: '
     }
-    componentDidMount() {
+    componentDidMount () {
         console.log(this.props.match.params.search)
         this.get_query_results();
     }
@@ -27,6 +27,7 @@ class SearchResults extends React.Component {
                         name: allTourneys.tourneyName,
                         id: allTourneys.uuid,
                         description: allTourneys.description,
+                        actualSize: allTourneys.actualSize,
                         sizeLimit: allTourneys.sizeLimit,
                         date: allTourneys.date,
                         format: allTourneys.format,
@@ -44,7 +45,7 @@ class SearchResults extends React.Component {
             })
     }
 
-    render() {
+    render () {
         return (
             <>
                 <Navbar />

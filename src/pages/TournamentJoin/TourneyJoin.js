@@ -87,13 +87,14 @@ class TourneyJoin extends React.Component {
                     id: user.uuid
                 }
                 userArr.push(userObj);
-            })
+            });
+
             this.setState({
                 tournament: tourney,
                 players: [...this.state.players, ...userArr],
-                // date: tournament.date.slice(0, tournament.date.indexOf("T"))
             })
         })
+
     }
 
     sort_players = players => {
@@ -198,28 +199,21 @@ class TourneyJoin extends React.Component {
             players = Math.pow(2, Math.ceil(Math.log2(tourneyplayers)))
         }
 
-        // The rounds to run is how many times the incrementer for the seed index is incremented
         const roundsToRun = Math.log2(players);
         const seedOrder = [];
 
-        // Starts with a 0 in the first position (sorta hacky) that way its not adding half the players + undefined in the first iteration
         let playerIndexOrder = [0];
 
-        // Starts at 1 because math numbers !== loop numbers, to visualize what this is doing check the large commented section at the bottom of this func
         for (let round = 1; round < roundsToRun + 1; round++) {
             const tempArr = [];
-            // Base is half of the players first time, then half of the previous the next, half again, etc.
             let base = players / Math.pow(2, round);
 
-            // pushes the index into the array
             for (let playerIndex = 0; playerIndex < Math.pow(2, round - 1); playerIndex++) {
-                // Uses unshift to preserve order
                 tempArr.unshift(base + playerIndexOrder[playerIndex]);
             }
             playerIndexOrder = playerIndexOrder.concat(tempArr);
         }
 
-        // Puts the player in the right place
         for (let player = 0; player < playerIndexOrder.length; player++) {
             seedOrder[playerIndexOrder[player]] = player + 1;
         }
@@ -261,7 +255,6 @@ class TourneyJoin extends React.Component {
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                             <div className="col s12 m3" >

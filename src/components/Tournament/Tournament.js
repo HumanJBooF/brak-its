@@ -7,8 +7,8 @@ const Tournament = props => (
         <div className="row">
             <div className="col s12 tournamentViewport">
                 <div className="tournamentDisplay">
-                    {props.allMatches.map(round => (
-                        <Round key={`roundSize${round.length}`} roundInfo={round} admin={props.admin} handle_win={event => { props.handle_win(event) }} />
+                    {props.allMatches.map((round, i) => (
+                        <Round key={`roundSize${round.length}`} roundInfo={round} roundState={props.activeRounds[i]} admin={props.admin} handle_win={event => { props.handle_win(event) }} />
                     ))}
                 </div>
             </div>
