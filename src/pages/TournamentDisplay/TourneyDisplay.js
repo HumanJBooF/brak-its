@@ -6,6 +6,12 @@ import Footer from '../../components/Footer'
 import API from '../../utils/API';
 import swal from 'sweetalert2';
 
+const styles = {
+    span: {
+        borderBottom: '2pt solid white'
+    }
+}
+
 class TourneyDisplay extends React.Component {
     state = {
         tourneyInfo: {},
@@ -413,8 +419,8 @@ class TourneyDisplay extends React.Component {
                 />
                 <Container fluid>
                     <div className="row">
-                        <div className="col s12">
-
+                        <div className="col s12 center white-text">
+                            <h2><span style={styles.span}>{this.state.tourneyInfo.name}</span></h2>
                         </div>
                     </div>
                     <Tournament
@@ -422,6 +428,13 @@ class TourneyDisplay extends React.Component {
                         admin={this.state.admin}
                         activeRounds={this.state.activeRounds}
                         handle_win={event => this.handle_win(event)} />
+                    <div className="row">
+                        <div className="col s12 center">
+                            {this.state.tourneyInfo.owner === this.props.username &&
+                                <h5 className="white-text"> Click the winning player to send them to the next round</h5>
+                            }
+                        </div>
+                    </div>
                     <Footer />
                 </Container>
             </>

@@ -48,16 +48,16 @@ class TournCreate extends React.Component {
                 & tourneyInfo.description.length > 0) ? true : false;
     }
 
-    handle_date = date => {
-        this.setState({ startDate: date }, () => {
-            console.log(this.state.date);
-        })
-    }
+    // handle_date = date => {
+    //     this.setState({ startDate: date }, () => {
+    //         console.log(this.state.date);
+    //     })
+    // }
 
     handle_submit = (event) => {
         event.preventDefault();
 
-        console.log(this.state.startDate)
+        // console.log(this.state.startDate)
 
 
         this.handle_validity({
@@ -72,7 +72,6 @@ class TournCreate extends React.Component {
                 sizeLimit: this.state.sizeLimit,
                 owner: this.state.username
             }).then(newTourny => {
-                console.log('added yo')
                 this.setState({
                     redirectTo: `/join/${newTourny.data.tournament.owner}/${newTourny.data.tournament.uuid}`
                 })
@@ -140,9 +139,9 @@ class TournCreate extends React.Component {
                                             />
                                             <label style={styles.labels} htmlFor="tName">{this.state.nameError}</label>
 
-                                              <a 
-                                                className='dropdown-trigger btn-large left  col s5 right z-depth-3' 
-                                                data-target='dropdown1' 
+                                            <a
+                                                className='dropdown-trigger btn-large left  col s5 right z-depth-3'
+                                                data-target='dropdown1'
                                                 style={styles.posDrop}>{this.state.showSize}
                                             </a>
                                             <ul id='dropdown1' className='dropdown-content'>
@@ -167,13 +166,13 @@ class TournCreate extends React.Component {
                                                         data-id="16"> 16
                                                 </h4>
                                                 </li>
-                                                {/* <li>
+                                                <li>
                                                     <h4 className="center-align"
                                                         onClick={this.handle_click.bind(this)}
                                                         data-id="32"> 32
                                                  </h4>
                                                 </li>
-                                                <li>
+                                                {/* <li>
                                                     <h4 className="center-align"
                                                         onClick={this.handle_click.bind(this)}
                                                         data-id="64"> 64
@@ -184,10 +183,10 @@ class TournCreate extends React.Component {
                                                         onClick={this.handle_click.bind(this)}
                                                         data-id="128"> 128
                                                  </h4>
-                                                </li> */}
+                                                </li>  */}
                                             </ul>
                                         </div>
-                                        <div className="row"> 
+                                        <div className="row">
                                             <i className="fas fa-gamepad fa-9x right"></i>
                                             <p style={styles.ptag}>Enter the game type</p>
                                             <input
@@ -199,7 +198,7 @@ class TournCreate extends React.Component {
                                                 className="col s6"
                                                 style={styles.inputs}
                                             />
-                                           
+
                                             <label htmlFor="tType"><h5>{this.state.typeError}</h5></label>
                                         </div>
                                         <div className="row">
@@ -210,12 +209,12 @@ class TournCreate extends React.Component {
                                                 id="textarea"
                                                 maxLength="250"
                                                 onChange={this.handle_change}
-                                                className="col s12 tooltipped" 
-                                                data-position="bottom" 
+                                                className="col s12 tooltipped"
+                                                data-position="bottom"
                                                 data-tooltip="Please Don't forget to add the date and time! of your event!"
                                                 style={styles.textArea}
                                                 placeholder=""
-                                                
+
                                             />
                                             {/* <label placeholder="PLEASE ADD THE TIME & DATE OF YOUR TOURNAMENT:D" htmlFor="textarea"></label> */}
                                             <label htmlFor="textarea"><h5>{this.state.descriptError}</h5></label>
@@ -227,8 +226,8 @@ class TournCreate extends React.Component {
                                             style={styles.createbtn}
                                             className="btn left light-blue waves-effect hoverable col s12"
                                             type="submit"
-                                    > <h6>Create Tournament!</h6>
-                                    </button>
+                                        > <h6>Create Tournament!</h6>
+                                        </button>
                                     </div>
                                 </form>
                             </div>
