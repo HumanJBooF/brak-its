@@ -1,25 +1,26 @@
 import React from 'react';
-import styles from './SearchStyles';
+import './searchStyles.css';
 
 const SearchBar = props => (
-    <div className="row">
-        <form className={props.loggedIn ? "col s4" : "col s4 center-align"}>
-            <div className="">
-                <button onClick={props.onClick} className="btn light-blue hide-on-med-and-down" style={styles.searchIcon}>
-                    <i
-                        className="material-icons"
-                    >search
+    <div className="col s4 offset-s1">
+        <div className="card horizontal z-depth-5" id="box">
+            <div className="card-content col s12">
+                <form className="col s12 center-align">
+                    <input
+                        id="search" type="search"
+                        placeholder="Search for tournaments!"
+                        onChange={event => props.on_change(event)}
+                        className="autocomplete-input"
+                    />
+                    <button onClick={props.onClick} className="col s12 btn light-blue hide-on-med-and-down">
+                        <i
+                            className="material-icons"
+                        >search
                         </i>
-                </button>
-                <input
-                    id="search" type="search"
-                    placeholder="Search for tournaments!"
-                    style={styles.searchBar}
-                    onChange={event => props.on_change(event)}
-                    className="autocomplete-input offset-s6"
-                />
+                    </button>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 )
 

@@ -74,14 +74,16 @@ class LandingPage extends React.Component {
                         username={this.props.username}
                     />
                     <Container>
-                        {this.props.loggedIn
-                            ? <Create />
-                            : null}
-                        <Search
-                            loggedIn={this.props.loggedIn}
-                            on_change={event => { this.handle_change(event) }}
-                            onClick={this.handle_click}
-                        />
+                        <div className="row">
+                            <Search
+                                loggedIn={this.props.loggedIn}
+                                on_change={event => { this.handle_change(event) }}
+                                onClick={this.handle_click}
+                            />
+                            {this.props.loggedIn
+                                ? <Create />
+                                : null}
+                        </div>
                         {/* <h4 className="white-text center-align">Face your Challongers </h4> */}
                         <RecentCard
                             recentarr={this.state.recentArr}

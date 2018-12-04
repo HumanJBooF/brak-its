@@ -51,8 +51,6 @@ class SignIn extends React.Component {
                         username: user.data.username
                     })
                     this.setState({ redirectTo: '/' });
-
-                    //custom swal
                     const toast = swal.mixin({
                         toast: true,
                         position: 'top-end',
@@ -64,8 +62,15 @@ class SignIn extends React.Component {
                         title: 'Signed in successfully'
                     })
                 }
-            }).catch(error => console.log(error))
-            // todo add a couldn't send
+            }).catch(error => {
+                if (error) {
+                    swal({
+                        type: 'error',
+                        title: 'Oh No!',
+                        text: 'It seems we can\'t find matching login credentials try again!',
+                    });
+                }
+            })
             : swal({
                 type: 'error',
                 title: 'Oh No!',

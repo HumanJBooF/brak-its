@@ -1,0 +1,9 @@
+#box {
+    border: 1pt solid black;
+    background: #cdc9c9;
+}
+
+::placeholder {
+    color: black;
+    font-weight: bold;
+}
