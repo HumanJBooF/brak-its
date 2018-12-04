@@ -17,7 +17,7 @@ const logout = props => {
 const Navbar = props => (
     <nav className="" style={styles.nav}>
         <div className="nav-wrapper" style={styles.wrap}>
-            <div className="brand-logo fixed" style={styles.logoFont}><Link to="/">[ Brakits ]</Link></div>
+            <div className="brand-logo fixed" style={styles.logoFont}><Link to="/">[ Brak-its ]</Link></div>
             {!props.loggedIn
                 ? (
                     <ul className="right" >

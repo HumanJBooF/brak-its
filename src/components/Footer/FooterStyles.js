@@ -6,7 +6,7 @@ const style = {
         width: '100%',
         backgroundColor: "#2A2D34",
         height: '60px',
-        fontFamily: `'Puritan', 'sans-serif'`
+        fontFamily: `'Puritan', 'sans-serif'`,
     }
 }
 
