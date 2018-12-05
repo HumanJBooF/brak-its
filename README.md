@@ -1,5 +1,9 @@
 # brak-its
 
+#READ ME IS COMING 12/5/2018
+
+
+
 ## Quick Reference
 * React Dev Server (frontend)
   * http://192.168.90.20:3000*
