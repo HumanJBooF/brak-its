@@ -1,6 +1,28 @@
-# brak-its
+# [Brak-its](https://brak-its.herokuapp.com)
 
-# READ ME IS COMING 12/5/2018
+### Current Features 
+
+- User created tournaments
+- Users are seeded based on join order of the tournament
+- Users who create tournaments have full control over when they start, and picking a winner for each match.
+
+
+### Features coming soon
+
+- Owner page for creators of tournaments where you can edit/delete/view all your tournaments.
+- User profile page (Bio, tournament history)
+- Results page for each tournament
+- Round robin, double elimination, ladders/leagues, team play
+- Chat features
+- Add other users
+- View other users tournaments and history
+- More in-depth readme
+
+
+
+
+
+
 
 
 
@@ -23,7 +45,7 @@ This is not an exhaustive list, just some worth noting
 
 ```
 +-- /api                          : Express Server
-|   +-- /.env.sample              : Sample .env
+|   +-- /.env.sample              : Sample .en
 |   +-- /package.json             : Express dependencies
 +-- /Public                       : React Public assets
 +-- /src                          : React App Source
