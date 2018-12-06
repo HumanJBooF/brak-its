@@ -1,3 +1,9 @@
+[![HitCount](http://hits.dwyl.io/humanjboof/https://github.com/HumanJBooF/brak-its.svg)](http://hits.dwyl.io/humanjboof/https://github.com/HumanJBooF/brak-its) [![GitHub issues](https://img.shields.io/github/issues/HumanJBooF/brak-its.svg?style=popout)](https://github.com/HumanJBooF/brak-its/issues)
+
+
+
+
+
 # [Brak-its](https://brak-its.herokuapp.com)
 
 ### Current Features 
