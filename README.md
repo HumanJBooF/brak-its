@@ -1,38 +1,78 @@
 [![HitCount](http://hits.dwyl.io/humanjboof/https://github.com/HumanJBooF/brak-its.svg)](http://hits.dwyl.io/humanjboof/https://github.com/HumanJBooF/brak-its) [![GitHub issues](https://img.shields.io/github/issues/HumanJBooF/brak-its.svg?style=popout)](https://github.com/HumanJBooF/brak-its/issues)
+[![GitHub last commit](https://img.shields.io/github/last-commit/google/skia.svg)](https://github.com/HumanJBooF/brak-its)
+
+[![Brak-its](./public/assets/img/logo.PNG)](https://brak-its.herokuapp.com)     
+
+#### Welcome to [ Brak-its ] an app that allows users to create a tournament and play with friends all over the world.
+![end](./public/assets/img/end.PNG)
+
+
+### Contents 
+- [Current Features](#current-features)
+    - [Coming Soon](#features-coming-soon)
+- [Tech used](#technologies-used)
+- [Authors](#authors)
+- [Local](#quick-reference-for-local-set-up)
 
 
 
-
-
-# [Brak-its](https://brak-its.herokuapp.com)
 
 ### Current Features 
 
+- Create a username and safely sign up/in 
 - User created tournaments
-- Users are seeded based on join order of the tournament
+    - Users are seeded based on join order of the tournament
+![create](./public/assets/img/create.PNG)
 - Users who create tournaments have full control over when they start, and picking a winner for each match.
+    - If you don't have the full list of players, the event owner still has a choice to start it, with bye weeks if necessary
+![early](./public/assets/img/early.PNG) 
+- If you have a full group of players, start will be normal
 
+![start](./public/assets/img/start.PNG)
+- Once started, the event owner will have access to each match as buttons to determine who will go to the next round
+
+![brackets](./public/assets/img/brackets.PNG) 
+![send](./public/assets/img/send.PNG)
+- If you cancel, the player will not be sent.
 
 ### Features coming soon
 
 - Owner page for creators of tournaments where you can edit/delete/view all your tournaments.
-- User profile page (Bio, tournament history)
+    - This will be a "Manager" page, it will bring more admin privileges and more over all QoL changes 
+- User profile page
+    - A place where a user can add a bio and other interest and track all the tournaments they have played in.
 - Results page for each tournament
+    - More robust results page, where you can see first, second and third place and a list of each matches wins and losses.
 - Round robin, double elimination, ladders/leagues, team play
 - Chat features
-- Add other users
+- A friends list
+    - A place to keep all your friends that you like to play with
 - View other users tournaments and history
+    - Have access to looking at others profiles and history
 - More in-depth readme
 
 
 
+## Technologies Used
+- [React](https://reactjs.org/) - Web framework
+- [Express](https://expressjs.com/) - Web framework
+- [Passport.js](http://www.passportjs.org/) - Authentication tool
+- [Bcrypt](https://www.npmjs.com/package/bcrypt) - Password Protection
+- [Materialize](https://www.materializecss.com/) - CSS framework
+- [Sequelize](https://docs.sequelizejs.com/) - ORM and management tool
+- [MySql](https://www.mysql.com/) - Relational Database
+- [Heroku](https://www.heroku.com/) - Hosting platform
+- [Axios](https://www.npmjs.com/package/axios) - Promised based HTTP client
+- [Vagrant](https://www.vagrantup.com/) -Virtualization
+- [Docker](https://www.docker.com/) - Containerization
+
+
+## Authors
+**|| [Joshua LeBoeuf](https://github.com/humanjboof) || [Jake Plaisted](https://github.com/spaceTab) || [Mason Hester](https://github.com/MasonHester) ||**
 
 
 
-
-
-
-## Quick Reference
+## Quick Reference for local set up
 * React Dev Server (frontend)
   * http://192.168.90.20:3000*
 * Express API (backend)
@@ -93,33 +133,6 @@ While `docker-compose` is running, press `CTRL+C`. Status will show Docker conta
 
 ### Connecting to MySQL/Mongo with a client
 MySQL/Mongo running as a Docker container registers itself on the local machine, so the host is `localhost` or, more reliably, `127.0.0.1` loopback address. The username and password (defined in `docker-compose.yml`) default to `root`, and the port is default `3306` for MySQL and default `27017` for Mongo.
-
-## Deploying to Heroku
-When ready, this project can be deployed to the Heroku container using the Heroku CLI.
-
-Before doing anything, log in to Heroku **and** the Heroku Container Registry.
-
-`heroku login`
-
-`heroku container:login`
-
-> **Important**: For first deployment be sure to run `heroku create` to initialize the app, or use the CLI to connect to an existing project
-
-Now you're ready to build and deploy. An **npm** script is provided in `package.json`:
-
-> NOTE: Before deploying, ensure all **React dependencies from `package.json`** are also added to `/api/package.json`. That file is copied as the deployed `package.json` and the dependencies are needed so Docker can compile React while building the image.
-
-`npm run deploy`
-
-**Tl;Dr;** this does the following:
-* Docker image built from `./Dockerfile`, which builds the React app on the fly, and copies the Express app to the root of the deployment image
-* Sets Heroku Config Var NODE_ENV to "production" (so Express serves static content)
-* Heroku build & release
-
-### Heroku Config Vars (environment variables)
-The [Heroku Config Vars](https://devcenter.heroku.com/articles/config-vars) for each project function identical to entries in a `.env` file. Any sensitive credentials your app needs can be added to Heroku Config Vars with the same Key as in the `/api/.env` file and it will be used as the production environment setting.
-
-Example: local `.env` file contains `AWS_KEY` with personal developer key. The Heroku Config Vars for the project can specify `AWS_KEY` as config key, and the value would be the production API key. This insulates all private key data from the repo and public access.
 
 ### Docker Cleanup
 There is an npm script in `package.json` that will clean up "dangling" images from Docker. Every so often it's recommended you run this command:

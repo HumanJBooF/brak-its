@@ -24,18 +24,18 @@ const RecentCard = props => (
                         <tbody>
                             {props.recentarr.map((name, i) => (
                                 <tr key={i}>
-                                    {!name.isActive &&
-                                        <td><Link to={`/join/${name.owner}/${name.id}`}><h6>{name.name}</h6></Link></td>
+                                    <td>{name.isActive === 'Sign ups' &&
+                                        <Link to={`/join/${name.owner}/${name.id}`}><h6>{name.name}</h6></Link>
                                     }
-                                    {name.isActive &&
-                                        <td><Link to={`/display/${name.name}/${name.owner}/${name.id}`}><h6>{name.name}</h6></Link></td>
-                                    }
+                                        {name.isActive !== 'Sign ups' &&
+                                            <Link to={`/display/${name.name}/${name.owner}/${name.id}`}><h6>{name.name}</h6></Link>
+                                        }</td>
                                     <td><h6>{name.gameType}</h6></td>
                                     <td className="hide-on-med-and-down"><h6>{name.owner}</h6></td>
                                     <td><h6>{name.actualSize}/{name.sizeLimit}</h6></td>
                                     <td className="hide-on-med-and-down"><h6>{name.format}</h6></td>
                                     <td className="hide-on-med-and-down" ><h6>
-                                        {`${name.isActive.toString().charAt(0).toUpperCase()}${name.isActive.toString().slice(1)}`}
+                                        {name.isActive}
                                     </h6></td>
                                 </tr>
                             ))}

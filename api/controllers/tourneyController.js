@@ -89,7 +89,7 @@ const tourneyController = {
                 { model: db.tourneys, as: 'tourneys' }]
         }).then(match => {
             res.json({ match: match })
-            db.tourneys.update({ isActive: true }, { where: { uuid: tourneyId } })
+            db.tourneys.update({ isActive: 'In progress' }, { where: { uuid: tourneyId } })
                 .then(tourney => console.log(tourney))
                 .catch(err => res.json({ err: err }))
         }).catch(err => res.json({ err: err }))
@@ -132,17 +132,13 @@ const tourneyController = {
                         nextMatch: nextMatch
                     }
                 }).then(winner => {
-                    res.json({ match: match, winner: winner })
-                    // db.match.findAll({ where: { tourneyUuid: id } })
-                    //     .then(matches => res.json({ matches: matches }))
-                    //     .catch(err => res.json({ err: err }))
+                    res.json({ match: match, winner: winner });
                 })
                     .catch(err => res.json({ err: err }))
             }).catch(err => res.json({ err: err }))
     },
 
     update_match: (req, res) => {
-        console.log(req.body.info.next)
         const id = req.body.info.next.tourneyUuid;
         const matchNum = req.body.info.next.matchNum;
         const player = req.body.info.next.player;
@@ -163,12 +159,19 @@ const tourneyController = {
                     nextMatch: nextMatchWin
                 }
             }).then(winner => {
-                res.json({ match: match, winner: winner })
-                // db.match.findAll({ where: { tourneyUuid: id } })
-                //     .then(matches => res.json({ matches: matches }))
-                //     .catch(err => res.json({ err: err }))
+                res.json({ match: match, winner: winner });
             }).catch(err => res.json({ err: err }))
         }).catch(err => res.json({ err: err }))
+    },
+
+    end_match: (req, res) => {
+        const id = req.body.id;
+        db.tourneys.update({ isActive: 'Finished' }, {
+            where: {
+                uuid: id
+            }
+        }).then(tourney => res.json({ tournament: tourney }))
+            .catch(err => res.json({ err: err }))
     },
 
     find_search: (req, res) => {
@@ -179,7 +182,7 @@ const tourneyController = {
                 gameType: searchTerm
             }
         }).then(tourneys => res.json({ tourneys: tourneys }))
-            .catch(error => res.json({ error }))
+            .catch(error => res.json({ err: err }))
     },
 }
 

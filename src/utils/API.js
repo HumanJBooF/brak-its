@@ -14,7 +14,8 @@ const apiController = {
     send_users_to_matches: userArr => { return axios.post('/api/tournament/setmatches', userArr) },
     get_users_for_matches: id => { return axios.post(`/api/tournament/matches/${id}`) },
     create_next_match: (match, winner) => { return axios.post(`/api/tournament/nextmatch`, match, winner) },
-    update_match: match => { return axios.post(`/api/tournament/update_match`, match) }
+    update_match: match => { return axios.post(`/api/tournament/update_match`, match) },
+    end_match: id => { return axios.post('/api/tournament/end_match', id) }
 };
 
 export default apiController;

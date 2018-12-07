@@ -3,14 +3,10 @@ import Container from '../../components/Container';
 import Tournament from '../../components/Tournament';
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
+import styles from './styles';
 import API from '../../utils/API';
 import swal from 'sweetalert2';
 
-const styles = {
-    span: {
-        borderBottom: '2pt solid white'
-    }
-}
 
 class TourneyDisplay extends React.Component {
     state = {
@@ -307,6 +303,10 @@ class TourneyDisplay extends React.Component {
 
     check_winner = player => {
         if (!player.nextMatch) {
+            const id = this.state.tourneyInfo.id;
+            API.end_match({ id: id }).then(result => {
+                console.log(result.data)
+            });
             swal({
                 title: `${player.player} is the winner!`,
                 text: `Go take a vacation, you have earned it!`,
@@ -431,7 +431,7 @@ class TourneyDisplay extends React.Component {
                     <div className="row">
                         <div className="col s12 center">
                             {this.state.tourneyInfo.owner === this.props.username &&
-                                <h5 className="white-text"> Click the winning player to send them to the next round</h5>
+                                <h5 className="white-text" style={styles.ownerText}> Click the winning player to send them to the next round</h5>
                             }
                         </div>
                     </div>
