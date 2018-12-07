@@ -1,10 +1,6 @@
 [![HitCount](http://hits.dwyl.io/humanjboof/https://github.com/HumanJBooF/brak-its.svg)](http://hits.dwyl.io/humanjboof/https://github.com/HumanJBooF/brak-its) [![GitHub issues](https://img.shields.io/github/issues/HumanJBooF/brak-its.svg?style=popout)](https://github.com/HumanJBooF/brak-its/issues)
 [![GitHub last commit](https://img.shields.io/github/last-commit/google/skia.svg)](https://github.com/HumanJBooF/brak-its)
 
-
-
-
-
 [![Brak-its](./public/assets/img/logo.PNG)](https://brak-its.herokuapp.com)     
 
 #### Welcome to [ Brak-its ] an app that allows users to create a tournament and play with friends all over the world.
