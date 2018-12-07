@@ -10,11 +10,11 @@ module.exports = (sequelize, DataTypes) => {
         description: { type: DataTypes.STRING, allowNull: true },
         date: { type: DataTypes.DATE },
         actualSize: { type: DataTypes.INTEGER, defaultValue: 0 },
-        sizeLimit: { type: DataTypes.INTEGER },
+        sizeLimit: { type: DataTypes.INTEGER, defaultValue: 4 },
         format: { type: DataTypes.STRING, defaultValue: 'Single-elim' },
         gameType: { type: DataTypes.STRING },
         owner: { type: DataTypes.STRING },
-        isActive: { type: DataTypes.BOOLEAN, defaultValue: false },
+        isActive: { type: DataTypes.ENUM, values: ['Sign ups', 'In progress', 'Finished'], defaultValue: 'Sign ups' },
         time: { type: DataTypes.STRING }
     },
         { paranoid: true }

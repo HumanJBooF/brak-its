@@ -69,7 +69,7 @@ class TournCreate extends React.Component {
                 gameType: this.state.gameType,
                 description: this.state.description,
                 date: this.state.startDate,
-                sizeLimit: this.state.sizeLimit,
+                sizeLimit: !this.state.sizeLimit ? "4" : this.state.sizeLimit,
                 owner: this.state.username
             }).then(newTourny => {
                 this.setState({
@@ -172,13 +172,13 @@ class TournCreate extends React.Component {
                                                         data-id="32"> 32
                                                  </h4>
                                                 </li>
-                                                {/* <li>
+                                                <li>
                                                     <h4 className="center-align"
                                                         onClick={this.handle_click.bind(this)}
                                                         data-id="64"> 64
                                                  </h4>
                                                 </li>
-                                                <li>
+                                                {/*<li>
                                                     <h4 className="center-align"
                                                         onClick={this.handle_click.bind(this)}
                                                         data-id="128"> 128

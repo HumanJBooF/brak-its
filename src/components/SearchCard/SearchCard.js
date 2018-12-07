@@ -28,12 +28,12 @@ const SearchCard = props => (
 
                             {props.queryResults.map((name, i) => (
                                 <tr key={i}>
-                                    {!name.isActive &&
-                                        <td><Link to={`/join/${name.owner}/${name.id}`}><h6>{name.name}</h6></Link></td>
+                                    <td>{name.isActive === 'Sign ups' &&
+                                        <Link to={`/join/${name.owner}/${name.id}`}><h6>{name.name}</h6></Link>
                                     }
-                                    {name.isActive &&
-                                        <td><Link to={`/display/${name.name}/${name.owner}/${name.id}`}><h6>{name.name}</h6></Link></td>
-                                    }
+                                        {name.isActive !== 'Sign ups' &&
+                                            <Link to={`/display/${name.name}/${name.owner}/${name.id}`}><h6>{name.name}</h6></Link>
+                                        }</td>
                                     <td><h6>{name.gameType}</h6></td>
                                     <td className="hide-on-med-and-down"><h6>{name.owner}</h6></td>
                                     <td><h6>{name.actualSize}/{name.sizeLimit}</h6></td>
@@ -41,7 +41,7 @@ const SearchCard = props => (
                                     <td><h6>{name.date.slice(0, name.date.indexOf("T"))}</h6></td>
                                     <td><h6>{name.date.slice(name.date.indexOf("T") + 1, name.date.indexOf("."))}</h6></td>
                                     <td className="hide-on-med-and-down"><h6>
-                                        {`${name.isActive.toString().charAt(0).toUpperCase()}${name.isActive.toString().slice(1)}`}
+                                        {name.isActive}
                                     </h6></td>
                                 </tr>
                             ))}
