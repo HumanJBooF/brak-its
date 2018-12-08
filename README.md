@@ -50,7 +50,7 @@
 - View other users tournaments and history
     - Have access to looking at others profiles and history
 - More in-depth readme
-
+- Redux
 
 
 ## Technologies Used
